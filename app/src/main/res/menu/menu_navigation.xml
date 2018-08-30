@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:title="Inbox"
+            android:id="@+id/menu_inbox"
+            android:icon="@android:drawable/btn_star" />
+
+        <item
+            android:title="Favoritos"
+            android:id="@+id/menu_starred"
+            android:icon="@android:drawable/edit_text" />
+
+        <item
+            android:title="Emails Enviados"
+            android:id="@+id/menu_sent_email"
+            android:icon="@android:drawable/ic_menu_camera" />
+
+    </group>
+
+
+</menu>
