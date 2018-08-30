@@ -1,6 +1,5 @@
 package com.asuprojects.tarefafeita.adapter;
 
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.asuprojects.tarefafeita.R;
-import com.asuprojects.tarefafeita.domain.Prioridade;
+import com.asuprojects.tarefafeita.domain.enums.Prioridade;
 import com.asuprojects.tarefafeita.domain.Tarefa;
 
 import java.text.SimpleDateFormat;
@@ -17,6 +16,7 @@ import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter {
 
     private List<Tarefa> tarefas;
+    private List<Tarefa> listaTarefas;
 
     public RecyclerViewAdapter(List<Tarefa> tarefas){
         this.tarefas = tarefas;
@@ -53,6 +53,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         return (tarefas != null) ? tarefas.size() : 0;
+    }
+
+    public void setListaTarefas(List<Tarefa> listaTarefas) {
+        this.listaTarefas = listaTarefas;
     }
 
 

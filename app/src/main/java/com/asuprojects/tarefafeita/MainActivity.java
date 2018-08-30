@@ -19,14 +19,10 @@ import android.widget.Toast;
 
 import com.asuprojects.tarefafeita.activity.TarefaActivity;
 import com.asuprojects.tarefafeita.adapter.AbasAdapter;
-import com.asuprojects.tarefafeita.domain.Tarefa;
 import com.asuprojects.tarefafeita.fragment.ListaFragment;
 import com.asuprojects.tarefafeita.fragment.MainFragment;
 import com.asuprojects.tarefafeita.fragment.ResumoFragment;
 import com.asuprojects.tarefafeita.util.GeradorTarefa;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
@@ -40,21 +36,11 @@ public class MainActivity extends AppCompatActivity
     private Toolbar toolbar;
     private FloatingActionButton btnAdicionarTarefa;
 
-    private List<Tarefa> tarefas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        GeradorTarefa gerador = new GeradorTarefa();
-
-        tarefas = new ArrayList<>();
-        tarefas.add(gerador.gerar());
-        tarefas.add(gerador.gerar());
-        tarefas.add(gerador.gerar());
-        tarefas.add(gerador.gerar());
-        tarefas.add(gerador.gerar());
 
         toolbar = findViewById(R.id.toolbar_tarefa);
         setSupportActionBar(toolbar);
@@ -71,12 +57,8 @@ public class MainActivity extends AppCompatActivity
         navigationView = findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(this);
 
-
         ListaFragment listaFragment = new ListaFragment();
-        listaFragment.setLista(tarefas);
-
         MainFragment mainFragment = new MainFragment();
-        mainFragment.setLista(tarefas);
 
         AbasAdapter abasAdapter = new AbasAdapter(getSupportFragmentManager());
         abasAdapter.adicionar(mainFragment, "Atual");

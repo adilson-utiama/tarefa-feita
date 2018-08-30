@@ -1,7 +1,7 @@
 package com.asuprojects.tarefafeita.util;
 
-import com.asuprojects.tarefafeita.domain.Prioridade;
-import com.asuprojects.tarefafeita.domain.Status;
+import com.asuprojects.tarefafeita.domain.enums.Prioridade;
+import com.asuprojects.tarefafeita.domain.enums.Status;
 import com.asuprojects.tarefafeita.domain.Tarefa;
 
 import java.util.Calendar;

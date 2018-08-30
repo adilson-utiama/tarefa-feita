@@ -1,4 +1,4 @@
-package com.asuprojects.tarefafeita.domain;
+package com.asuprojects.tarefafeita.domain.enums;
 
 import android.graphics.Color;
 
@@ -28,5 +28,14 @@ public enum Prioridade {
 
     public Integer getCor() {
         return cor;
+    }
+
+    public static Prioridade toEnum(String p){
+        for(Prioridade pri : Prioridade.values()){
+            if(pri.getDescricao().equals(p)){
+                return pri;
+            }
+        }
+        throw new RuntimeException("objeto não encontrado");
     }
 }

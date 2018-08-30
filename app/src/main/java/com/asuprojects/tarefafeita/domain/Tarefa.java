@@ -1,11 +1,22 @@
 package com.asuprojects.tarefafeita.domain;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
+
+import com.asuprojects.tarefafeita.domain.enums.Prioridade;
+import com.asuprojects.tarefafeita.domain.enums.Status;
+
 import java.io.Serializable;
 import java.util.Calendar;
 
+@Entity(tableName = "tabela_tarefa")
 public class Tarefa implements Serializable {
 
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
     private long id;
+
     private String titulo;
     private Calendar dataIncluida;
     private Calendar dataConlusao;

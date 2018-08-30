@@ -1,7 +1,10 @@
 package com.asuprojects.tarefafeita.fragment;
 
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,8 +18,11 @@ import com.asuprojects.tarefafeita.MainActivity;
 import com.asuprojects.tarefafeita.R;
 import com.asuprojects.tarefafeita.adapter.RecyclerViewAdapter;
 import com.asuprojects.tarefafeita.domain.Tarefa;
+import com.asuprojects.tarefafeita.domain.viewmodel.TarefaViewModel;
+import com.asuprojects.tarefafeita.util.GeradorTarefa;
 import com.asuprojects.tarefafeita.util.RecyclerViewItemListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,6 +33,8 @@ public class MainFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerViewAdapter adapter;
 
+    private TarefaViewModel viewModel;
+
     public MainFragment() {
         // Required empty public constructor
     }
@@ -35,6 +43,12 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
+
+
+        GeradorTarefa gerador = new GeradorTarefa();
+        tarefas = new ArrayList<>();
+        tarefas.add(gerador.gerar());
+        tarefas.add(gerador.gerar());
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         adapter = new RecyclerViewAdapter(tarefas);
@@ -62,6 +76,16 @@ public class MainFragment extends Fragment {
                     }
                 }
         ));
+
+        viewModel = ViewModelProviders.of(this).get(TarefaViewModel.class);
+        viewModel.getTodasTarefas().observe(this, new Observer<List<Tarefa>>() {
+            @Override
+            public void onChanged(@Nullable List<Tarefa> tarefas) {
+                adapter.setListaTarefas(tarefas);
+            }
+        });
+
+
         return view;
 
     }
