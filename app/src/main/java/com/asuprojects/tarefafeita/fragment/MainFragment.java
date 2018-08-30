@@ -23,6 +23,7 @@ import com.asuprojects.tarefafeita.util.GeradorTarefa;
 import com.asuprojects.tarefafeita.util.RecyclerViewItemListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -47,6 +48,13 @@ public class MainFragment extends Fragment {
 
         GeradorTarefa gerador = new GeradorTarefa();
         tarefas = new ArrayList<>();
+        tarefas.add(gerador.gerar());
+        tarefas.add(gerador.gerar());
+        tarefas.add(gerador.gerar());
+        tarefas.add(gerador.gerar());
+        tarefas.add(gerador.gerar());
+        tarefas.add(gerador.gerar());
+        tarefas.add(gerador.gerar());
         tarefas.add(gerador.gerar());
         tarefas.add(gerador.gerar());
 
@@ -78,7 +86,7 @@ public class MainFragment extends Fragment {
         ));
 
         viewModel = ViewModelProviders.of(this).get(TarefaViewModel.class);
-        viewModel.getTodasTarefas().observe(this, new Observer<List<Tarefa>>() {
+        viewModel.getTarefasDoDia(Calendar.getInstance()).observe(this, new Observer<List<Tarefa>>() {
             @Override
             public void onChanged(@Nullable List<Tarefa> tarefas) {
                 adapter.setListaTarefas(tarefas);

@@ -39,13 +39,13 @@
 
         <TextView
             android:id="@+id/tarefa_titulo"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:text="Titulo Descritivo"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.02"
+            app:layout_constraintEnd_toStartOf="@+id/imageView_options_menu"
+            app:layout_constraintHorizontal_bias="0.03"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView_today" />
 

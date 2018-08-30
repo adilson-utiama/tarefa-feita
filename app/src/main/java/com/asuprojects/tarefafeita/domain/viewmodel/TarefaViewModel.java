@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import com.asuprojects.tarefafeita.database.repository.TarefaRepository;
 import com.asuprojects.tarefafeita.domain.Tarefa;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class TarefaViewModel extends AndroidViewModel {
@@ -24,6 +25,14 @@ public class TarefaViewModel extends AndroidViewModel {
 
     public LiveData<List<Tarefa>> getTodasTarefas(){
         return tarefas;
+    }
+
+    public LiveData<List<Tarefa>> getTarefasOrdenadoPorData() {
+        return repository.getTarefasOrdenadasPorData();
+    }
+
+    public LiveData<List<Tarefa>> getTarefasDoDia(Calendar data) {
+        return repository.getTarefasDoDia(data);
     }
 
     public void adiciona(Tarefa tarefa){

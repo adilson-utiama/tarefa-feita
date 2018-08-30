@@ -74,7 +74,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout_anotacao"
         app:layout_constraintVertical_bias="0.050000012" />
 
-    <Spinner
+    <android.support.v7.widget.AppCompatSpinner
         android:id="@+id/spinner_prioridade"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

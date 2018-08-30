@@ -8,6 +8,7 @@ import com.asuprojects.tarefafeita.database.TarefaRoomDatabase;
 import com.asuprojects.tarefafeita.database.dao.TarefaDao;
 import com.asuprojects.tarefafeita.domain.Tarefa;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class TarefaRepository {
@@ -25,6 +26,13 @@ public class TarefaRepository {
         return tarefas;
     }
 
+    public LiveData<List<Tarefa>> getTarefasOrdenadasPorData() {
+        return tarefaDao.listaOrdenadaPorDataConclusao();
+    }
+
+    public LiveData<List<Tarefa>> getTarefasDoDia(Calendar data) {
+        return tarefaDao.listaDoDia(data);
+    }
 
     public void adiciona (Tarefa tarefa) {
         new insertAsyncTask(tarefaDao).execute(tarefa);

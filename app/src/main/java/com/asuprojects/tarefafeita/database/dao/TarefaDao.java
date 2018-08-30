@@ -9,6 +9,7 @@ import android.arch.persistence.room.Update;
 
 import com.asuprojects.tarefafeita.domain.Tarefa;
 
+import java.util.Calendar;
 import java.util.List;
 
 @Dao
@@ -31,5 +32,8 @@ public interface TarefaDao {
 
     @Query("SELECT * FROM tabela_tarefa ORDER BY dataConlusao ASC")
     LiveData<List<Tarefa>> listaOrdenadaPorDataConclusao();
+
+    @Query("SELECT * FROM  tabela_tarefa WHERE dataConlusao == :data")
+    LiveData<List<Tarefa>> listaDoDia(Calendar data);
 
 }

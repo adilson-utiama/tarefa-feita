@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity
         AbasAdapter abasAdapter = new AbasAdapter(getSupportFragmentManager());
         abasAdapter.adicionar(mainFragment, "Atual");
         abasAdapter.adicionar(listaFragment, "Lista Geral");
-        abasAdapter.adicionar(new ResumoFragment(), "Sumario");
+        abasAdapter.adicionar(new ResumoFragment(), "Resumo");
 
         viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(abasAdapter);
