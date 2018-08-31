@@ -16,7 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.TarefaActivity"></activity>
+        <activity
+            android:name=".activity.TarefaActivity"
+            android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>

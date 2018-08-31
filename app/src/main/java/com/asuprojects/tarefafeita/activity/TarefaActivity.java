@@ -38,6 +38,7 @@ public class TarefaActivity extends AppCompatActivity implements AdapterView.OnI
 
         toolbar = findViewById(R.id.toolbar_tarefa);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ArrayAdapter<Prioridade> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, values);
         spinner = findViewById(R.id.spinner_prioridade);
