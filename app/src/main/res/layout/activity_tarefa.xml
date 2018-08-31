@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_tarefa"
-        app:layout_constraintVertical_bias="0.26999998">
+        app:layout_constraintVertical_bias="0.13999999">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/input_titulo"
@@ -63,13 +63,13 @@
 
     <Button
         android:id="@+id/btnCalendar"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="24dp"
-        android:padding="15dp"
+        android:background="@drawable/rounded_corner_square"
+        android:padding="10dp"
         android:text="Selecionar Data"
-        android:background="@color/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -99,14 +99,14 @@
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
+        android:background="@drawable/rounded_corner_square"
         android:text="Adicionar"
-        android:background="@color/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnCalendar"
-        app:layout_constraintVertical_bias="0.68" />
+        app:layout_constraintVertical_bias="0.76" />
 
     <TextView
         android:id="@+id/textView"
