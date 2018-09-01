@@ -30,6 +30,7 @@ dependencies {
     implementation 'com.applandeo:material-calendar-view:1.4.0'
     implementation 'com.android.support:cardview-v7:26.1.0'
 
+
     // Room components
     implementation "android.arch.persistence.room:runtime:$rootProject.roomVersion"
     annotationProcessor "android.arch.persistence.room:compiler:$rootProject.roomVersion"

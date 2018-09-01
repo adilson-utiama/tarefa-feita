@@ -5,4 +5,8 @@
     <color name="colorSecondary">#ffb65c</color>
     <color name="colorSecondaryDark">#e6922c</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="prioridadeBaixa">#1fba22</color>
+    <color name="prioridadeMedia">#ffa530</color>
+    <color name="prioridadeAlta">#ff3030</color>
 </resources>
