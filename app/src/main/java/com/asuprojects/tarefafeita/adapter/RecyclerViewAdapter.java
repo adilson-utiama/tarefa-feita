@@ -34,11 +34,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
         Tarefa tarefa = tarefas.get(position);
         TarefaViewHolder viewholder = (TarefaViewHolder) holder;
 
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm");
 
         viewholder.titulo.setText(tarefa.getTitulo());
         viewholder.anotacao.setText(tarefa.getAnotacao());
-        viewholder.dataConclusao.setText(format.format(tarefa.getDataConlusao().getTime()));
+        viewholder.dataConclusao.setText(dataFormat.format(tarefa.getDataConlusao().getTime()));
         if(tarefa.getPrioridade().equals(Prioridade.ALTA)){
             viewholder.prioridade.setTextColor(Prioridade.ALTA.getCor());
         } else if(tarefa.getPrioridade().equals(Prioridade.MEDIA)){
@@ -47,6 +48,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
             viewholder.prioridade.setTextColor(Prioridade.BAIXA.getCor());
         }
         viewholder.prioridade.setText(tarefa.getPrioridade().getDescricao());
+        viewholder.status.setText(tarefa.getStatus().getDescricao());
+        viewholder.horario.setText(timeFormat.format(tarefa.getDataConlusao().getTime()));
+
 
     }
 
@@ -63,17 +67,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
     class TarefaViewHolder extends RecyclerView.ViewHolder{
 
         private TextView dataConclusao;
+        private TextView horario;
         private TextView titulo;
         private TextView anotacao;
         private TextView prioridade;
+        private TextView status;
 
         public TarefaViewHolder(View itemView) {
             super(itemView);
 
             dataConclusao = itemView.findViewById(R.id.tarefa_data_conclusao);
+            horario = itemView.findViewById(R.id.tarefa_horario);
             titulo = itemView.findViewById(R.id.tarefa_titulo);
             anotacao = itemView.findViewById(R.id.tarefa_anotacao);
             prioridade = itemView.findViewById(R.id.tarefa_prioridade);
+            status = itemView.findViewById(R.id.tarefa_status);
         }
     }
 }
