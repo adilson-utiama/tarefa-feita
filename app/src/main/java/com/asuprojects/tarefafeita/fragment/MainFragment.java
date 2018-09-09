@@ -4,6 +4,7 @@ package com.asuprojects.tarefafeita.fragment;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import com.asuprojects.tarefafeita.MainActivity;
 import com.asuprojects.tarefafeita.R;
+import com.asuprojects.tarefafeita.activity.TarefaActivity;
 import com.asuprojects.tarefafeita.adapter.RecyclerViewAdapter;
 import com.asuprojects.tarefafeita.domain.Tarefa;
 import com.asuprojects.tarefafeita.domain.viewmodel.TarefaViewModel;
@@ -66,7 +68,10 @@ public class MainFragment extends Fragment {
                 new RecyclerViewItemListener.OnClickItemListener() {
                     @Override
                     public void onClickItem(View view, int position) {
-                        Toast.makeText(getContext(), "onClickItem: " + position, Toast.LENGTH_SHORT).show();
+                        Tarefa tarefa = adapter.getTarefa(position);
+                        Intent intent = new Intent(getContext(), TarefaActivity.class);
+                        intent.putExtra("EDITAR_TAREFA", tarefa);
+                        startActivity(intent);
                     }
 
                     @Override

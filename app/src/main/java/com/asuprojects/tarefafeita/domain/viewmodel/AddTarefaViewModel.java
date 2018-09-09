@@ -20,4 +20,8 @@ public class AddTarefaViewModel extends AndroidViewModel {
     public void adiciona(Tarefa tarefa){
         repo.adiciona(tarefa);
     }
+
+    public void atualiza(Tarefa tarefa){
+        repo.atualiza(tarefa);
+    }
 }

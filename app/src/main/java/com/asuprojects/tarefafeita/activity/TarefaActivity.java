@@ -56,6 +56,8 @@ public class TarefaActivity extends AppCompatActivity {
     private Tarefa tarefa;
     private Prioridade prioridade = Prioridade.MEDIA;
 
+    private SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +67,8 @@ public class TarefaActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+
         inputTitulo = findViewById(R.id.input_titulo);
         inputAnotacao = findViewById(R.id.input_anotacao);
         radioGroup = findViewById(R.id.radioGroup);
@@ -73,7 +77,7 @@ public class TarefaActivity extends AppCompatActivity {
 
         btnSelecaoData = findViewById(R.id.btnCalendar);
         Calendar data = Calendar.getInstance();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
         btnSelecaoData.setText(format.format(data.getTime()));
         btnSelecaoData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,7 +113,6 @@ public class TarefaActivity extends AppCompatActivity {
                 if(tarefa == null){
                     tarefa = new Tarefa();
                 }
-                //TODO preencher tarefa com dados
                 tarefa.setTitulo(inputTitulo.getText().toString());
                 tarefa.setAnotacao(inputAnotacao.getText().toString());
                 tarefa.setDataIncluida(Calendar.getInstance());
@@ -121,13 +124,52 @@ public class TarefaActivity extends AppCompatActivity {
                 tarefa.setStatus(Status.ADICIONADO);
                 tarefa.setPrioridade(prioridade);
 
-                viewModel.adiciona(tarefa);
+                if(tarefa.getId() != 0){
+                    viewModel.atualiza(tarefa);
+                }else{
+                    viewModel.adiciona(tarefa);
+                }
 
                 finish();
             }
         });
 
+        Intent intent = getIntent();
+        if(intent.hasExtra("EDITAR_TAREFA")){
+            tarefa = (Tarefa) intent.getSerializableExtra("EDITAR_TAREFA");
+            if(tarefa != null){
+                inputTitulo.setText(tarefa.getTitulo());
+                inputAnotacao.setText(tarefa.getAnotacao());
+                Calendar dataR = tarefa.getDataConlusao();
+                btnSelecaoData.setText(format.format(dataR.getTime()));
+                int horaR = data.get(Calendar.HOUR_OF_DAY);
+                int minutoR = data.get(Calendar.MINUTE);
+                btnSelecaoHorario.setText(horaR + ":" + minutoR);
+                checkPrioridadeRadioButton(tarefa.getPrioridade());
+                btnSalvar.setText("Atualizar");
+            }
+        }
 
+    }
+
+    private void checkPrioridadeRadioButton(Prioridade prioridade) {
+        RadioButton baixa = findViewById(R.id.item_baixa);
+        int baixaId = baixa.getId();
+        RadioButton media = findViewById(R.id.item_media);
+        int mediaId = media.getId();
+        RadioButton alta = findViewById(R.id.item_alta);
+        int altaId = alta.getId();
+        switch (prioridade.getCod()){
+            case 1:
+                radioGroup.check(baixaId);
+                break;
+            case 2:
+                radioGroup.check(mediaId);
+                break;
+            case 3:
+                radioGroup.check(altaId);
+                break;
+        }
 
     }
 
