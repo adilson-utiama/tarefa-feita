@@ -35,7 +35,7 @@ public interface TarefaDao {
     @Query("SELECT * FROM tabela_tarefa ORDER BY dataConlusao ASC")
     LiveData<List<Tarefa>> listaOrdenadaPorDataConclusao();
 
-    @Query("SELECT * FROM  tabela_tarefa WHERE dataConlusao == :data")
+    @Query("SELECT * FROM  tabela_tarefa WHERE dataConlusao = :data")
     LiveData<List<Tarefa>> listaDoDia(Calendar data);
 
 }

@@ -39,6 +39,14 @@ public class TarefaRepository {
         new insertAsyncTask(tarefaDao).execute(tarefa);
     }
 
+    public void deleta(Tarefa tarefa){
+        new removeAsyncTask(tarefaDao).execute(tarefa);
+    }
+
+    public void atualiza(Tarefa tarefa){
+        tarefaDao.atualiza(tarefa);
+    }
+
     private static class insertAsyncTask extends AsyncTask<Tarefa, Void, Void> {
         private TarefaDao asyncTaskDao;
         insertAsyncTask(TarefaDao dao) {
@@ -52,11 +60,17 @@ public class TarefaRepository {
         }
     }
 
-    public void deleta(Tarefa tarefa){
-        tarefaDao.remove(tarefa);
-    }
+    private static class removeAsyncTask extends AsyncTask<Tarefa, Void, Void>{
 
-    public void atualiza(Tarefa tarefa){
-        tarefaDao.atualiza(tarefa);
+        private TarefaDao asyncTaskDao;
+        removeAsyncTask(TarefaDao dao) {
+            asyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Tarefa... tarefas) {
+            asyncTaskDao.remove(tarefas[0]);
+            return null;
+        }
     }
 }

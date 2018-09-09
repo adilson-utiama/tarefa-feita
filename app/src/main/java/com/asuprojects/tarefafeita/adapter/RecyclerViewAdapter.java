@@ -63,6 +63,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
+    public Tarefa getTarefa(int posicao){
+        return this.tarefas.get(posicao);
+    }
 
     class TarefaViewHolder extends RecyclerView.ViewHolder{
 

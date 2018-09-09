@@ -3,9 +3,11 @@ package com.asuprojects.tarefafeita.fragment;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -44,12 +46,19 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         adapter = new RecyclerViewAdapter(new ArrayList<Tarefa>());
         recyclerView = view.findViewById(R.id.recyclerViewSelecionados);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
+
+        viewModel = ViewModelProviders.of(this).get(TarefaViewModel.class);
+        viewModel.getTarefasOrdenadoPorData().observe(MainFragment.this, new Observer<List<Tarefa>>() {
+            @Override
+            public void onChanged(@Nullable List<Tarefa> tasks) {
+                adapter.setListaTarefas(tasks);
+            }
+        });
 
         recyclerView.addOnItemTouchListener(new RecyclerViewItemListener(
                 getContext(),
@@ -62,7 +71,9 @@ public class MainFragment extends Fragment {
 
                     @Override
                     public void onClickItemLongo(View view, int position) {
-                        Toast.makeText(getContext(), "onClickItemLongo: " + position , Toast.LENGTH_SHORT).show();
+                        Tarefa tarefa = adapter.getTarefa(position);
+                        mostraDialogRemocao(tarefa);
+
                     }
 
                     @Override
@@ -72,18 +83,25 @@ public class MainFragment extends Fragment {
                 }
         ));
 
-        viewModel = ViewModelProviders.of(this).get(TarefaViewModel.class);
-        viewModel.getTodasTarefas().observe(MainFragment.this, new Observer<List<Tarefa>>() {
-            @Override
-            public void onChanged(@Nullable List<Tarefa> tasks) {
-                Log.i("TAREFA_LIST", "onChanged: " + tasks);
-                adapter.setListaTarefas(tasks);
-            }
-        });
-
-
         return view;
 
+    }
+
+    private void mostraDialogRemocao(final Tarefa tarefa) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Remover Tarefa ")
+                .append("'").append(tarefa.getTitulo()).append("'").append(" ?");
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+        dialog.setTitle("DELETAR TAREFA");
+        dialog.setMessage(builder.toString());
+        dialog.setPositiveButton("Deletar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                viewModel.remove(tarefa);
+            }
+        });
+        dialog.setNegativeButton("Cancelar", null);
+        dialog.show();
     }
 
 
