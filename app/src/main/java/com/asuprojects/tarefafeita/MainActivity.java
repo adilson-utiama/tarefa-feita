@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity
         btnAdicionarTarefa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(MainActivity.this, "Adicionando Tarefa....", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, TarefaActivity.class);
                 startActivity(intent);
             }

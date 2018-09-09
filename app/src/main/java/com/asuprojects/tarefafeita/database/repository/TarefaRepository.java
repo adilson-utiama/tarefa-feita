@@ -3,6 +3,7 @@ package com.asuprojects.tarefafeita.database.repository;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.asuprojects.tarefafeita.database.TarefaRoomDatabase;
 import com.asuprojects.tarefafeita.database.dao.TarefaDao;
@@ -45,6 +46,7 @@ public class TarefaRepository {
         }
         @Override
         protected Void doInBackground(final Tarefa... params) {
+            Log.i("TAREFA", "doInBackground: " + params[0]);
             asyncTaskDao.adiciona(params[0]);
             return null;
         }

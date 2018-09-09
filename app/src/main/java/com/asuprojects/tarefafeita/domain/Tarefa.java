@@ -2,8 +2,12 @@ package com.asuprojects.tarefafeita.domain;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 import android.support.annotation.NonNull;
 
+import com.asuprojects.tarefafeita.database.converters.CalendarTypeConverter;
+import com.asuprojects.tarefafeita.database.converters.PrioridadeTypeConverter;
+import com.asuprojects.tarefafeita.database.converters.StatusTypeConverter;
 import com.asuprojects.tarefafeita.domain.enums.Prioridade;
 import com.asuprojects.tarefafeita.domain.enums.Status;
 
@@ -14,14 +18,22 @@ import java.util.Calendar;
 public class Tarefa implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
-    @NonNull
     private long id;
 
     private String titulo;
+
+    @TypeConverters(CalendarTypeConverter.class)
     private Calendar dataIncluida;
+
+    @TypeConverters(CalendarTypeConverter.class)
     private Calendar dataConlusao;
+
     private String anotacao;
+
+    @TypeConverters(PrioridadeTypeConverter.class)
     private Prioridade prioridade;
+
+    @TypeConverters(StatusTypeConverter.class)
     private Status status;
 
     public Tarefa() {
@@ -91,5 +103,14 @@ public class Tarefa implements Serializable {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("ID: ").append(getId()).append("Titulo: ").append(getTitulo())
+                .append("Data Conclusao: ").append(getDataConlusao().getTime())
+                .append("Prioridade: ").append(getPrioridade().getDescricao());
+        return builder.toString();
     }
 }

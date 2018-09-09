@@ -12,13 +12,15 @@ import com.asuprojects.tarefafeita.domain.Tarefa;
 import java.util.Calendar;
 import java.util.List;
 
+import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
+
 @Dao
 public interface TarefaDao {
 
-    @Query("SELECT * FROM tabela_tarefa ORDER BY id DESC")
+    @Query("SELECT * FROM tabela_tarefa")
     LiveData<List<Tarefa>> listarTodos();
 
-    @Insert
+    @Insert(onConflict = REPLACE)
     void adiciona(Tarefa tarefa);
 
     @Update

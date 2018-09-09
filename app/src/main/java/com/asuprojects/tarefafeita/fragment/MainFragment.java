@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,8 +30,6 @@ import java.util.List;
 
 public class MainFragment extends Fragment {
 
-    private List<Tarefa> tarefas;
-
     private RecyclerView recyclerView;
     private RecyclerViewAdapter adapter;
 
@@ -46,20 +45,8 @@ public class MainFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
 
-        GeradorTarefa gerador = new GeradorTarefa();
-        tarefas = new ArrayList<>();
-        tarefas.add(gerador.gerar());
-        tarefas.add(gerador.gerar());
-        tarefas.add(gerador.gerar());
-        tarefas.add(gerador.gerar());
-        tarefas.add(gerador.gerar());
-        tarefas.add(gerador.gerar());
-        tarefas.add(gerador.gerar());
-        tarefas.add(gerador.gerar());
-        tarefas.add(gerador.gerar());
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        adapter = new RecyclerViewAdapter(tarefas);
+        adapter = new RecyclerViewAdapter(new ArrayList<Tarefa>());
         recyclerView = view.findViewById(R.id.recyclerViewSelecionados);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -86,10 +73,11 @@ public class MainFragment extends Fragment {
         ));
 
         viewModel = ViewModelProviders.of(this).get(TarefaViewModel.class);
-        viewModel.getTarefasDoDia(Calendar.getInstance()).observe(this, new Observer<List<Tarefa>>() {
+        viewModel.getTodasTarefas().observe(MainFragment.this, new Observer<List<Tarefa>>() {
             @Override
-            public void onChanged(@Nullable List<Tarefa> tarefas) {
-                adapter.setListaTarefas(tarefas);
+            public void onChanged(@Nullable List<Tarefa> tasks) {
+                Log.i("TAREFA_LIST", "onChanged: " + tasks);
+                adapter.setListaTarefas(tasks);
             }
         });
 
@@ -98,8 +86,5 @@ public class MainFragment extends Fragment {
 
     }
 
-    public void setLista(List<Tarefa> tarefas){
-        this.tarefas = tarefas;
-    }
 
 }

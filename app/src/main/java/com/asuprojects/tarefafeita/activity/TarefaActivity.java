@@ -1,15 +1,20 @@
 package com.asuprojects.tarefafeita.activity;
 
 import android.app.TimePickerDialog;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -17,20 +22,39 @@ import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.DatePicker;
 import com.applandeo.materialcalendarview.builders.DatePickerBuilder;
 import com.applandeo.materialcalendarview.listeners.OnSelectDateListener;
+import com.asuprojects.tarefafeita.MainActivity;
 import com.asuprojects.tarefafeita.R;
+import com.asuprojects.tarefafeita.database.converters.CalendarTypeConverter;
+import com.asuprojects.tarefafeita.database.repository.TarefaRepository;
+import com.asuprojects.tarefafeita.domain.Tarefa;
 import com.asuprojects.tarefafeita.domain.enums.Prioridade;
+import com.asuprojects.tarefafeita.domain.enums.Status;
+import com.asuprojects.tarefafeita.domain.viewmodel.AddTarefaViewModel;
+import com.asuprojects.tarefafeita.domain.viewmodel.TarefaViewModel;
 
 import java.text.SimpleDateFormat;
+import java.time.Month;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 public class TarefaActivity extends AppCompatActivity {
 
+    private TextInputEditText inputTitulo;
+    private TextInputEditText inputAnotacao;
+
     private Button btnSelecaoData;
     private Button btnSelecaoHorario;
+    private Button btnSalvar;
+
+    private RadioGroup radioGroup;
 
     private Toolbar toolbar;
+
+    private AddTarefaViewModel viewModel;
+
+    private Tarefa tarefa;
+    private Prioridade prioridade = Prioridade.MEDIA;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +65,11 @@ public class TarefaActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        inputTitulo = findViewById(R.id.input_titulo);
+        inputAnotacao = findViewById(R.id.input_anotacao);
+        radioGroup = findViewById(R.id.radioGroup);
+
+        viewModel = ViewModelProviders.of(this).get(AddTarefaViewModel.class);
 
         btnSelecaoData = findViewById(R.id.btnCalendar);
         Calendar data = Calendar.getInstance();
@@ -73,6 +102,47 @@ public class TarefaActivity extends AppCompatActivity {
             }
         });
 
+        btnSalvar = findViewById(R.id.btnAdicionar);
+        btnSalvar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(tarefa == null){
+                    tarefa = new Tarefa();
+                }
+                //TODO preencher tarefa com dados
+                tarefa.setTitulo(inputTitulo.getText().toString());
+                tarefa.setAnotacao(inputAnotacao.getText().toString());
+                tarefa.setDataIncluida(Calendar.getInstance());
+
+                String data = btnSelecaoData.getText().toString();
+                String hora = btnSelecaoHorario.getText().toString();
+                Calendar dataConclusao = buildCalendar(data, hora);
+                tarefa.setDataConlusao(dataConclusao);
+                tarefa.setStatus(Status.ADICIONADO);
+                tarefa.setPrioridade(prioridade);
+
+                viewModel.adiciona(tarefa);
+
+                finish();
+            }
+        });
+
+
+
+    }
+
+    private Calendar buildCalendar(String data, String horario) {
+        int dia, mes, ano, hora, minuto = 0;
+        String[] arrayData = data.split("/");
+        String[] arrayHorario = horario.split(":");
+        dia = Integer.parseInt(arrayData[0]);
+        mes = Integer.parseInt(arrayData[1]);
+        ano = Integer.parseInt(arrayData[2]);
+        hora = Integer.parseInt(arrayHorario[0]);
+        minuto = Integer.parseInt(arrayHorario[1]);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(ano, mes - 1, dia, hora, minuto);
+        return calendar;
     }
 
     private TimePickerDialog.OnTimeSetListener listenerHorario = new TimePickerDialog.OnTimeSetListener() {
@@ -98,17 +168,17 @@ public class TarefaActivity extends AppCompatActivity {
         switch(view.getId()){
             case R.id.item_baixa:
                 if(checked){
-                    Toast.makeText(this, "BAIXA selecionada", Toast.LENGTH_SHORT).show();
+                    prioridade = Prioridade.BAIXA;
                 }
                 break;
             case R.id.item_media:
                 if(checked){
-                    Toast.makeText(this, "MEDIA selecionada", Toast.LENGTH_SHORT).show();
+                    prioridade = Prioridade.MEDIA;
                 }
                 break;
             case R.id.item_alta:
                 if(checked){
-                    Toast.makeText(this, "ALTA selecionada", Toast.LENGTH_SHORT).show();
+                    prioridade = Prioridade.ALTA;
                 }
                 break;
         }

@@ -16,7 +16,6 @@ import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter {
 
     private List<Tarefa> tarefas;
-    private List<Tarefa> listaTarefas;
 
     public RecyclerViewAdapter(List<Tarefa> tarefas){
         this.tarefas = tarefas;
@@ -60,7 +59,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
     }
 
     public void setListaTarefas(List<Tarefa> listaTarefas) {
-        this.listaTarefas = listaTarefas;
+        this.tarefas = listaTarefas;
+        notifyDataSetChanged();
     }
 
 
