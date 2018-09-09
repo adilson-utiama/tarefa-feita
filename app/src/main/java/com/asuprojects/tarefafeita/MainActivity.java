@@ -82,10 +82,6 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public void itemOpcoes(View view){
-        Toast.makeText(this, "Menu de Opcoes", Toast.LENGTH_SHORT).show();
-    }
-
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(Gravity.START)) {

@@ -1,10 +1,13 @@
 package com.asuprojects.tarefafeita.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.asuprojects.tarefafeita.R;
 import com.asuprojects.tarefafeita.domain.enums.Prioridade;
@@ -31,7 +34,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         Tarefa tarefa = tarefas.get(position);
-        TarefaViewHolder viewholder = (TarefaViewHolder) holder;
+        final TarefaViewHolder viewholder = (TarefaViewHolder) holder;
 
         SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm");
@@ -49,8 +52,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
         viewholder.prioridade.setText(tarefa.getPrioridade().getDescricao());
         viewholder.status.setText(tarefa.getStatus().getDescricao());
         viewholder.horario.setText(timeFormat.format(tarefa.getDataConlusao().getTime()));
-
-
     }
 
     @Override

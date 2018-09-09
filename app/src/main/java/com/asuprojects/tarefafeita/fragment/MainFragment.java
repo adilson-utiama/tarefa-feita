@@ -12,10 +12,15 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.Toast;
 
 import com.asuprojects.tarefafeita.MainActivity;
@@ -23,6 +28,7 @@ import com.asuprojects.tarefafeita.R;
 import com.asuprojects.tarefafeita.activity.TarefaActivity;
 import com.asuprojects.tarefafeita.adapter.RecyclerViewAdapter;
 import com.asuprojects.tarefafeita.domain.Tarefa;
+import com.asuprojects.tarefafeita.domain.enums.Status;
 import com.asuprojects.tarefafeita.domain.viewmodel.TarefaViewModel;
 import com.asuprojects.tarefafeita.util.GeradorTarefa;
 import com.asuprojects.tarefafeita.util.RecyclerViewItemListener;
@@ -39,6 +45,8 @@ public class MainFragment extends Fragment {
 
     private TarefaViewModel viewModel;
 
+    private Tarefa tarefa;
+
     public MainFragment() {
         // Required empty public constructor
     }
@@ -48,17 +56,18 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        adapter = new RecyclerViewAdapter(new ArrayList<Tarefa>());
+        this.adapter = new RecyclerViewAdapter(new ArrayList<Tarefa>());
         recyclerView = view.findViewById(R.id.recyclerViewSelecionados);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(this.adapter);
 
         viewModel = ViewModelProviders.of(this).get(TarefaViewModel.class);
         viewModel.getTarefasOrdenadoPorData().observe(MainFragment.this, new Observer<List<Tarefa>>() {
             @Override
             public void onChanged(@Nullable List<Tarefa> tasks) {
-                adapter.setListaTarefas(tasks);
+                MainFragment.this.adapter.setListaTarefas(tasks);
             }
         });
 
@@ -68,28 +77,82 @@ public class MainFragment extends Fragment {
                 new RecyclerViewItemListener.OnClickItemListener() {
                     @Override
                     public void onClickItem(View view, int position) {
-                        Tarefa tarefa = adapter.getTarefa(position);
-                        Intent intent = new Intent(getContext(), TarefaActivity.class);
-                        intent.putExtra("EDITAR_TAREFA", tarefa);
-                        startActivity(intent);
+                        tarefa = MainFragment.this.adapter.getTarefa(position);
+                        mostrDialogStatus();
+
                     }
 
                     @Override
                     public void onClickItemLongo(View view, int position) {
-                        Tarefa tarefa = adapter.getTarefa(position);
-                        mostraDialogRemocao(tarefa);
+                        tarefa = MainFragment.this.adapter.getTarefa(position);
+
+                        CharSequence[] opcoes = new CharSequence[2];
+                        opcoes[0] = "Editar";
+                        opcoes[1] = "Deletar";
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        builder.setTitle("Escolha uma Opção");
+                        builder.setItems(opcoes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int selecao) {
+                                if(selecao == 0){
+                                    Intent intent = new Intent(getContext(), TarefaActivity.class);
+                                    intent.putExtra("EDITAR_TAREFA", tarefa);
+                                    startActivity(intent);
+                                }
+                                if(selecao == 1){
+                                    mostraDialogRemocao(tarefa);
+                                }
+                            }
+                        });
+                        builder.show();
 
                     }
 
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
                     }
                 }
         ));
 
         return view;
 
+    }
+
+    private void mostrDialogStatus() {
+        final CharSequence[] sequences = statusCharSequence();
+        int id = 0;
+        for(int i = 0; i < sequences.length; i++){
+            if(tarefa.getStatus().getDescricao().equals(sequences[i])){
+                id = i;
+            }
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Mudar Status")
+                .setSingleChoiceItems(sequences, id ,new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        tarefa.setStatus(Status.toEnum(sequences[i].toString()));
+                    }
+                });
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                viewModel.atualiza(tarefa);
+            }
+        });
+        builder.setNegativeButton("Cancelar", null);
+        builder.show();
+    }
+
+    private CharSequence[] statusCharSequence() {
+        CharSequence[] s = new CharSequence[Status.values().length];
+        Status[] status = Status.values();
+        for(int i = 0; i < status.length; i++){
+            s[i] = status[i].getDescricao();
+        }
+        return s;
     }
 
     private void mostraDialogRemocao(final Tarefa tarefa) {
