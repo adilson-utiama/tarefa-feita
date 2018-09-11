@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.asuprojects.tarefafeita.MainActivity;
@@ -33,9 +34,11 @@ import com.asuprojects.tarefafeita.domain.viewmodel.TarefaViewModel;
 import com.asuprojects.tarefafeita.util.GeradorTarefa;
 import com.asuprojects.tarefafeita.util.RecyclerViewItemListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 
 public class MainFragment extends Fragment {
@@ -46,6 +49,7 @@ public class MainFragment extends Fragment {
     private TarefaViewModel viewModel;
 
     private Tarefa tarefa;
+    private TextView dataAtual;
 
     public MainFragment() {
         // Required empty public constructor
@@ -56,6 +60,9 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
+        dataAtual = view.findViewById(R.id.dataAtual);
+
+        setaDataAtual();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         this.adapter = new RecyclerViewAdapter(new ArrayList<Tarefa>());
@@ -116,6 +123,14 @@ public class MainFragment extends Fragment {
         ));
 
         return view;
+
+    }
+
+    private void setaDataAtual() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd 'de' MMMM");
+        Calendar atual = Calendar.getInstance();
+        String dataExtenso = dateFormat.format(atual.getTime());
+        dataAtual.setText(dataExtenso);
 
     }
 
