@@ -12,6 +12,8 @@ import java.util.Locale;
 
 public class CalendarTypeConverter {
 
+    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+
     @TypeConverter
     public static Calendar toCalendar(Date date){
         Calendar instance = Calendar.getInstance();
@@ -20,16 +22,19 @@ public class CalendarTypeConverter {
     }
 
     @TypeConverter
-    public static Calendar toCalendar(long data){
-        Date date = new Date();
-        date.setTime(data);
+    public static Calendar toCalendar(String data){
         Calendar instance = Calendar.getInstance();
-        instance.setTime(date);
+        try {
+            Date date = format.parse(data);
+            instance.setTime(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         return instance;
     }
 
     @TypeConverter
-    public static long toLong(Calendar value){
-        return value.getTime().getTime();
+    public static String toString(Calendar value){
+        return format.format(value.getTime());
     }
 }

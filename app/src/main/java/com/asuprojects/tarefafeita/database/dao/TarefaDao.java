@@ -32,10 +32,10 @@ public interface TarefaDao {
     @Query("DELETE FROM tabela_tarefa")
     void deleteAll();
 
-    @Query("SELECT * FROM tabela_tarefa ORDER BY dataConlusao ASC")
+    @Query("SELECT * FROM tabela_tarefa ORDER BY dataConlusao DESC")
     LiveData<List<Tarefa>> listaOrdenadaPorDataConclusao();
 
-    @Query("SELECT * FROM  tabela_tarefa WHERE dataConlusao = :data")
-    LiveData<List<Tarefa>> listaDoDia(Calendar data);
+    @Query("SELECT * FROM  tabela_tarefa WHERE date(dataConlusao) = date('now')")
+    LiveData<List<Tarefa>> listaDoDia();
 
 }

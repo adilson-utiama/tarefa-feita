@@ -31,8 +31,8 @@ public class TarefaRepository {
         return tarefaDao.listaOrdenadaPorDataConclusao();
     }
 
-    public LiveData<List<Tarefa>> getTarefasDoDia(Calendar data) {
-        return tarefaDao.listaDoDia(data);
+    public LiveData<List<Tarefa>> getTarefasDoDia() {
+        return tarefaDao.listaDoDia();
     }
 
     public void adiciona (Tarefa tarefa) {

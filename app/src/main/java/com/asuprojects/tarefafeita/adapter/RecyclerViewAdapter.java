@@ -39,7 +39,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
         final TarefaViewHolder viewholder = (TarefaViewHolder) holder;
 
         SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
         viewholder.titulo.setText(tarefa.getTitulo());
         viewholder.anotacao.setText(tarefa.getAnotacao());

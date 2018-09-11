@@ -71,7 +71,7 @@ public class MainFragment extends Fragment {
         recyclerView.setAdapter(this.adapter);
 
         viewModel = ViewModelProviders.of(this).get(TarefaViewModel.class);
-        viewModel.getTarefasOrdenadoPorData().observe(MainFragment.this, new Observer<List<Tarefa>>() {
+        viewModel.getTarefasDoDia().observe(MainFragment.this, new Observer<List<Tarefa>>() {
             @Override
             public void onChanged(@Nullable List<Tarefa> tasks) {
                 MainFragment.this.adapter.setListaTarefas(tasks);
