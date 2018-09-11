@@ -1,5 +1,6 @@
 package com.asuprojects.tarefafeita.adapter;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import com.asuprojects.tarefafeita.R;
 import com.asuprojects.tarefafeita.domain.enums.Prioridade;
 import com.asuprojects.tarefafeita.domain.Tarefa;
+import com.asuprojects.tarefafeita.domain.enums.Status;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -51,6 +53,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
         }
         viewholder.prioridade.setText(tarefa.getPrioridade().getDescricao());
         viewholder.status.setText(tarefa.getStatus().getDescricao());
+        if(tarefa.getStatus().getDescricao().equals(Status.CONCLUIDO.getDescricao())){
+            viewholder.status.setTextColor(Color.GREEN);
+        }else{
+            viewholder.status.setTextColor(Color.GRAY);
+        }
         viewholder.horario.setText(timeFormat.format(tarefa.getDataConlusao().getTime()));
     }
 

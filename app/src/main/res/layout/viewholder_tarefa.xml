@@ -14,51 +14,28 @@
         android:elevation="5dp"
         android:padding="5dp">
 
-        <ImageView
-            android:id="@+id/imageView_today"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/tarefa_data_conclusao"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/ic_data_conclusao" />
-
         <TextView
             android:id="@+id/tarefa_data_conclusao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:text="20/08/2018"
-            app:layout_constraintStart_toEndOf="@+id/imageView_today"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/imageView_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            app:layout_constraintBottom_toTopOf="@+id/tarefa_titulo"
-            app:layout_constraintStart_toEndOf="@+id/tarefa_data_conclusao"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@drawable/ic_time" />
 
         <TextView
             android:id="@+id/tarefa_titulo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
             android:text="Titulo Descritivo"
+            android:textColor="@color/colorPrimary"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/imageView_today"
-            app:layout_constraintTop_toBottomOf="@+id/imageView_today" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/tarefa_data_conclusao"
+            app:layout_constraintTop_toBottomOf="@+id/tarefa_data_conclusao" />
 
         <TextView
             android:id="@+id/tarefa_anotacao"
@@ -119,13 +96,11 @@
             android:id="@+id/tarefa_horario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="32dp"
             android:text="10:00"
-            app:layout_constraintBottom_toTopOf="@+id/tarefa_titulo"
-            app:layout_constraintStart_toEndOf="@+id/imageView_time"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@+id/tarefa_data_conclusao"
+            app:layout_constraintStart_toEndOf="@+id/tarefa_data_conclusao"
+            app:layout_constraintTop_toTopOf="@+id/tarefa_data_conclusao" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline2"
