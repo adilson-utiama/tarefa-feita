@@ -4,19 +4,14 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:title="Inbox"
-            android:id="@+id/menu_inbox"
-            android:icon="@android:drawable/btn_star" />
+            android:title="Configurações"
+            android:id="@+id/menu_configuracoes"
+            android:icon="@drawable/ic_configuracoes" />
 
         <item
-            android:title="Favoritos"
-            android:id="@+id/menu_starred"
-            android:icon="@android:drawable/edit_text" />
-
-        <item
-            android:title="Emails Enviados"
-            android:id="@+id/menu_sent_email"
-            android:icon="@android:drawable/ic_menu_camera" />
+            android:title="Sobre"
+            android:id="@+id/menu_sobre"
+            android:icon="@drawable/ic_about" />
 
     </group>
 

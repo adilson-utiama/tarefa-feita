@@ -94,16 +94,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_inbox: {
-                Toast.makeText(this, "Menu Inbox", Toast.LENGTH_SHORT).show();
+            case R.id.menu_configuracoes: {
+                Toast.makeText(this, "Menu Configuracoes Clicado", Toast.LENGTH_SHORT).show();
                 break;
             }
-            case R.id.menu_starred: {
-                Toast.makeText(this, "Menu Favoritos", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.menu_sent_email: {
-                Toast.makeText(this, "Menu Emails Enviados", Toast.LENGTH_SHORT).show();
+            case R.id.menu_sobre: {
+                Toast.makeText(this, "Menu Sobre Clicado", Toast.LENGTH_SHORT).show();
                 break;
             }
         }
