@@ -3,20 +3,30 @@ package com.asuprojects.tarefafeita.fragment;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.TextView;
 
 import com.asuprojects.tarefafeita.R;
+import com.asuprojects.tarefafeita.activity.TarefaActivity;
 import com.asuprojects.tarefafeita.adapter.RecyclerViewAdapter;
 import com.asuprojects.tarefafeita.domain.Tarefa;
+import com.asuprojects.tarefafeita.domain.enums.Prioridade;
+import com.asuprojects.tarefafeita.domain.enums.Status;
 import com.asuprojects.tarefafeita.domain.viewmodel.TarefaViewModel;
+import com.asuprojects.tarefafeita.util.DataFormatterUtil;
 import com.asuprojects.tarefafeita.util.GeradorTarefa;
+import com.asuprojects.tarefafeita.util.RecyclerViewItemListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +41,7 @@ public class ListaFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerViewAdapter adapter;
 
+    private Tarefa tarefa;
     private TarefaViewModel viewModel;
 
     public ListaFragment() {
@@ -43,19 +54,8 @@ public class ListaFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lista, container, false);
 
-        GeradorTarefa gerador = new GeradorTarefa();
-        tarefas = new ArrayList<>();
-        tarefas.add(gerador.gerar());
-        tarefas.add(gerador.gerar());
-        tarefas.add(gerador.gerar());
-        tarefas.add(gerador.gerar());
-        tarefas.add(gerador.gerar());
-        tarefas.add(gerador.gerar());
-        tarefas.add(gerador.gerar());
-        tarefas.add(gerador.gerar());
-        tarefas.add(gerador.gerar());
 
-        adapter = new RecyclerViewAdapter(tarefas);
+        adapter = new RecyclerViewAdapter(new ArrayList<Tarefa>());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView = view.findViewById(R.id.recyclerViewLista);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -69,7 +69,117 @@ public class ListaFragment extends Fragment {
             }
         });
 
+        recyclerView.addOnItemTouchListener(new RecyclerViewItemListener(
+                getContext(),
+                recyclerView,
+                new RecyclerViewItemListener.OnClickItemListener() {
+                    @Override
+                    public void onClickItem(View view, int position) {
+                        tarefa = ListaFragment.this.adapter.getTarefa(position);
+                        mostrDialogStatus();
+
+                    }
+
+                    @Override
+                    public void onClickItemLongo(View view, int position) {
+                        tarefa = ListaFragment.this.adapter.getTarefa(position);
+
+                        CharSequence[] opcoes = new CharSequence[2];
+                        opcoes[0] = "Editar";
+                        opcoes[1] = "Deletar";
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        builder.setTitle("Escolha uma Opção");
+                        builder.setItems(opcoes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int selecao) {
+                                if(selecao == 0){
+                                    Intent intent = new Intent(getContext(), TarefaActivity.class);
+                                    intent.putExtra("EDITAR_TAREFA", tarefa);
+                                    startActivity(intent);
+                                }
+                                if(selecao == 1){
+                                    mostraDialogRemocao(tarefa);
+                                }
+                            }
+                        });
+                        builder.show();
+
+                    }
+
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    }
+                }
+        ));
+
         return view;
+    }
+
+    private void mostrDialogStatus() {
+        View view = preencherTarefaDetalheDialog();
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setView(view);
+
+        if(!tarefa.getStatus().equals(Status.CONCLUIDO)){
+            builder.setTitle("Marcar como Concluido?");
+        }else{
+            builder.setTitle("Desmarcar Status Concluido?");
+        }
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(!tarefa.getStatus().equals(Status.CONCLUIDO)){
+                    tarefa.setStatus(Status.CONCLUIDO);
+                }else{
+                    tarefa.setStatus(Status.ADICIONADO);
+                }
+                viewModel.atualiza(tarefa);
+            }
+        });
+        builder.setNegativeButton("Cancelar", null);
+        builder.show();
+    }
+
+    private View preencherTarefaDetalheDialog() {
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_tarefa_detalhes, null);
+        TextView dataInclusao = view.findViewById(R.id.detalhe_dataInclusao);
+        dataInclusao.setText(DataFormatterUtil.formatarData(tarefa.getDataIncluida()));
+        TextView dataConclusao = view.findViewById(R.id.detalhe_dataConclusao);
+        dataConclusao.setText(DataFormatterUtil.formatarData(tarefa.getDataConlusao()));
+        TextView horario = view.findViewById(R.id.detalhe_horario);
+        horario.setText(DataFormatterUtil.formataHora(tarefa.getDataConlusao()));
+        TextView titulo = view.findViewById(R.id.detalhe_titulo);
+        titulo.setText(tarefa.getTitulo());
+        TextView anotacao = view.findViewById(R.id.detalhe_anotacao);
+        anotacao.setText(tarefa.getAnotacao());
+        TextView prioridade = view.findViewById(R.id.detalhe_prioridade);
+        if(tarefa.getPrioridade().equals(Prioridade.ALTA)){
+            prioridade.setTextColor(Prioridade.ALTA.getCor());
+        } else if(tarefa.getPrioridade().equals(Prioridade.MEDIA)){
+            prioridade.setTextColor(Prioridade.MEDIA.getCor());
+        } else {
+            prioridade.setTextColor(Prioridade.BAIXA.getCor());
+        }
+        prioridade.setText(tarefa.getPrioridade().getDescricao());
+        return view;
+    }
+
+    private void mostraDialogRemocao(final Tarefa tarefa) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Remover Tarefa ")
+                .append("'").append(tarefa.getTitulo()).append("'").append(" ?");
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+        dialog.setTitle("DELETAR TAREFA");
+        dialog.setMessage(builder.toString());
+        dialog.setPositiveButton("Deletar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                viewModel.remove(tarefa);
+            }
+        });
+        dialog.setNegativeButton("Cancelar", null);
+        dialog.show();
     }
 
     public void setLista(List<Tarefa> tarefas) {
