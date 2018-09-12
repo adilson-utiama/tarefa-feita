@@ -65,7 +65,7 @@ public class MainFragment extends Fragment {
         recyclerView.setAdapter(this.adapter);
 
         viewModel = ViewModelProviders.of(this).get(TarefaViewModel.class);
-        viewModel.getTarefasDoDia().observe(MainFragment.this, new Observer<List<Tarefa>>() {
+        viewModel.getTarefasDoDia(Calendar.getInstance()).observe(MainFragment.this, new Observer<List<Tarefa>>() {
             @Override
             public void onChanged(@Nullable List<Tarefa> tasks) {
                 MainFragment.this.adapter.setListaTarefas(tasks);

@@ -31,8 +31,8 @@ public class TarefaViewModel extends AndroidViewModel {
         return repository.getTarefasOrdenadasPorData();
     }
 
-    public LiveData<List<Tarefa>> getTarefasDoDia() {
-        return repository.getTarefasDoDia();
+    public LiveData<List<Tarefa>> getTarefasDoDia(Calendar data) {
+        return repository.getTarefasDoDia(data);
     }
 
     public void adiciona(Tarefa tarefa){
