@@ -59,7 +59,7 @@ public class ListaFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView = view.findViewById(R.id.recyclerViewLista);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(this.adapter);
 
         viewModel = ViewModelProviders.of(this).get(TarefaViewModel.class);
         viewModel.getTarefasOrdenadoPorData().observe(this, new Observer<List<Tarefa>>() {

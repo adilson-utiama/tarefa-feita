@@ -32,20 +32,10 @@
             android:text="Titulo Descritivo"
             android:textColor="@color/colorPrimary"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageView"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/tarefa_data_conclusao"
             app:layout_constraintTop_toBottomOf="@+id/tarefa_data_conclusao" />
-
-        <TextView
-            android:id="@+id/tarefa_anotacao"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="anotacao"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/tarefa_titulo"
-            app:layout_constraintTop_toBottomOf="@+id/tarefa_titulo" />
 
         <TextView
             android:id="@+id/textView_prioridade"
@@ -56,9 +46,8 @@
             android:text="prioridade: "
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/tarefa_anotacao"
-            app:layout_constraintTop_toBottomOf="@+id/tarefa_anotacao"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintStart_toStartOf="@+id/tarefa_titulo"
+            app:layout_constraintTop_toBottomOf="@+id/tarefa_titulo" />
 
         <TextView
             android:id="@+id/tarefa_prioridade"
@@ -96,7 +85,7 @@
             android:id="@+id/tarefa_horario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="16dp"
             android:text="10:00"
             app:layout_constraintBottom_toBottomOf="@+id/tarefa_data_conclusao"
             app:layout_constraintStart_toEndOf="@+id/tarefa_data_conclusao"
@@ -112,6 +101,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintGuide_percent="0.67"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/icon_status"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_time" />
+
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.CardView>
