@@ -134,11 +134,11 @@ public class MainFragment extends Fragment {
         builder.setView(view);
 
         if(!tarefa.getStatus().equals(Status.CONCLUIDO)){
-            builder.setTitle("Marcar como Concluido?");
+            builder.setTitle("Tarefa Concluida?");
         }else{
-            builder.setTitle("Desmarcar Status Concluido?");
+            builder.setTitle("Desmarcar Concluir?");
         }
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if(!tarefa.getStatus().equals(Status.CONCLUIDO)){
@@ -149,7 +149,8 @@ public class MainFragment extends Fragment {
                 viewModel.atualiza(tarefa);
             }
         });
-        builder.setNegativeButton("Cancelar", null);
+        builder.setNeutralButton("NÂO", null);
+        builder.setIcon(R.drawable.ic_question);
         builder.show();
     }
 
