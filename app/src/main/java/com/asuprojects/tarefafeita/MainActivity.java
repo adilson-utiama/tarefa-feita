@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.asuprojects.tarefafeita.activity.ConfiguracoesActivity;
 import com.asuprojects.tarefafeita.activity.TarefaActivity;
 import com.asuprojects.tarefafeita.adapter.AbasAdapter;
 import com.asuprojects.tarefafeita.fragment.ListaFragment;
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_configuracoes: {
-                Toast.makeText(this, "Menu Configuracoes Clicado", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, ConfiguracoesActivity.class));
                 break;
             }
             case R.id.menu_sobre: {
