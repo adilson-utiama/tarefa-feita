@@ -2,15 +2,12 @@ package com.asuprojects.tarefafeita.adapter;
 
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.DrawableUtils;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.asuprojects.tarefafeita.R;
 import com.asuprojects.tarefafeita.domain.enums.Prioridade;
@@ -35,9 +32,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        concluido = parent.getResources().getDrawable(R.drawable.ic_done);
-        naoConcluido = parent.getResources().getDrawable(R.drawable.ic_time);
-        cancelado = parent.getResources().getDrawable(R.drawable.ic_cancelar);
+        concluido = parent.getResources().getDrawable(R.drawable.vc_concluido);
+        naoConcluido = parent.getResources().getDrawable(R.drawable.vc_nao_concluido);
+        cancelado = parent.getResources().getDrawable(R.drawable.vc_cancelado);
 
         return new TarefaViewHolder(LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.viewholder_tarefa, parent, false));
