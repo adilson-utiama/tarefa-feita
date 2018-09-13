@@ -31,6 +31,7 @@ import com.asuprojects.tarefafeita.domain.enums.Prioridade;
 import com.asuprojects.tarefafeita.domain.enums.Status;
 import com.asuprojects.tarefafeita.domain.viewmodel.AddTarefaViewModel;
 import com.asuprojects.tarefafeita.domain.viewmodel.TarefaViewModel;
+import com.asuprojects.tarefafeita.util.DataFormatterUtil;
 
 import java.text.SimpleDateFormat;
 import java.time.Month;
@@ -92,9 +93,7 @@ public class TarefaActivity extends AppCompatActivity {
         });
 
         btnSelecaoHorario = findViewById(R.id.btnHorario);
-        int hora = data.get(Calendar.HOUR_OF_DAY);
-        int minuto = data.get(Calendar.MINUTE);
-        btnSelecaoHorario.setText(hora + ":" + minuto);
+        btnSelecaoHorario.setText(DataFormatterUtil.formataHora(data));
         btnSelecaoHorario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
