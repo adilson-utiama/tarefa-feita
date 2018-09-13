@@ -87,9 +87,10 @@ public class MainFragment extends Fragment {
                     public void onClickItemLongo(View view, int position) {
                         tarefa = MainFragment.this.adapter.getTarefa(position);
 
-                        CharSequence[] opcoes = new CharSequence[2];
+                        CharSequence[] opcoes = new CharSequence[3];
                         opcoes[0] = "Editar";
                         opcoes[1] = "Deletar";
+                        opcoes[2] = "Cancelar";
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                         builder.setTitle("Escolha uma Opção");
@@ -103,6 +104,10 @@ public class MainFragment extends Fragment {
                                 }
                                 if(selecao == 1){
                                     mostraDialogRemocao(tarefa);
+                                }
+                                if(selecao == 2){
+                                    tarefa.setStatus(Status.CANCELADO);
+                                    viewModel.atualiza(tarefa);
                                 }
                             }
                         });

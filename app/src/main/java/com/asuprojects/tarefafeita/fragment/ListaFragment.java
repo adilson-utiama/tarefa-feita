@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.asuprojects.tarefafeita.R;
 import com.asuprojects.tarefafeita.activity.TarefaActivity;
@@ -84,12 +85,16 @@ public class ListaFragment extends Fragment {
                     public void onClickItemLongo(View view, int position) {
                         tarefa = ListaFragment.this.adapter.getTarefa(position);
 
-                        CharSequence[] opcoes = new CharSequence[2];
+                        CharSequence[] opcoes = new CharSequence[3];
                         opcoes[0] = "Editar";
                         opcoes[1] = "Deletar";
+                        opcoes[2] = "Cancelar";
+
+                        //View viewDialog = LayoutInflater.from(getContext()).inflate(R.layout.dialog_menu_opcoes, null, false);
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                         builder.setTitle("Escolha uma Opção");
+                        //builder.setView(viewDialog);
                         builder.setItems(opcoes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int selecao) {
@@ -100,6 +105,10 @@ public class ListaFragment extends Fragment {
                                 }
                                 if(selecao == 1){
                                     mostraDialogRemocao(tarefa);
+                                }
+                                if(selecao == 2){
+                                    tarefa.setStatus(Status.CANCELADO);
+                                    viewModel.atualiza(tarefa);
                                 }
                             }
                         });
@@ -122,11 +131,11 @@ public class ListaFragment extends Fragment {
         builder.setView(view);
 
         if(!tarefa.getStatus().equals(Status.CONCLUIDO)){
-            builder.setTitle("Marcar como Concluido?");
+            builder.setTitle("Tarefa Concluida?");
         }else{
-            builder.setTitle("Desmarcar Status Concluido?");
+            builder.setTitle("Desmarcar Concluir?");
         }
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if(!tarefa.getStatus().equals(Status.CONCLUIDO)){
@@ -137,7 +146,8 @@ public class ListaFragment extends Fragment {
                 viewModel.atualiza(tarefa);
             }
         });
-        builder.setNegativeButton("Cancelar", null);
+        builder.setNeutralButton("NÂO", null);
+        builder.setIcon(R.drawable.ic_question);
         builder.show();
     }
 

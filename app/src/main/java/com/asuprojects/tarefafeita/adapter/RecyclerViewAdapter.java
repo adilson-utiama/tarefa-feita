@@ -26,6 +26,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
 
     private Drawable concluido;
     private Drawable naoConcluido;
+    private Drawable cancelado;
 
     public RecyclerViewAdapter(List<Tarefa> tarefas){
         this.tarefas = tarefas;
@@ -36,6 +37,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
 
         concluido = parent.getResources().getDrawable(R.drawable.ic_done);
         naoConcluido = parent.getResources().getDrawable(R.drawable.ic_time);
+        cancelado = parent.getResources().getDrawable(R.drawable.ic_cancelar);
+
         return new TarefaViewHolder(LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.viewholder_tarefa, parent, false));
     }
@@ -60,12 +63,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
         }
         viewholder.prioridade.setText(tarefa.getPrioridade().getDescricao());
 
-        if(tarefa.getStatus().getDescricao().equals(Status.CONCLUIDO.getDescricao())){
+        if(tarefa.getStatus().equals(Status.CONCLUIDO)){
             viewholder.status.setTextColor(Color.GREEN);
             viewholder.iconStatus.setImageDrawable(concluido);
         }else{
             viewholder.status.setTextColor(Color.GRAY);
             viewholder.iconStatus.setImageDrawable(naoConcluido);
+        }
+        if(tarefa.getStatus().equals(Status.CANCELADO)){
+            viewholder.status.setTextColor(Color.RED);
+            viewholder.iconStatus.setImageDrawable(cancelado);
         }
         viewholder.horario.setText(timeFormat.format(tarefa.getDataConlusao().getTime()));
     }
