@@ -25,6 +25,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
     private Drawable naoConcluido;
     private Drawable cancelado;
 
+
+
     public RecyclerViewAdapter(List<Tarefa> tarefas){
         this.tarefas = tarefas;
     }
@@ -63,14 +65,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
         if(tarefa.getStatus().equals(Status.CONCLUIDO)){
             viewholder.status.setTextColor(Color.GREEN);
             viewholder.iconStatus.setImageDrawable(concluido);
+            viewholder.tarjaStatus.setBackgroundColor(Prioridade.BAIXA.getCor());
         }else{
             viewholder.status.setTextColor(Color.GRAY);
             viewholder.iconStatus.setImageDrawable(naoConcluido);
+            viewholder.tarjaStatus.setBackgroundColor(Prioridade.MEDIA.getCor());
         }
         if(tarefa.getStatus().equals(Status.CANCELADO)){
             viewholder.status.setTextColor(Color.RED);
             viewholder.iconStatus.setImageDrawable(cancelado);
+            viewholder.tarjaStatus.setBackgroundColor(Prioridade.ALTA.getCor());
         }
+
         viewholder.horario.setText(timeFormat.format(tarefa.getDataConlusao().getTime()));
     }
 
@@ -96,6 +102,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
         private TextView prioridade;
         private TextView status;
         private ImageView iconStatus;
+        private ImageView tarjaStatus;
 
         public TarefaViewHolder(View itemView) {
             super(itemView);
@@ -106,6 +113,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
             prioridade = itemView.findViewById(R.id.tarefa_prioridade);
             status = itemView.findViewById(R.id.tarefa_status);
             iconStatus = itemView.findViewById(R.id.icon_status);
+            tarjaStatus = itemView.findViewById(R.id.tarja_status);
         }
     }
 }
