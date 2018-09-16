@@ -66,28 +66,6 @@
             app:layout_constraintStart_toEndOf="@+id/textView_prioridade"
             app:layout_constraintTop_toTopOf="@+id/textView_prioridade" />
 
-        <TextView
-            android:id="@+id/textView_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:text="status: "
-            android:textSize="10sp"
-            app:layout_constraintBottom_toBottomOf="@+id/tarefa_prioridade"
-            app:layout_constraintStart_toEndOf="@+id/tarefa_prioridade"
-            app:layout_constraintTop_toTopOf="@+id/tarefa_prioridade" />
-
-        <TextView
-            android:id="@+id/tarefa_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="Status"
-            app:layout_constraintBottom_toBottomOf="@+id/textView_status"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/textView_status"
-            app:layout_constraintTop_toTopOf="@+id/textView_status" />
 
         <TextView
             android:id="@+id/tarefa_horario"

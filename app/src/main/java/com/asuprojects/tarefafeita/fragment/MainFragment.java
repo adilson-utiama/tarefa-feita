@@ -80,7 +80,6 @@ public class MainFragment extends Fragment {
                     public void onClickItem(View view, int position) {
                         tarefa = MainFragment.this.adapter.getTarefa(position);
                         mostrDialogStatus();
-
                     }
 
                     @Override
@@ -130,7 +129,6 @@ public class MainFragment extends Fragment {
         Calendar atual = Calendar.getInstance();
         String dataExtenso = dateFormat.format(atual.getTime());
         dataAtual.setText(dataExtenso);
-
     }
 
     private void mostrDialogStatus() {

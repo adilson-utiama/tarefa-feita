@@ -63,16 +63,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
         viewholder.prioridade.setText(tarefa.getPrioridade().getDescricao());
 
         if(tarefa.getStatus().equals(Status.CONCLUIDO)){
-            viewholder.status.setTextColor(Color.GREEN);
             viewholder.iconStatus.setImageDrawable(concluido);
             viewholder.tarjaStatus.setBackgroundColor(Prioridade.BAIXA.getCor());
         }else{
-            viewholder.status.setTextColor(Color.GRAY);
             viewholder.iconStatus.setImageDrawable(naoConcluido);
             viewholder.tarjaStatus.setBackgroundColor(Prioridade.MEDIA.getCor());
         }
         if(tarefa.getStatus().equals(Status.CANCELADO)){
-            viewholder.status.setTextColor(Color.RED);
             viewholder.iconStatus.setImageDrawable(cancelado);
             viewholder.tarjaStatus.setBackgroundColor(Prioridade.ALTA.getCor());
         }
@@ -100,7 +97,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
         private TextView horario;
         private TextView titulo;
         private TextView prioridade;
-        private TextView status;
         private ImageView iconStatus;
         private ImageView tarjaStatus;
 
@@ -111,7 +107,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
             horario = itemView.findViewById(R.id.tarefa_horario);
             titulo = itemView.findViewById(R.id.tarefa_titulo);
             prioridade = itemView.findViewById(R.id.tarefa_prioridade);
-            status = itemView.findViewById(R.id.tarefa_status);
             iconStatus = itemView.findViewById(R.id.icon_status);
             tarjaStatus = itemView.findViewById(R.id.tarja_status);
         }
