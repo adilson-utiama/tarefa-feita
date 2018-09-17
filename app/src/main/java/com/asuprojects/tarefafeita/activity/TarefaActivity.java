@@ -1,10 +1,13 @@
 package com.asuprojects.tarefafeita.activity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.AlarmManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
@@ -119,6 +122,13 @@ public class TarefaActivity extends AppCompatActivity {
                 String data = btnSelecaoData.getText().toString();
                 String hora = btnSelecaoHorario.getText().toString();
                 Calendar dataConclusao = buildCalendar(data, hora);
+
+                Log.i("TASK", "onClick: " + dataConclusao.getTime());
+
+                long timeInMillis = dataConclusao.getTimeInMillis();
+
+                Log.i("TASK", "onClick: TimeMillis : " + timeInMillis);
+
                 tarefa.setDataConlusao(dataConclusao);
                 tarefa.setStatus(Status.ADICIONADO);
                 tarefa.setPrioridade(prioridade);
@@ -128,6 +138,14 @@ public class TarefaActivity extends AppCompatActivity {
                 }else{
                     viewModel.adiciona(tarefa);
                 }
+
+                AlarmManager alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+                Intent intent = new Intent("EXECUTAR_ALARME");
+                intent.putExtra("tarefa", tarefa);
+
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(TarefaActivity.this, 0, intent, 0);
+                AlarmManagerCompat.setExact(alarm, AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent);
 
                 finish();
             }
