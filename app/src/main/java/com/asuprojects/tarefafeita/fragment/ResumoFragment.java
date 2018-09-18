@@ -58,7 +58,7 @@ public class ResumoFragment extends Fragment {
 
                 int total = listaTarefas.size();
                 int concluidos = totalFromStatus(Status.CONCLUIDO);
-                int naoConcluidos = total - concluidos;
+                int naoConcluidos = totalFromStatus(Status.ADICIONADO);
                 int cancelados = totalFromStatus(Status.CANCELADO);
 
                 Log.i("COUNTER", "onChanged: " + total + ":" + concluidos + ":" + naoConcluidos + ":" + cancelados);
