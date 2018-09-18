@@ -14,4 +14,9 @@ public class DataFormatterUtil {
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
         return timeFormat.format(data.getTime());
     }
+
+    public static  String formataDataHora(Calendar data){
+        SimpleDateFormat dataHoraFormat = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
+        return dataHoraFormat.format(data.getTime());
+    }
 }

@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
 import com.asuprojects.tarefafeita.R;
+import com.asuprojects.tarefafeita.activity.DetalhesActivity;
 import com.asuprojects.tarefafeita.domain.Tarefa;
 
 public class AlarmReceiver extends BroadcastReceiver {
@@ -32,12 +33,13 @@ public class AlarmReceiver extends BroadcastReceiver {
                         .setVibrate(new long[]{ 100,250,100,500 })
                         .setAutoCancel(true);
 
-//        Intent resultIntent = new Intent(context, DetalhesActivity.class);
-//
-//        PendingIntent resultPendingIntent =
-//                PendingIntent.getActivity(context, 0, resultIntent, 0);
-//
-//        mBuilder.setContentIntent(resultPendingIntent);
+        Intent resultIntent = new Intent(context, DetalhesActivity.class);
+        resultIntent.putExtra("tarefa_detalhe", tarefa);
+
+        PendingIntent resultPendingIntent =
+                PendingIntent.getActivity(context, 0, resultIntent, 0);
+
+        mBuilder.setContentIntent(resultPendingIntent);
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Activity.NOTIFICATION_SERVICE);
 
