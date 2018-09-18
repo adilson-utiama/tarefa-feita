@@ -163,11 +163,8 @@ public class TarefaActivity extends AppCompatActivity {
             if(tarefa != null){
                 inputTitulo.setText(tarefa.getTitulo());
                 inputAnotacao.setText(tarefa.getAnotacao());
-                Calendar dataR = tarefa.getDataConlusao();
-                btnSelecaoData.setText(format.format(dataR.getTime()));
-                int horaR = data.get(Calendar.HOUR_OF_DAY);
-                int minutoR = data.get(Calendar.MINUTE);
-                btnSelecaoHorario.setText(horaR + ":" + minutoR);
+                btnSelecaoData.setText(DataFormatterUtil.formatarData(tarefa.getDataConlusao()));
+                btnSelecaoHorario.setText(DataFormatterUtil.formataHora(tarefa.getDataConlusao()));
                 checkPrioridadeRadioButton(tarefa.getPrioridade());
                 btnSalvar.setText("Atualizar");
             }
@@ -213,7 +210,15 @@ public class TarefaActivity extends AppCompatActivity {
     private TimePickerDialog.OnTimeSetListener listenerHorario = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePicker timePicker, int hora, int minutos) {
-            btnSelecaoHorario.setText(hora + ":" + minutos);
+            String horaS = String.valueOf(hora);
+            String minutosS = String.valueOf(minutos);
+            if (hora < 10){
+                horaS = "0" + horaS;
+            }
+            if(minutos < 10){
+                minutosS = "0" + minutos;
+            }
+            btnSelecaoHorario.setText(horaS + ":" + minutosS);
         }
     };
 
