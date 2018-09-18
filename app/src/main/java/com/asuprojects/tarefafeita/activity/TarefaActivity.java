@@ -41,6 +41,7 @@ import java.time.Month;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 public class TarefaActivity extends AppCompatActivity {
 
@@ -144,7 +145,12 @@ public class TarefaActivity extends AppCompatActivity {
                 Intent intent = new Intent("EXECUTAR_ALARME");
                 intent.putExtra("tarefa", tarefa);
 
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(TarefaActivity.this, 0, intent, 0);
+                Random random = new Random();
+                int nextInt = random.nextInt(2000);
+
+                PendingIntent pendingIntent =
+                        PendingIntent.getBroadcast(TarefaActivity.this, nextInt, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
                 AlarmManagerCompat.setExact(alarm, AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent);
 
                 finish();

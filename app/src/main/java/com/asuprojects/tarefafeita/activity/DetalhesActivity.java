@@ -3,6 +3,7 @@ package com.asuprojects.tarefafeita.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -32,8 +33,10 @@ public class DetalhesActivity extends AppCompatActivity {
         prioridade = findViewById(R.id.prioridadeTarefaDetalhes);
 
         Intent intent = getIntent();
-        if(intent.hasExtra("tarefa_detalhe")){
-            tarefa = (Tarefa) intent.getSerializableExtra("tarefa_detalhe");
+        if(intent.hasExtra("tarefa_notificacao")){
+            tarefa = (Tarefa) intent.getSerializableExtra("tarefa_notificacao");
+
+            Log.i("TASK", "onCreate: " + tarefa.toString());
 
             if(tarefa != null){
                 titulo.setText(tarefa.getTitulo());
