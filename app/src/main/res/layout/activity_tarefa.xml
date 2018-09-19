@@ -45,17 +45,20 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:hint="Titulo Descritivo"
+                app:counterEnabled="true"
+                app:counterMaxLength="30"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.06999999">
+                app:layout_constraintVertical_bias="0.060000002">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/input_titulo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text|textCapSentences" />
+                    android:inputType="text|textCapSentences"
+                    android:maxLength="30" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -66,7 +69,9 @@
                 android:layout_marginEnd="24dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
-                android:hint="Anotações"
+                android:hint="Anotações (Opcional)"
+                app:counterEnabled="true"
+                app:counterMaxLength="100"
                 app:layout_constraintEnd_toEndOf="@+id/textInputLayout_titulo"
                 app:layout_constraintStart_toStartOf="@+id/textInputLayout_titulo"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout_titulo">
@@ -75,6 +80,7 @@
                     android:id="@+id/input_anotacao"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:maxLength="100"
                     android:inputType="text|textCapSentences|textMultiLine" />
 
             </android.support.design.widget.TextInputLayout>
@@ -83,7 +89,7 @@
                 android:id="@+id/text_dataConclusao"
                 android:layout_width="wrap_content"
                 android:layout_height="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:text="Data para Conclusão"
                 android:textAlignment="textStart"
                 android:textSize="12sp"
@@ -111,7 +117,7 @@
                 android:id="@+id/text_horario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:text="Horario"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@+id/btnHorario"

@@ -7,6 +7,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.AlarmManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
@@ -45,6 +46,7 @@ import java.util.Random;
 
 public class TarefaActivity extends AppCompatActivity {
 
+    private TextInputLayout textInputLayout;
     private TextInputEditText inputTitulo;
     private TextInputEditText inputAnotacao;
 
@@ -73,7 +75,7 @@ public class TarefaActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
-
+        textInputLayout = findViewById(R.id.textInputLayout_titulo);
         inputTitulo = findViewById(R.id.input_titulo);
         inputAnotacao = findViewById(R.id.input_anotacao);
         radioGroup = findViewById(R.id.radioGroup);
@@ -113,47 +115,35 @@ public class TarefaActivity extends AppCompatActivity {
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(tarefa == null){
-                    tarefa = new Tarefa();
+
+                if(validaCampos()) {
+
+                    if (tarefa == null) {
+                        tarefa = new Tarefa();
+                    }
+                    tarefa.setTitulo(inputTitulo.getText().toString());
+                    tarefa.setAnotacao(inputAnotacao.getText().toString());
+                    tarefa.setDataIncluida(Calendar.getInstance());
+
+                    String data = btnSelecaoData.getText().toString();
+                    String hora = btnSelecaoHorario.getText().toString();
+                    Calendar dataConclusao = buildCalendar(data, hora);
+
+                    tarefa.setDataConlusao(dataConclusao);
+                    tarefa.setStatus(Status.ADICIONADO);
+                    tarefa.setPrioridade(prioridade);
+
+                    if (tarefa.getId() != 0) {
+                        viewModel.atualiza(tarefa);
+                    } else {
+                        viewModel.adiciona(tarefa);
+                    }
+
+                    setAlarmeParaNotificacao(tarefa);
+
+                    finish();
                 }
-                tarefa.setTitulo(inputTitulo.getText().toString());
-                tarefa.setAnotacao(inputAnotacao.getText().toString());
-                tarefa.setDataIncluida(Calendar.getInstance());
 
-                String data = btnSelecaoData.getText().toString();
-                String hora = btnSelecaoHorario.getText().toString();
-                Calendar dataConclusao = buildCalendar(data, hora);
-
-                Log.i("TASK", "onClick: " + dataConclusao.getTime());
-
-                long timeInMillis = dataConclusao.getTimeInMillis();
-
-                Log.i("TASK", "onClick: TimeMillis : " + timeInMillis);
-
-                tarefa.setDataConlusao(dataConclusao);
-                tarefa.setStatus(Status.ADICIONADO);
-                tarefa.setPrioridade(prioridade);
-
-                if(tarefa.getId() != 0){
-                    viewModel.atualiza(tarefa);
-                }else{
-                    viewModel.adiciona(tarefa);
-                }
-
-                AlarmManager alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-                Intent intent = new Intent("EXECUTAR_ALARME");
-                intent.putExtra("tarefa", tarefa);
-
-                Random random = new Random();
-                int nextInt = random.nextInt(2000);
-
-                PendingIntent pendingIntent =
-                        PendingIntent.getBroadcast(TarefaActivity.this, nextInt, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-                AlarmManagerCompat.setExact(alarm, AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent);
-
-                finish();
             }
         });
 
@@ -170,6 +160,33 @@ public class TarefaActivity extends AppCompatActivity {
             }
         }
 
+    }
+
+    private void setAlarmeParaNotificacao(Tarefa tarefa) {
+        Intent intent = new Intent("EXECUTAR_ALARME");
+        intent.putExtra("tarefa", tarefa);
+
+        Random random = new Random();
+        int nextInt = random.nextInt(2000);
+
+        long timeInMillis = tarefa.getDataConlusao().getTimeInMillis();
+
+        PendingIntent pendingIntent =
+                PendingIntent.getBroadcast(TarefaActivity.this, nextInt, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
+        AlarmManagerCompat.setExact(alarm, AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent);
+    }
+
+    private boolean validaCampos(){
+        if(inputTitulo.getText().toString().isEmpty()){
+            textInputLayout.setErrorEnabled(true);
+            textInputLayout.setError("Preenchimento Obrigatório.");
+            return false;
+        }else{
+            textInputLayout.setErrorEnabled(false);
+            return true;
+        }
     }
 
     private void checkPrioridadeRadioButton(Prioridade prioridade) {
