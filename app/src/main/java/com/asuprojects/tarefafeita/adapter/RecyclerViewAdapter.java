@@ -1,6 +1,5 @@
 package com.asuprojects.tarefafeita.adapter;
 
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,11 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.asuprojects.tarefafeita.R;
-import com.asuprojects.tarefafeita.domain.enums.Prioridade;
 import com.asuprojects.tarefafeita.domain.Tarefa;
+import com.asuprojects.tarefafeita.domain.enums.Prioridade;
 import com.asuprojects.tarefafeita.domain.enums.Status;
+import com.asuprojects.tarefafeita.util.DataFormatterUtil;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter {
@@ -48,11 +47,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
         Tarefa tarefa = tarefas.get(position);
         TarefaViewHolder viewholder = (TarefaViewHolder) holder;
 
-        SimpleDateFormat dataFormat = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
-
         viewholder.titulo.setText(tarefa.getTitulo());
-        viewholder.dataConclusao.setText(dataFormat.format(tarefa.getDataConlusao().getTime()));
+        viewholder.dataConclusao.setText(DataFormatterUtil.formatarData(tarefa.getDataConlusao()));
         if(tarefa.getPrioridade().equals(Prioridade.ALTA)){
             viewholder.prioridade.setTextColor(Prioridade.ALTA.getCor());
         } else if(tarefa.getPrioridade().equals(Prioridade.MEDIA)){
@@ -74,7 +70,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
             viewholder.tarjaStatus.setBackgroundColor(Prioridade.ALTA.getCor());
         }
 
-        viewholder.horario.setText(timeFormat.format(tarefa.getDataConlusao().getTime()));
+        viewholder.horario.setText(DataFormatterUtil.formataHora(tarefa.getDataConlusao()));
     }
 
     @Override
@@ -90,6 +86,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
     public Tarefa getTarefa(int posicao){
         return this.tarefas.get(posicao);
     }
+
+
 
     class TarefaViewHolder extends RecyclerView.ViewHolder{
 

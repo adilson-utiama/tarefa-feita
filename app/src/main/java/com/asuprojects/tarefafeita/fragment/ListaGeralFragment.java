@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.asuprojects.tarefafeita.R;
 import com.asuprojects.tarefafeita.activity.TarefaActivity;
@@ -26,16 +25,12 @@ import com.asuprojects.tarefafeita.domain.enums.Prioridade;
 import com.asuprojects.tarefafeita.domain.enums.Status;
 import com.asuprojects.tarefafeita.domain.viewmodel.TarefaViewModel;
 import com.asuprojects.tarefafeita.util.DataFormatterUtil;
-import com.asuprojects.tarefafeita.util.GeradorTarefa;
 import com.asuprojects.tarefafeita.util.RecyclerViewItemListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class ListaFragment extends Fragment {
+public class ListaGeralFragment extends Fragment {
 
     private List<Tarefa> tarefas = new ArrayList<>();
 
@@ -45,7 +40,7 @@ public class ListaFragment extends Fragment {
     private Tarefa tarefa;
     private TarefaViewModel viewModel;
 
-    public ListaFragment() {
+    public ListaGeralFragment() {
         // Required empty public constructor
     }
 
@@ -53,7 +48,7 @@ public class ListaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_lista, container, false);
+        View view = inflater.inflate(R.layout.fragment_lista_geral, container, false);
 
 
         adapter = new RecyclerViewAdapter(new ArrayList<Tarefa>());
@@ -76,25 +71,22 @@ public class ListaFragment extends Fragment {
                 new RecyclerViewItemListener.OnClickItemListener() {
                     @Override
                     public void onClickItem(View view, int position) {
-                        tarefa = ListaFragment.this.adapter.getTarefa(position);
+                        tarefa = ListaGeralFragment.this.adapter.getTarefa(position);
                         mostrDialogStatus();
 
                     }
 
                     @Override
                     public void onClickItemLongo(View view, int position) {
-                        tarefa = ListaFragment.this.adapter.getTarefa(position);
+                        tarefa = ListaGeralFragment.this.adapter.getTarefa(position);
 
                         CharSequence[] opcoes = new CharSequence[3];
                         opcoes[0] = "Editar";
                         opcoes[1] = "Deletar";
                         opcoes[2] = "Cancelar";
 
-                        //View viewDialog = LayoutInflater.from(getContext()).inflate(R.layout.dialog_menu_opcoes, null, false);
-
                         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                         builder.setTitle("Escolha uma Opção");
-                        //builder.setView(viewDialog);
                         builder.setItems(opcoes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int selecao) {

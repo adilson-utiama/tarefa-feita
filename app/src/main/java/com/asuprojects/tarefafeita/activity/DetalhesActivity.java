@@ -35,9 +35,6 @@ public class DetalhesActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if(intent.hasExtra("tarefa_notificacao")){
             tarefa = (Tarefa) intent.getSerializableExtra("tarefa_notificacao");
-
-            Log.i("TASK", "onCreate: " + tarefa.toString());
-
             if(tarefa != null){
                 titulo.setText(tarefa.getTitulo());
                 anotacao.setText(tarefa.getAnotacao());

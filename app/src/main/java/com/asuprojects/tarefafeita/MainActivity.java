@@ -11,8 +11,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.SupportMenuInflater;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -20,10 +22,9 @@ import android.widget.Toast;
 import com.asuprojects.tarefafeita.activity.ConfiguracoesActivity;
 import com.asuprojects.tarefafeita.activity.TarefaActivity;
 import com.asuprojects.tarefafeita.adapter.AbasAdapter;
-import com.asuprojects.tarefafeita.fragment.ListaFragment;
-import com.asuprojects.tarefafeita.fragment.MainFragment;
+import com.asuprojects.tarefafeita.fragment.ListaGeralFragment;
+import com.asuprojects.tarefafeita.fragment.ListaDoDiaFragment;
 import com.asuprojects.tarefafeita.fragment.ResumoFragment;
-import com.asuprojects.tarefafeita.util.GeradorTarefa;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
@@ -58,8 +59,8 @@ public class MainActivity extends AppCompatActivity
         navigationView = findViewById(R.id.navigationView);
         navigationView.setNavigationItemSelectedListener(this);
 
-        ListaFragment listaFragment = new ListaFragment();
-        MainFragment mainFragment = new MainFragment();
+        ListaGeralFragment listaFragment = new ListaGeralFragment();
+        ListaDoDiaFragment mainFragment = new ListaDoDiaFragment();
 
         AbasAdapter abasAdapter = new AbasAdapter(getSupportFragmentManager());
         abasAdapter.adicionar(mainFragment, "Atual");
@@ -80,6 +81,27 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.options_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.menuitem_cofiguracoes:
+                startActivity(new Intent(MainActivity.this, ConfiguracoesActivity.class));
+                return true;
+            case R.id.menuitem_sair:
+                Toast.makeText(this, "Saindo do App", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
 
     }
 
