@@ -4,8 +4,11 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.AlarmManagerCompat;
@@ -43,6 +46,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.prefs.Preferences;
 
 public class TarefaActivity extends AppCompatActivity {
 
@@ -163,19 +167,25 @@ public class TarefaActivity extends AppCompatActivity {
     }
 
     private void setAlarmeParaNotificacao(Tarefa tarefa) {
-        Intent intent = new Intent("EXECUTAR_ALARME");
-        intent.putExtra("tarefa", tarefa);
 
-        Random random = new Random();
-        int nextInt = random.nextInt(2000);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean notificacaoDesativada = sharedPref.getBoolean(getString(R.string.desativar_notificacao), false);
+        if(!notificacaoDesativada){
+            Intent intent = new Intent("EXECUTAR_ALARME");
+            intent.putExtra("tarefa", tarefa);
 
-        long timeInMillis = tarefa.getDataConlusao().getTimeInMillis();
+            Random random = new Random();
+            int nextInt = random.nextInt(2000);
 
-        PendingIntent pendingIntent =
-                PendingIntent.getBroadcast(TarefaActivity.this, nextInt, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            long timeInMillis = tarefa.getDataConlusao().getTimeInMillis();
 
-        AlarmManager alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
-        AlarmManagerCompat.setExact(alarm, AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent);
+            PendingIntent pendingIntent =
+                    PendingIntent.getBroadcast(TarefaActivity.this, nextInt, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            AlarmManager alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
+            AlarmManagerCompat.setExact(alarm, AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent);
+        }
+
     }
 
     private boolean validaCampos(){
