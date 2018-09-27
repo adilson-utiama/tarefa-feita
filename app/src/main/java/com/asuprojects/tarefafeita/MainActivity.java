@@ -24,6 +24,7 @@ import com.asuprojects.tarefafeita.activity.TarefaActivity;
 import com.asuprojects.tarefafeita.adapter.AbasAdapter;
 import com.asuprojects.tarefafeita.fragment.ListaGeralFragment;
 import com.asuprojects.tarefafeita.fragment.ListaDoDiaFragment;
+import com.asuprojects.tarefafeita.fragment.ListaPrioridadeIndefinidaFragment;
 import com.asuprojects.tarefafeita.fragment.ResumoFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -61,9 +62,11 @@ public class MainActivity extends AppCompatActivity
 
         ListaGeralFragment listaFragment = new ListaGeralFragment();
         ListaDoDiaFragment mainFragment = new ListaDoDiaFragment();
+        ListaPrioridadeIndefinidaFragment listaPrioridadeIndefinidaFragment = new ListaPrioridadeIndefinidaFragment();
 
         AbasAdapter abasAdapter = new AbasAdapter(getSupportFragmentManager());
         abasAdapter.adicionar(mainFragment, "Atual");
+        abasAdapter.adicionar(listaPrioridadeIndefinidaFragment, "Sem Data");
         abasAdapter.adicionar(listaFragment, "Lista Geral");
         abasAdapter.adicionar(new ResumoFragment(), "Resumo");
 

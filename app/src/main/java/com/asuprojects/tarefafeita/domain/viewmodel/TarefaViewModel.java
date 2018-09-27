@@ -36,6 +36,10 @@ public class TarefaViewModel extends AndroidViewModel {
         return repository.getTarefasDoDia(data, prioridade);
     }
 
+    public LiveData<List<Tarefa>> getTarefasPelaPela(Prioridade prioridade) {
+        return repository.getTarefasPela(prioridade);
+    }
+
     public void adiciona(Tarefa tarefa){
         repository.adiciona(tarefa);
     }

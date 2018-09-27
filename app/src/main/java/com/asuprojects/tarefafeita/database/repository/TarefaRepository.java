@@ -36,6 +36,10 @@ public class TarefaRepository {
         return tarefaDao.listaDoDia(data, prioridade);
     }
 
+    public LiveData<List<Tarefa>> getTarefasPela(Prioridade prioridade){
+        return tarefaDao.listarPor(prioridade);
+    }
+
     public void adiciona (Tarefa tarefa) {
         new insertAsyncTask(tarefaDao).execute(tarefa);
     }
