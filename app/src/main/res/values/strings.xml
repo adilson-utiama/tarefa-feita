@@ -38,4 +38,5 @@
     <string name="apagar_tarefas_antigas">apagar_tarefas_antigas</string>
     <string name="selecao_data">Data</string>
     <string name="selecao_horario">Horario</string>
+    <string name="tarefa_a_realizar">Tarefa a ser realizada!</string>
 </resources>

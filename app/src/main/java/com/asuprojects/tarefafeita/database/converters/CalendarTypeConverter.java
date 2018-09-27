@@ -12,9 +12,6 @@ import java.util.Locale;
 
 public class CalendarTypeConverter {
 
-//    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS",
-//            Locale.getDefault());
-
     public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm",
             Locale.getDefault());
 
@@ -29,8 +26,6 @@ public class CalendarTypeConverter {
     public static Calendar toCalendar(String data){
         Calendar instance = Calendar.getInstance();
         try {
-            //TODO corrigir possivel bug na conversao de datas
-            Log.i("DATA_CONVERSAO", "toCalendar: " + data);
             Date date = format.parse(data);
             instance.setTime(date);
         } catch (ParseException e) {

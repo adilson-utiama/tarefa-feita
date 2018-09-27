@@ -4,7 +4,6 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,12 +12,8 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.AlarmManagerCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -29,24 +24,17 @@ import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.DatePicker;
 import com.applandeo.materialcalendarview.builders.DatePickerBuilder;
 import com.applandeo.materialcalendarview.listeners.OnSelectDateListener;
-import com.asuprojects.tarefafeita.MainActivity;
 import com.asuprojects.tarefafeita.R;
-import com.asuprojects.tarefafeita.database.converters.CalendarTypeConverter;
-import com.asuprojects.tarefafeita.database.repository.TarefaRepository;
 import com.asuprojects.tarefafeita.domain.Tarefa;
 import com.asuprojects.tarefafeita.domain.enums.Prioridade;
 import com.asuprojects.tarefafeita.domain.enums.Status;
 import com.asuprojects.tarefafeita.domain.viewmodel.AddTarefaViewModel;
-import com.asuprojects.tarefafeita.domain.viewmodel.TarefaViewModel;
 import com.asuprojects.tarefafeita.util.DataFormatterUtil;
 
 import java.text.SimpleDateFormat;
-import java.time.Month;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
-import java.util.prefs.Preferences;
 
 public class TarefaActivity extends AppCompatActivity {
 
@@ -86,10 +74,6 @@ public class TarefaActivity extends AppCompatActivity {
         viewModel = ViewModelProviders.of(this).get(AddTarefaViewModel.class);
 
         btnSelecaoData = findViewById(R.id.btnCalendar);
-
-        Calendar data = Calendar.getInstance();
-        //btnSelecaoData.setText(format.format(data.getTime()));
-
         btnSelecaoData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,9 +87,6 @@ public class TarefaActivity extends AppCompatActivity {
         });
 
         btnSelecaoHorario = findViewById(R.id.btnHorario);
-
-        //btnSelecaoHorario.setText(DataFormatterUtil.formataHora(data));
-
         btnSelecaoHorario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -28,13 +28,11 @@ public class AlarmReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if(intent.hasExtra("tarefa")){
             tarefa = (Tarefa) intent.getSerializableExtra("tarefa");
-
-            Log.i("TASK", "onReceive: " + tarefa.toString());
         }
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
                         .setSmallIcon(R.drawable.ic_aviso)
-                        .setContentTitle("Tarefa a ser realizada!")
+                        .setContentTitle(context.getString(R.string.tarefa_a_realizar))
                         .setContentText(tarefa.getTitulo())
                         .setSubText("Clique para mais detalhes")
                         .setVibrate(new long[]{ 100,250,100,500 })

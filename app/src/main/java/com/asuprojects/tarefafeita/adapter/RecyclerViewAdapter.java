@@ -59,13 +59,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
 
         switch(tarefa.getPrioridade().getCod()){
             case 1:
-                viewholder.prioridade.setTextColor(Prioridade.ALTA.getCor());
+                viewholder.prioridade.setTextColor(Prioridade.BAIXA.getCor());
                 break;
             case 2:
                 viewholder.prioridade.setTextColor(Prioridade.MEDIA.getCor());
                 break;
             case 3:
-                viewholder.prioridade.setTextColor(Prioridade.BAIXA.getCor());
+                viewholder.prioridade.setTextColor(Prioridade.ALTA.getCor());
                 break;
             default:
                 viewholder.prioridade.setTextColor(Prioridade.INDEFINIDO.getCor());
@@ -101,7 +101,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
     public Tarefa getTarefa(int posicao){
         return this.tarefas.get(posicao);
     }
-
 
 
     class TarefaViewHolder extends RecyclerView.ViewHolder{
