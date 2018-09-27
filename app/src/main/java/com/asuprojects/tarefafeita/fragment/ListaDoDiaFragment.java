@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.asuprojects.tarefafeita.R;
 import com.asuprojects.tarefafeita.domain.Tarefa;
+import com.asuprojects.tarefafeita.domain.enums.Prioridade;
 import com.asuprojects.tarefafeita.domain.viewmodel.TarefaViewModel;
 
 import java.text.SimpleDateFormat;
@@ -42,7 +43,7 @@ public class ListaDoDiaFragment extends Fragment {
         setaDataAtual();
 
         viewModel = ViewModelProviders.of(this).get(TarefaViewModel.class);
-        viewModel.getTarefasDoDia(Calendar.getInstance()).observe(ListaDoDiaFragment.this, new Observer<List<Tarefa>>() {
+        viewModel.getTarefasDoDia(Calendar.getInstance(), Prioridade.INDEFINIDO).observe(ListaDoDiaFragment.this, new Observer<List<Tarefa>>() {
             @Override
             public void onChanged(@Nullable List<Tarefa> tasks) {
                 listSize = tasks.size();

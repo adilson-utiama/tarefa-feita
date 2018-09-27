@@ -8,6 +8,7 @@ import android.util.Log;
 import com.asuprojects.tarefafeita.database.TarefaRoomDatabase;
 import com.asuprojects.tarefafeita.database.dao.TarefaDao;
 import com.asuprojects.tarefafeita.domain.Tarefa;
+import com.asuprojects.tarefafeita.domain.enums.Prioridade;
 
 import java.util.Calendar;
 import java.util.List;
@@ -31,8 +32,8 @@ public class TarefaRepository {
         return tarefaDao.listaOrdenadaPorDataConclusao();
     }
 
-    public LiveData<List<Tarefa>> getTarefasDoDia(Calendar data) {
-        return tarefaDao.listaDoDia(data);
+    public LiveData<List<Tarefa>> getTarefasDoDia(Calendar data, Prioridade prioridade) {
+        return tarefaDao.listaDoDia(data, prioridade);
     }
 
     public void adiciona (Tarefa tarefa) {
@@ -54,7 +55,6 @@ public class TarefaRepository {
         }
         @Override
         protected Void doInBackground(final Tarefa... params) {
-            Log.i("TAREFA", "doInBackground: " + params[0]);
             asyncTaskDao.adiciona(params[0]);
             return null;
         }

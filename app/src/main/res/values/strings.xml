@@ -36,4 +36,6 @@
     <string name="material_calendar_negative_button">Cancel</string>
     <string name="desativar_notificacao">desativar_notificacoes</string>
     <string name="apagar_tarefas_antigas">apagar_tarefas_antigas</string>
+    <string name="selecao_data">Data</string>
+    <string name="selecao_horario">Horario</string>
 </resources>

@@ -145,16 +145,26 @@ public class ListaGeralFragment extends Fragment {
 
     private View preencherTarefaDetalheDialog() {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_tarefa_detalhes, null);
+
         TextView dataInclusao = view.findViewById(R.id.detalhe_dataInclusao);
         dataInclusao.setText(DataFormatterUtil.formatarData(tarefa.getDataIncluida()));
+
         TextView dataConclusao = view.findViewById(R.id.detalhe_dataConclusao);
-        dataConclusao.setText(DataFormatterUtil.formatarData(tarefa.getDataConlusao()));
         TextView horario = view.findViewById(R.id.detalhe_horario);
-        horario.setText(DataFormatterUtil.formataHora(tarefa.getDataConlusao()));
+        if(!tarefa.getPrioridade().equals(Prioridade.INDEFINIDO)){
+            dataConclusao.setText(DataFormatterUtil.formatarData(tarefa.getDataConlusao()));
+            horario.setText(DataFormatterUtil.formataHora(tarefa.getDataConlusao()));
+        } else {
+            dataConclusao.setText("Sem Data Definida");
+            horario.setText("");
+        }
+
         TextView titulo = view.findViewById(R.id.detalhe_titulo);
         titulo.setText(tarefa.getTitulo());
+
         TextView anotacao = view.findViewById(R.id.detalhe_anotacao);
         anotacao.setText(tarefa.getAnotacao());
+
         TextView prioridade = view.findViewById(R.id.detalhe_prioridade);
         if(tarefa.getPrioridade().equals(Prioridade.ALTA)){
             prioridade.setTextColor(Prioridade.ALTA.getCor());

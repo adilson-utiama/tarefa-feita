@@ -89,6 +89,7 @@
                 android:id="@+id/text_dataConclusao"
                 android:layout_width="wrap_content"
                 android:layout_height="16dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="Data para Conclusão"
                 android:textAlignment="textStart"
@@ -105,7 +106,7 @@
                 android:layout_marginStart="24dp"
                 android:background="@drawable/rounded_corner_square"
                 android:padding="10dp"
-                android:text="Selecionar Data"
+                android:text="@string/selecao_data"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
@@ -117,6 +118,7 @@
                 android:id="@+id/text_horario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="Horario"
                 android:textSize="12sp"
@@ -132,7 +134,7 @@
                 android:layout_marginStart="8dp"
                 android:background="@drawable/rounded_corner_square"
                 android:padding="10dp"
-                android:text="Selecione Horario"
+                android:text="@string/selecao_horario"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -148,7 +150,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="Prioridade"
+                android:text="Prioridade da Tarefa"
                 app:layout_constraintBottom_toTopOf="@+id/radioGroup"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -162,7 +164,6 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginStart="24dp"
-                android:checkedButton="@+id/item_media"
                 android:fitsSystemWindows="true"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -178,7 +179,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:onClick="onRadioButtonClicked"
-                    android:text="BAIXO" />
+                    android:text="BAIXA" />
 
                 <RadioButton
                     android:id="@+id/item_media"
@@ -195,8 +196,8 @@
                     android:layout_weight="1"
                     android:onClick="onRadioButtonClicked"
                     android:text="ALTA" />
-            </RadioGroup>
 
+            </RadioGroup>
 
             <Button
                 android:id="@+id/btnAdicionar"

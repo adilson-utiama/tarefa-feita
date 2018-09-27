@@ -58,7 +58,7 @@ public class RecyclerViewFragment extends Fragment {
         recyclerView.setAdapter(this.adapter);
 
         viewModel = ViewModelProviders.of(this).get(TarefaViewModel.class);
-        viewModel.getTarefasDoDia(Calendar.getInstance()).observe(RecyclerViewFragment.this, new Observer<List<Tarefa>>() {
+        viewModel.getTarefasDoDia(Calendar.getInstance(), Prioridade.INDEFINIDO).observe(RecyclerViewFragment.this, new Observer<List<Tarefa>>() {
             @Override
             public void onChanged(@Nullable List<Tarefa> tasks) {
                 RecyclerViewFragment.this.adapter.setListaTarefas(tasks);
@@ -146,9 +146,14 @@ public class RecyclerViewFragment extends Fragment {
         TextView dataInclusao = view.findViewById(R.id.detalhe_dataInclusao);
         dataInclusao.setText(DataFormatterUtil.formatarData(tarefa.getDataIncluida()));
         TextView dataConclusao = view.findViewById(R.id.detalhe_dataConclusao);
-        dataConclusao.setText(DataFormatterUtil.formatarData(tarefa.getDataConlusao()));
         TextView horario = view.findViewById(R.id.detalhe_horario);
-        horario.setText(DataFormatterUtil.formataHora(tarefa.getDataConlusao()));
+        if(!tarefa.getPrioridade().equals(Prioridade.INDEFINIDO)){
+            dataConclusao.setText(DataFormatterUtil.formatarData(tarefa.getDataConlusao()));
+            horario.setText(DataFormatterUtil.formataHora(tarefa.getDataConlusao()));
+        } else {
+            dataConclusao.setText("Sem Data Definida");
+            horario.setText("");
+        }
         TextView titulo = view.findViewById(R.id.detalhe_titulo);
         titulo.setText(tarefa.getTitulo());
         TextView anotacao = view.findViewById(R.id.detalhe_anotacao);

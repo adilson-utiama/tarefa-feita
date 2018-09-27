@@ -8,6 +8,7 @@ import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
 import com.asuprojects.tarefafeita.domain.Tarefa;
+import com.asuprojects.tarefafeita.domain.enums.Prioridade;
 
 import java.util.Calendar;
 import java.util.List;
@@ -35,7 +36,8 @@ public interface TarefaDao {
     @Query("SELECT * FROM tabela_tarefa ORDER BY dataConlusao DESC")
     LiveData<List<Tarefa>> listaOrdenadaPorDataConclusao();
 
-    @Query("SELECT * FROM  tabela_tarefa WHERE date(dataConlusao) = date(:data) ORDER BY dataConlusao ASC")
-    LiveData<List<Tarefa>> listaDoDia(Calendar data);
+    @Query("SELECT * FROM  tabela_tarefa WHERE date(dataConlusao) = date(:data) " +
+            "AND prioridade NOT IN (:prioridade) ORDER BY dataConlusao ASC")
+    LiveData<List<Tarefa>> listaDoDia(Calendar data, Prioridade prioridade);
 
 }

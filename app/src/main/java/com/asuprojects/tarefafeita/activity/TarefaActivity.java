@@ -65,7 +65,7 @@ public class TarefaActivity extends AppCompatActivity {
     private AddTarefaViewModel viewModel;
 
     private Tarefa tarefa;
-    private Prioridade prioridade = Prioridade.MEDIA;
+    private Prioridade prioridade = Prioridade.INDEFINIDO;
 
     private SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -78,7 +78,6 @@ public class TarefaActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         textInputLayout = findViewById(R.id.textInputLayout_titulo);
         inputTitulo = findViewById(R.id.input_titulo);
         inputAnotacao = findViewById(R.id.input_anotacao);
@@ -87,9 +86,10 @@ public class TarefaActivity extends AppCompatActivity {
         viewModel = ViewModelProviders.of(this).get(AddTarefaViewModel.class);
 
         btnSelecaoData = findViewById(R.id.btnCalendar);
-        Calendar data = Calendar.getInstance();
 
-        btnSelecaoData.setText(format.format(data.getTime()));
+        Calendar data = Calendar.getInstance();
+        //btnSelecaoData.setText(format.format(data.getTime()));
+
         btnSelecaoData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,7 +103,9 @@ public class TarefaActivity extends AppCompatActivity {
         });
 
         btnSelecaoHorario = findViewById(R.id.btnHorario);
-        btnSelecaoHorario.setText(DataFormatterUtil.formataHora(data));
+
+        //btnSelecaoHorario.setText(DataFormatterUtil.formataHora(data));
+
         btnSelecaoHorario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,14 +130,20 @@ public class TarefaActivity extends AppCompatActivity {
                     tarefa.setTitulo(inputTitulo.getText().toString());
                     tarefa.setAnotacao(inputAnotacao.getText().toString());
                     tarefa.setDataIncluida(Calendar.getInstance());
-
-                    String data = btnSelecaoData.getText().toString();
-                    String hora = btnSelecaoHorario.getText().toString();
-                    Calendar dataConclusao = buildCalendar(data, hora);
-
-                    tarefa.setDataConlusao(dataConclusao);
                     tarefa.setStatus(Status.ADICIONADO);
-                    tarefa.setPrioridade(prioridade);
+
+                    if(!btnSelecaoData.getText().toString().contentEquals(getString(R.string.selecao_data)) ||
+                            !btnSelecaoHorario.getText().toString().contentEquals(getString(R.string.selecao_horario))){
+                        String data = btnSelecaoData.getText().toString();
+                        String hora = btnSelecaoHorario.getText().toString();
+                        Calendar dataConclusao = buildCalendar(data, hora);
+                        tarefa.setDataConlusao(dataConclusao);
+                        tarefa.setPrioridade(prioridade);
+
+                    } else {
+                        tarefa.setDataConlusao(Calendar.getInstance());
+                        tarefa.setPrioridade(prioridade);
+                    }
 
                     if (tarefa.getId() != 0) {
                         viewModel.atualiza(tarefa);
@@ -143,7 +151,9 @@ public class TarefaActivity extends AppCompatActivity {
                         viewModel.adiciona(tarefa);
                     }
 
-                    setAlarmeParaNotificacao(tarefa);
+                    if(!tarefa.getPrioridade().equals(Prioridade.INDEFINIDO)){
+                        setAlarmeParaNotificacao(tarefa);
+                    }
 
                     finish();
                 }
@@ -157,8 +167,10 @@ public class TarefaActivity extends AppCompatActivity {
             if(tarefa != null){
                 inputTitulo.setText(tarefa.getTitulo());
                 inputAnotacao.setText(tarefa.getAnotacao());
-                btnSelecaoData.setText(DataFormatterUtil.formatarData(tarefa.getDataConlusao()));
-                btnSelecaoHorario.setText(DataFormatterUtil.formataHora(tarefa.getDataConlusao()));
+                if(!tarefa.getPrioridade().equals(Prioridade.INDEFINIDO)){
+                    btnSelecaoData.setText(DataFormatterUtil.formatarData(tarefa.getDataConlusao()));
+                    btnSelecaoHorario.setText(DataFormatterUtil.formataHora(tarefa.getDataConlusao()));
+                }
                 checkPrioridadeRadioButton(tarefa.getPrioridade());
                 btnSalvar.setText("Atualizar");
             }
@@ -193,10 +205,27 @@ public class TarefaActivity extends AppCompatActivity {
             textInputLayout.setErrorEnabled(true);
             textInputLayout.setError("Preenchimento Obrigatório.");
             return false;
-        }else{
-            textInputLayout.setErrorEnabled(false);
-            return true;
         }
+
+        if(!btnSelecaoData.getText().toString().contentEquals(getString(R.string.selecao_data))
+                && btnSelecaoHorario.getText().toString().contentEquals(getString(R.string.selecao_horario))){
+            Toast.makeText(this, "Necessario Selecionar Horario", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(btnSelecaoData.getText().toString().contentEquals(getString(R.string.selecao_data))
+                && !btnSelecaoHorario.getText().toString().contentEquals(getString(R.string.selecao_horario))){
+            Toast.makeText(this, "Necessario Selecionar Data", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        textInputLayout.setErrorEnabled(false);
+        return true;
+    }
+
+    private boolean validaCAmpoData() {
+
+        return true;
     }
 
     private void checkPrioridadeRadioButton(Prioridade prioridade) {
@@ -253,9 +282,9 @@ public class TarefaActivity extends AppCompatActivity {
         @Override
         public void onSelect(List<Calendar> calendars) {
             Calendar calendar = calendars.get(0);
-            Date date = calendar.getTime();
-            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-            String data = format.format(date);
+//            Date date = calendar.getTime();
+//            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            String data = DataFormatterUtil.formatarData(calendar);
             btnSelecaoData.setText(data);
         }
     };

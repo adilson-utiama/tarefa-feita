@@ -48,14 +48,29 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
         TarefaViewHolder viewholder = (TarefaViewHolder) holder;
 
         viewholder.titulo.setText(tarefa.getTitulo());
-        viewholder.dataConclusao.setText(DataFormatterUtil.formatarData(tarefa.getDataConlusao()));
-        if(tarefa.getPrioridade().equals(Prioridade.ALTA)){
-            viewholder.prioridade.setTextColor(Prioridade.ALTA.getCor());
-        } else if(tarefa.getPrioridade().equals(Prioridade.MEDIA)){
-            viewholder.prioridade.setTextColor(Prioridade.MEDIA.getCor());
+
+        if(!tarefa.getPrioridade().equals(Prioridade.INDEFINIDO)){
+            viewholder.dataConclusao.setText(DataFormatterUtil.formatarData(tarefa.getDataConlusao()));
+            viewholder.horario.setText(DataFormatterUtil.formataHora(tarefa.getDataConlusao()));
         } else {
-            viewholder.prioridade.setTextColor(Prioridade.BAIXA.getCor());
+            viewholder.dataConclusao.setText("Sem data Definida");
+            viewholder.horario.setText("");
         }
+
+        switch(tarefa.getPrioridade().getCod()){
+            case 1:
+                viewholder.prioridade.setTextColor(Prioridade.ALTA.getCor());
+                break;
+            case 2:
+                viewholder.prioridade.setTextColor(Prioridade.MEDIA.getCor());
+                break;
+            case 3:
+                viewholder.prioridade.setTextColor(Prioridade.BAIXA.getCor());
+                break;
+            default:
+                viewholder.prioridade.setTextColor(Prioridade.INDEFINIDO.getCor());
+        }
+
         viewholder.prioridade.setText(tarefa.getPrioridade().getDescricao());
 
         if(tarefa.getStatus().equals(Status.CONCLUIDO)){
@@ -70,7 +85,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
             viewholder.tarjaStatus.setBackgroundColor(Prioridade.ALTA.getCor());
         }
 
-        viewholder.horario.setText(DataFormatterUtil.formataHora(tarefa.getDataConlusao()));
+
     }
 
     @Override
