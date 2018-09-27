@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.SobreActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_sobre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
+
+    <TextView
+        android:id="@+id/textView_appName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/app_name"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_sobre" />
+
+    <TextView
+        android:id="@+id/textView_versao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Versão 1.0"
+        app:layout_constraintEnd_toEndOf="@+id/textView_appName"
+        app:layout_constraintStart_toStartOf="@+id/textView_appName"
+        app:layout_constraintTop_toBottomOf="@+id/textView_appName" />
+
+    <TextView
+        android:id="@+id/textView_desenvolvido_por"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:text="Desenvolvido por:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_versao" />
+
+    <TextView
+        android:id="@+id/textView_dev_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Adilson S. Utiama"
+        android:textColor="@color/prioridadeBaixa"
+        app:layout_constraintEnd_toEndOf="@+id/textView_desenvolvido_por"
+        app:layout_constraintStart_toStartOf="@+id/textView_desenvolvido_por"
+        app:layout_constraintTop_toBottomOf="@+id/textView_desenvolvido_por" />
+</android.support.constraint.ConstraintLayout>

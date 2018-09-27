@@ -39,4 +39,5 @@
     <string name="selecao_data">Data</string>
     <string name="selecao_horario">Horario</string>
     <string name="tarefa_a_realizar">Tarefa a ser realizada!</string>
+    <string name="sobre">Sobre</string>
 </resources>

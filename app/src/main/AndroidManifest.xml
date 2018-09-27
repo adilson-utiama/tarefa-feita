@@ -36,7 +36,10 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.DetalhesActivity"></activity>
+        <activity android:name=".activity.DetalhesActivity" />
+        <activity
+            android:name=".activity.SobreActivity"
+            android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>

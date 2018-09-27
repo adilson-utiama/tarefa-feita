@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.asuprojects.tarefafeita.activity.ConfiguracoesActivity;
+import com.asuprojects.tarefafeita.activity.SobreActivity;
 import com.asuprojects.tarefafeita.activity.TarefaActivity;
 import com.asuprojects.tarefafeita.adapter.AbasAdapter;
 import com.asuprojects.tarefafeita.fragment.ListaGeralFragment;
@@ -125,7 +126,7 @@ public class MainActivity extends AppCompatActivity
                 break;
             }
             case R.id.menu_sobre: {
-                Toast.makeText(this, "Menu Sobre Clicado", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, SobreActivity.class));
                 break;
             }
         }
