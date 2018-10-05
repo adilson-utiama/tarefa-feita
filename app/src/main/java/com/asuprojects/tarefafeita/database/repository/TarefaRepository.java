@@ -3,7 +3,6 @@ package com.asuprojects.tarefafeita.database.repository;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.asuprojects.tarefafeita.database.TarefaRoomDatabase;
 import com.asuprojects.tarefafeita.database.dao.TarefaDao;
@@ -52,6 +51,10 @@ public class TarefaRepository {
         new atualizaAsyncTask(tarefaDao).execute(tarefa);
     }
 
+    public void apagarTarefasAntigas(Calendar data) {
+        new apagarTarefasAntigas(tarefaDao).execute(data);
+    }
+
     private static class insertAsyncTask extends AsyncTask<Tarefa, Void, Void> {
         private TarefaDao asyncTaskDao;
         insertAsyncTask(TarefaDao dao) {
@@ -87,6 +90,20 @@ public class TarefaRepository {
         @Override
         protected Void doInBackground(Tarefa... tarefas) {
             asyncTaskDao.atualiza(tarefas[0]);
+            return null;
+        }
+    }
+
+    private static class apagarTarefasAntigas extends AsyncTask<Calendar, Void, Void>{
+        private TarefaDao asyncTaskDao;
+
+        apagarTarefasAntigas(TarefaDao dao){
+            asyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Calendar... data) {
+            asyncTaskDao.apagarTarefasAntigas(data[0]);
             return null;
         }
     }

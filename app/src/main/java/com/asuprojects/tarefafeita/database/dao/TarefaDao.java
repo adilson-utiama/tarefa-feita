@@ -43,4 +43,7 @@ public interface TarefaDao {
     @Query("SELECT * FROM  tabela_tarefa WHERE prioridade = :prioridade ORDER BY dataConlusao ASC")
     LiveData<List<Tarefa>> listarPor(Prioridade prioridade);
 
+    @Query("DELETE FROM tabela_tarefa WHERE date(dataConlusao) < date(:data)")
+    void apagarTarefasAntigas(Calendar data);
+
 }

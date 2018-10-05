@@ -2,7 +2,9 @@ package com.asuprojects.tarefafeita;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -25,10 +27,14 @@ import com.asuprojects.tarefafeita.activity.ConfiguracoesActivity;
 import com.asuprojects.tarefafeita.activity.SobreActivity;
 import com.asuprojects.tarefafeita.activity.TarefaActivity;
 import com.asuprojects.tarefafeita.adapter.AbasAdapter;
+import com.asuprojects.tarefafeita.database.repository.TarefaRepository;
 import com.asuprojects.tarefafeita.fragment.ListaGeralFragment;
 import com.asuprojects.tarefafeita.fragment.ListaDoDiaFragment;
 import com.asuprojects.tarefafeita.fragment.ListaPrioridadeIndefinidaFragment;
 import com.asuprojects.tarefafeita.fragment.ResumoFragment;
+
+import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
@@ -42,11 +48,21 @@ public class MainActivity extends AppCompatActivity
     private Toolbar toolbar;
     private FloatingActionButton btnAdicionarTarefa;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        TarefaRepository repository = new TarefaRepository(getApplication());
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean apagarTarefasAntigas = preferences.getBoolean(getString(R.string.apagar_tarefas_antigas), false);
+        if(apagarTarefasAntigas){
+            Calendar instance = Calendar.getInstance();
+            instance.add(Calendar.DAY_OF_MONTH, -30);
+            repository.apagarTarefasAntigas(instance);
+        }
+
 
         toolbar = findViewById(R.id.toolbar_tarefa);
         setSupportActionBar(toolbar);
