@@ -60,8 +60,8 @@ public class ListaGeralFragment extends Fragment {
         viewModel = ViewModelProviders.of(this).get(TarefaViewModel.class);
         viewModel.getTarefasOrdenadoPorData().observe(this, new Observer<List<Tarefa>>() {
             @Override
-            public void onChanged(@Nullable List<Tarefa> tarefas) {
-                adapter.setListaTarefas(tarefas);
+            public void onChanged(@Nullable List<Tarefa> tasks) {
+                adapter.setListaTarefas(tasks);
             }
         });
 

@@ -13,12 +13,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.asuprojects.tarefafeita.R;
-import com.asuprojects.tarefafeita.database.dao.TarefaDao;
 import com.asuprojects.tarefafeita.domain.Tarefa;
 import com.asuprojects.tarefafeita.domain.enums.Status;
 import com.asuprojects.tarefafeita.domain.viewmodel.TarefaViewModel;
 
-import java.security.Provider;
 import java.util.List;
 
 /**
@@ -51,7 +49,7 @@ public class ResumoFragment extends Fragment {
         tarefasCanceladas = view.findViewById(R.id.tarefasCanceladas);
 
         viewModel = ViewModelProviders.of(this).get(TarefaViewModel.class);
-        viewModel.getTodasTarefas().observe(ResumoFragment.this, new Observer<List<Tarefa>>() {
+        viewModel.getTarefas().observe(ResumoFragment.this, new Observer<List<Tarefa>>() {
             @Override
             public void onChanged(@Nullable List<Tarefa> tarefas) {
                 listaTarefas = tarefas;

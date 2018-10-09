@@ -11,13 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerViewListaIndefinida"
+        <FrameLayout
+            android:id="@+id/frameLayoutListIndefinidos"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="40dp">
+            android:layout_height="match_parent" />
 
-        </android.support.v7.widget.RecyclerView>
     </android.support.v4.widget.NestedScrollView>
 
 </FrameLayout>

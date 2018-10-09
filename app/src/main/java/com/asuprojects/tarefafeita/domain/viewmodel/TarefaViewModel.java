@@ -24,19 +24,19 @@ public class TarefaViewModel extends AndroidViewModel {
         tarefas = repository.getTodasTarefas();
     }
 
-    public LiveData<List<Tarefa>> getTodasTarefas(){
-        return tarefas;
-    }
-
     public LiveData<List<Tarefa>> getTarefasOrdenadoPorData() {
         return repository.getTarefasOrdenadasPorData();
     }
 
-    public LiveData<List<Tarefa>> getTarefasDoDia(Calendar data, Prioridade prioridade) {
+    public LiveData<List<Tarefa>> getTarefas(){
+        return tarefas;
+    }
+
+    public LiveData<List<Tarefa>> getTarefas(Calendar data, Prioridade prioridade) {
         return repository.getTarefasDoDia(data, prioridade);
     }
 
-    public LiveData<List<Tarefa>> getTarefasPelaPela(Prioridade prioridade) {
+    public LiveData<List<Tarefa>> getTarefas(Prioridade prioridade) {
         return repository.getTarefasPela(prioridade);
     }
 

@@ -43,7 +43,7 @@ public class ListaDoDiaFragment extends Fragment {
         setaDataAtual();
 
         viewModel = ViewModelProviders.of(this).get(TarefaViewModel.class);
-        viewModel.getTarefasDoDia(Calendar.getInstance(), Prioridade.INDEFINIDO).observe(ListaDoDiaFragment.this, new Observer<List<Tarefa>>() {
+        viewModel.getTarefas(Calendar.getInstance(), Prioridade.INDEFINIDO).observe(ListaDoDiaFragment.this, new Observer<List<Tarefa>>() {
             @Override
             public void onChanged(@Nullable List<Tarefa> tasks) {
                 listSize = tasks.size();
@@ -51,6 +51,7 @@ public class ListaDoDiaFragment extends Fragment {
                 if(listSize > 0){
                     FragmentTransaction tx = getActivity().getSupportFragmentManager().beginTransaction();
                     RecyclerViewFragment recyclerViewFragment = new RecyclerViewFragment();
+                    recyclerViewFragment.setTipoLista(TipoLista.LISTA_DO_DIA);
                     tx.replace(R.id.frameLayout, recyclerViewFragment);
                     tx.commit();
 

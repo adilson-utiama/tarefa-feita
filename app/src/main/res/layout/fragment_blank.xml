@@ -8,6 +8,7 @@
     tools:context=".fragment.BlankFragment">
 
     <ImageView
+        android:id="@+id/imagem"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:src="@drawable/rest"
@@ -15,6 +16,7 @@
         android:alpha="0.5"/>
 
     <TextView
+        android:id="@+id/texto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"

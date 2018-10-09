@@ -41,10 +41,11 @@ public class RecyclerViewFragment extends Fragment {
 
     private Tarefa tarefa;
 
+    private TipoLista tipoLista;
+
     public RecyclerViewFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,12 +59,13 @@ public class RecyclerViewFragment extends Fragment {
         recyclerView.setAdapter(this.adapter);
 
         viewModel = ViewModelProviders.of(this).get(TarefaViewModel.class);
-        viewModel.getTarefasDoDia(Calendar.getInstance(), Prioridade.INDEFINIDO).observe(RecyclerViewFragment.this, new Observer<List<Tarefa>>() {
-            @Override
-            public void onChanged(@Nullable List<Tarefa> tasks) {
-                RecyclerViewFragment.this.adapter.setListaTarefas(tasks);
-            }
-        });
+
+        if(tipoLista != null){
+            verificaTipoLista();
+        } else {
+            throw new RuntimeException("Necessario informar tipo de lista");
+        }
+
 
         recyclerView.addOnItemTouchListener(new RecyclerViewItemListener(
                 getContext(),
@@ -113,6 +115,39 @@ public class RecyclerViewFragment extends Fragment {
                 }
         ));
         return view;
+    }
+
+    private void verificaTipoLista() {
+        switch(tipoLista.getCode()){
+            case 1:
+                viewModel.getTarefas(Calendar.getInstance(), Prioridade.INDEFINIDO).observe(RecyclerViewFragment.this, new Observer<List<Tarefa>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Tarefa> tasks) {
+                        RecyclerViewFragment.this.adapter.setListaTarefas(tasks);
+                    }
+                });
+                break;
+            case 2:
+                viewModel.getTarefas(Prioridade.INDEFINIDO).observe(RecyclerViewFragment.this, new Observer<List<Tarefa>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Tarefa> tasks) {
+                        RecyclerViewFragment.this.adapter.setListaTarefas(tasks);
+                    }
+                });
+                break;
+            case 3:
+                viewModel.getTarefas().observe(RecyclerViewFragment.this, new Observer<List<Tarefa>>() {
+                    @Override
+                    public void onChanged(@Nullable List<Tarefa> tasks) {
+                        RecyclerViewFragment.this.adapter.setListaTarefas(tasks);
+                    }
+                });
+                break;
+        }
+    }
+
+    public void setTipoLista(TipoLista tipoLista) {
+        this.tipoLista = tipoLista;
     }
 
     private void mostraDialogStatus() {
