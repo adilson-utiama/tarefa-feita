@@ -21,6 +21,6 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:layout_gravity="center"
-        android:text="Nenhuma Tarefa Para Hoje" />
+        android:text="Nenhuma Tarefa" />
 
 </android.support.v7.widget.LinearLayoutCompat>

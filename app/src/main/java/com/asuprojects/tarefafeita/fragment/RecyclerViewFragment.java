@@ -136,7 +136,7 @@ public class RecyclerViewFragment extends Fragment {
                 });
                 break;
             case 3:
-                viewModel.getTarefas().observe(RecyclerViewFragment.this, new Observer<List<Tarefa>>() {
+                viewModel.getTarefasOrdenadoPorData().observe(RecyclerViewFragment.this, new Observer<List<Tarefa>>() {
                     @Override
                     public void onChanged(@Nullable List<Tarefa> tasks) {
                         RecyclerViewFragment.this.adapter.setListaTarefas(tasks);
