@@ -1,8 +1,10 @@
 package com.asuprojects.tarefafeita;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -15,7 +17,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,10 +30,14 @@ import com.asuprojects.tarefafeita.activity.SobreActivity;
 import com.asuprojects.tarefafeita.activity.TarefaActivity;
 import com.asuprojects.tarefafeita.adapter.AbasAdapter;
 import com.asuprojects.tarefafeita.database.repository.TarefaRepository;
-import com.asuprojects.tarefafeita.fragment.ListaGeralFragment;
 import com.asuprojects.tarefafeita.fragment.ListaDoDiaFragment;
+import com.asuprojects.tarefafeita.fragment.ListaGeralFragment;
 import com.asuprojects.tarefafeita.fragment.ListaPrioridadeIndefinidaFragment;
 import com.asuprojects.tarefafeita.fragment.ResumoFragment;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import java.util.Calendar;
 
@@ -37,11 +45,23 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
     private DrawerLayout drawerLayout;
+    private AdView mAdView;
+    LinearLayoutCompat container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        container = findViewById(R.id.linearLayoutCompat);
+
+        configuraAdView();
+
+        if(isConected()){
+            mostraAnuncioAdView();
+        }else{
+            container.removeView(mAdView);
+        }
 
         TarefaRepository repository = new TarefaRepository(getApplication());
 
@@ -75,6 +95,64 @@ public class MainActivity extends AppCompatActivity
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onPause() {
+        Log.i("CYCLE", "onPause: ");
+        if (mAdView != null) {
+            if(!isConected()){
+                container.removeView(mAdView);
+            } else {
+                container.removeView(mAdView);
+                mostraAnuncioAdView();
+            }
+            mAdView.pause();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        Log.i("CYCLE", "onResume: ");
+        if (mAdView != null) {
+            if(!isConected()){
+                container.removeView(mAdView);
+            } else {
+                container.removeView(mAdView);
+                mostraAnuncioAdView();
+            }
+            mAdView.resume();
+        }
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.i("CYCLE", "onDestroy: ");
+        if (mAdView != null) {
+            container.removeView(mAdView);
+            mAdView.destroy();
+        }
+        super.onDestroy();
+    }
+
+    private void mostraAnuncioAdView() {
+        LinearLayoutCompat.LayoutParams params = new LinearLayoutCompat.LayoutParams(
+                LinearLayoutCompat.LayoutParams.MATCH_PARENT,
+                LinearLayoutCompat.LayoutParams.WRAP_CONTENT);
+
+        container.addView(mAdView, params);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+    }
+
+    private void configuraAdView() {
+        MobileAds.initialize(this,
+                "ca-app-pub-3940256099942544~3347511713");
+        mAdView = new AdView(this);
+        mAdView.setAdSize(AdSize.SMART_BANNER);
+        mAdView.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
     }
 
     private void mostraDialogSairDoApp() {
@@ -172,5 +250,22 @@ public class MainActivity extends AppCompatActivity
             instance.add(Calendar.DAY_OF_MONTH, -30);
             repository.apagarTarefasAntigas(instance);
         }
+    }
+
+    private boolean isConected(){
+        ConnectivityManager conmag = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if ( conmag != null ) {
+            conmag.getActiveNetworkInfo();
+            //Verifica internet pela WIFI
+            if (conmag.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected()) {
+                return true;
+            }
+            //Verifica se tem internet móvel
+            if (conmag.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnected()) {
+                return true;
+            }
+        }
+        return false;
     }
 }
