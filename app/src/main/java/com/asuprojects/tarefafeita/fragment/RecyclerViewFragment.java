@@ -34,6 +34,7 @@ import java.util.List;
 
 public class RecyclerViewFragment extends Fragment {
 
+    public static final String TIPO_LISTA = "TIPO";
     private RecyclerView recyclerView;
     private RecyclerViewAdapter adapter;
 
@@ -51,6 +52,12 @@ public class RecyclerViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recycler_view, container, false);
+
+        if(savedInstanceState != null){
+            if(savedInstanceState.containsKey(TIPO_LISTA)){
+                tipoLista = (TipoLista) savedInstanceState.getSerializable(TIPO_LISTA);
+            }
+        }
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         this.adapter = new RecyclerViewAdapter(new ArrayList<Tarefa>());
@@ -115,6 +122,12 @@ public class RecyclerViewFragment extends Fragment {
                 }
         ));
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable(TIPO_LISTA, tipoLista);
+        super.onSaveInstanceState(outState);
     }
 
     private void verificaTipoLista() {
