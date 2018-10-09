@@ -15,13 +15,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.SupportMenuInflater;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.asuprojects.tarefafeita.activity.ConfiguracoesActivity;
 import com.asuprojects.tarefafeita.activity.SobreActivity;
@@ -34,19 +32,11 @@ import com.asuprojects.tarefafeita.fragment.ListaPrioridadeIndefinidaFragment;
 import com.asuprojects.tarefafeita.fragment.ResumoFragment;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
-
     private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
-
-    private Toolbar toolbar;
-    private FloatingActionButton btnAdicionarTarefa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,54 +45,15 @@ public class MainActivity extends AppCompatActivity
 
         TarefaRepository repository = new TarefaRepository(getApplication());
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean apagarTarefasAntigas = preferences.getBoolean(getString(R.string.apagar_tarefas_antigas), false);
-        if(apagarTarefasAntigas){
-            Calendar instance = Calendar.getInstance();
-            instance.add(Calendar.DAY_OF_MONTH, -30);
-            repository.apagarTarefasAntigas(instance);
-        }
+        verificaTarefasAntigas(repository);
 
+        Toolbar toolbar = configuraToolbar();
 
-        toolbar = findViewById(R.id.toolbar_tarefa);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(R.string.app_name);
+        configuraNavigationDrawer(toolbar);
 
-        drawerLayout = findViewById(R.id.drawerLayout);
-        ActionBarDrawerToggle toggle =
-                new ActionBarDrawerToggle(this,
-                        drawerLayout, toolbar,
-                        R.string.open_drawer, R.string.close_drawer);
+        configuraViewPager();
 
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-        navigationView = findViewById(R.id.navigationView);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        ListaGeralFragment listaFragment = new ListaGeralFragment();
-        ListaDoDiaFragment mainFragment = new ListaDoDiaFragment();
-        ListaPrioridadeIndefinidaFragment listaPrioridadeIndefinidaFragment = new ListaPrioridadeIndefinidaFragment();
-
-        AbasAdapter abasAdapter = new AbasAdapter(getSupportFragmentManager());
-        abasAdapter.adicionar(mainFragment, "Atual");
-        abasAdapter.adicionar(listaPrioridadeIndefinidaFragment, "Sem Data");
-        abasAdapter.adicionar(listaFragment, "Lista Geral");
-        abasAdapter.adicionar(new ResumoFragment(), "Resumo");
-
-        viewPager = findViewById(R.id.viewPager);
-        viewPager.setAdapter(abasAdapter);
-
-        tabLayout = findViewById(R.id.tabLayout);
-        tabLayout.setupWithViewPager(viewPager);
-        
-        btnAdicionarTarefa = findViewById(R.id.btnAdiciona);
-        btnAdicionarTarefa.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, TarefaActivity.class);
-                startActivity(intent);
-            }
-        });
+        configuraBotaoAdicionaTarefa();
 
     }
 
@@ -119,22 +70,24 @@ public class MainActivity extends AppCompatActivity
                 startActivity(new Intent(MainActivity.this, ConfiguracoesActivity.class));
                 return true;
             case R.id.menuitem_sair:
-                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-                dialog.setMessage("Sair do Aplicativo?")
-                        .setPositiveButton("SIM", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                finishAffinity();
-                            }
-                        })
-                        .setNegativeButton("NÂO", null)
-                        .show();
-
+                mostraDialogSairDoApp();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
 
+    private void mostraDialogSairDoApp() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setMessage(R.string.sair_app_msg)
+                .setPositiveButton(getString(R.string.opcao_sim), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finishAffinity();
+                    }
+                })
+                .setNegativeButton(getString(R.string.opcao_nao), null)
+                .show();
     }
 
     @Override
@@ -158,9 +111,66 @@ public class MainActivity extends AppCompatActivity
                 break;
             }
         }
-
         drawerLayout.closeDrawer(GravityCompat.START);
-
         return true;
+    }
+
+    private void configuraBotaoAdicionaTarefa() {
+        FloatingActionButton btnAdicionarTarefa = findViewById(R.id.btnAdiciona);
+        btnAdicionarTarefa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                vaParaNovaTarefa();
+            }
+        });
+    }
+
+    private void vaParaNovaTarefa() {
+        Intent intent = new Intent(MainActivity.this, TarefaActivity.class);
+        startActivity(intent);
+    }
+
+    private void configuraViewPager() {
+        AbasAdapter abasAdapter = new AbasAdapter(getSupportFragmentManager());
+        abasAdapter.adicionar(new ListaDoDiaFragment(), getString(R.string.aba_tarefas_do_dia));
+        abasAdapter.adicionar(new ListaPrioridadeIndefinidaFragment(), getString(R.string.aba_tarefas_sem_data));
+        abasAdapter.adicionar(new ListaGeralFragment(), getString(R.string.aba_tarefas_geral));
+        abasAdapter.adicionar(new ResumoFragment(), getString(R.string.aba_tarefas_resumo));
+
+        ViewPager viewPager = findViewById(R.id.viewPager);
+        viewPager.setAdapter(abasAdapter);
+
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void configuraNavigationDrawer(Toolbar toolbar) {
+        drawerLayout = findViewById(R.id.drawerLayout);
+        ActionBarDrawerToggle toggle =
+                new ActionBarDrawerToggle(this,
+                        drawerLayout, toolbar,
+                        R.string.open_drawer, R.string.close_drawer);
+
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+        NavigationView navigationView = findViewById(R.id.navigationView);
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private Toolbar configuraToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar_tarefa);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(R.string.app_name);
+        return toolbar;
+    }
+
+    private void verificaTarefasAntigas(TarefaRepository repository) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean apagarTarefasAntigas = preferences.getBoolean(getString(R.string.apagar_tarefas_antigas), false);
+        if(apagarTarefasAntigas){
+            Calendar instance = Calendar.getInstance();
+            instance.add(Calendar.DAY_OF_MONTH, -30);
+            repository.apagarTarefasAntigas(instance);
+        }
     }
 }

@@ -45,4 +45,11 @@
     <string name="validacao_campo_obrigatorio">Preenchimento Obrigatório.</string>
     <string name="validacao_msg_erro_hora">Necessario Selecionar Horario</string>
     <string name="validacao_msg_erro_data">Necessario Selecionar Data</string>
+    <string name="sair_app_msg">Sair do Aplicativo?</string>
+    <string name="opcao_sim">SIM</string>
+    <string name="opcao_nao">NÂO</string>
+    <string name="aba_tarefas_do_dia">Atual</string>
+    <string name="aba_tarefas_sem_data">Sem Data</string>
+    <string name="aba_tarefas_geral">Lista Geral</string>
+    <string name="aba_tarefas_resumo">Resumo</string>
 </resources>
