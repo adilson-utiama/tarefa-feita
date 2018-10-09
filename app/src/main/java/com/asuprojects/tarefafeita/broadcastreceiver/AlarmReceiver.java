@@ -17,6 +17,7 @@ import java.util.Random;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
+    public static final int FEED_NUMBER = 2000;
     private NotificationManagerCompat notificationManager;
 
     private Tarefa tarefa = new Tarefa();
@@ -44,7 +45,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         resultIntent.putExtra("tarefa_notificacao", tarefa);
 
         Random random = new Random();
-        int nextInt = random.nextInt(2000);
+        int nextInt = random.nextInt(FEED_NUMBER);
 
         PendingIntent resultPendingIntent =
                 PendingIntent.getActivity(context, nextInt, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);

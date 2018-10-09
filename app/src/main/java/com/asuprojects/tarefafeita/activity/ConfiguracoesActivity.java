@@ -15,14 +15,18 @@ public class ConfiguracoesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuracoes);
 
-        Toolbar toolbar = findViewById(R.id.toolbar_configuracoes);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Configurações");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        configuraToolBar();
 
         getFragmentManager().beginTransaction()
                 .replace(R.id.configuracoes, new ConfiguracoesFragment())
                 .commit();
+    }
+
+    private void configuraToolBar() {
+        Toolbar toolbar = findViewById(R.id.toolbar_configuracoes);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(R.string.configuracoes_titulo);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public static class ConfiguracoesFragment extends PreferenceFragment {

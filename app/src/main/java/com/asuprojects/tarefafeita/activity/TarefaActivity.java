@@ -31,13 +31,16 @@ import com.asuprojects.tarefafeita.domain.enums.Status;
 import com.asuprojects.tarefafeita.domain.viewmodel.AddTarefaViewModel;
 import com.asuprojects.tarefafeita.util.DataFormatterUtil;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
 public class TarefaActivity extends AppCompatActivity {
 
+    public static final String EDITAR_TAREFA = "EDITAR_TAREFA";
+    public static final String EXECUTAR_ALARME = "EXECUTAR_ALARME";
+    public static final String TAREFA = "tarefa";
+    public static final int FEED_NUMBER = 2000;
     private TextInputLayout textInputLayout;
     private TextInputEditText inputTitulo;
     private TextInputEditText inputAnotacao;
@@ -48,23 +51,17 @@ public class TarefaActivity extends AppCompatActivity {
 
     private RadioGroup radioGroup;
 
-    private Toolbar toolbar;
-
     private AddTarefaViewModel viewModel;
 
     private Tarefa tarefa;
     private Prioridade prioridade = Prioridade.INDEFINIDO;
-
-    private SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tarefa);
 
-        toolbar = findViewById(R.id.toolbar_tarefa);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        configuraToolBar();
 
         textInputLayout = findViewById(R.id.textInputLayout_titulo);
         inputTitulo = findViewById(R.id.input_titulo);
@@ -112,7 +109,6 @@ public class TarefaActivity extends AppCompatActivity {
                     tarefa.setAnotacao(inputAnotacao.getText().toString());
                     tarefa.setDataIncluida(Calendar.getInstance());
                     tarefa.setStatus(Status.ADICIONADO);
-
                     if(!btnSelecaoData.getText().toString().contentEquals(getString(R.string.selecao_data)) ||
                             !btnSelecaoHorario.getText().toString().contentEquals(getString(R.string.selecao_horario))){
                         String data = btnSelecaoData.getText().toString();
@@ -120,7 +116,6 @@ public class TarefaActivity extends AppCompatActivity {
                         Calendar dataConclusao = buildCalendar(data, hora);
                         tarefa.setDataConlusao(dataConclusao);
                         tarefa.setPrioridade(prioridade);
-
                     } else {
                         tarefa.setDataConlusao(Calendar.getInstance());
                         tarefa.setPrioridade(prioridade);
@@ -135,7 +130,6 @@ public class TarefaActivity extends AppCompatActivity {
                     if(!tarefa.getPrioridade().equals(Prioridade.INDEFINIDO)){
                         setAlarmeParaNotificacao(tarefa);
                     }
-
                     finish();
                 }
 
@@ -143,8 +137,13 @@ public class TarefaActivity extends AppCompatActivity {
         });
 
         Intent intent = getIntent();
-        if(intent.hasExtra("EDITAR_TAREFA")){
-            tarefa = (Tarefa) intent.getSerializableExtra("EDITAR_TAREFA");
+        eHEdicaoTarefa(intent);
+
+    }
+
+    private void eHEdicaoTarefa(Intent intent) {
+        if(intent.hasExtra(EDITAR_TAREFA)){
+            tarefa = (Tarefa) intent.getSerializableExtra(EDITAR_TAREFA);
             if(tarefa != null){
                 inputTitulo.setText(tarefa.getTitulo());
                 inputAnotacao.setText(tarefa.getAnotacao());
@@ -153,10 +152,15 @@ public class TarefaActivity extends AppCompatActivity {
                     btnSelecaoHorario.setText(DataFormatterUtil.formataHora(tarefa.getDataConlusao()));
                 }
                 checkPrioridadeRadioButton(tarefa.getPrioridade());
-                btnSalvar.setText("Atualizar");
+                btnSalvar.setText(R.string.texto_atualizar_tarefa);
             }
         }
+    }
 
+    private void configuraToolBar() {
+        Toolbar toolbar = findViewById(R.id.toolbar_tarefa);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void setAlarmeParaNotificacao(Tarefa tarefa) {
@@ -164,17 +168,15 @@ public class TarefaActivity extends AppCompatActivity {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         boolean notificacaoDesativada = sharedPref.getBoolean(getString(R.string.desativar_notificacao), false);
         if(!notificacaoDesativada){
-            Intent intent = new Intent("EXECUTAR_ALARME");
-            intent.putExtra("tarefa", tarefa);
+            Intent intent = new Intent(EXECUTAR_ALARME);
+            intent.putExtra(TAREFA, tarefa);
 
             Random random = new Random();
-            int nextInt = random.nextInt(2000);
-
+            int nextInt = random.nextInt(FEED_NUMBER);
             long timeInMillis = tarefa.getDataConlusao().getTimeInMillis();
 
             PendingIntent pendingIntent =
                     PendingIntent.getBroadcast(TarefaActivity.this, nextInt, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
             AlarmManager alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
             AlarmManagerCompat.setExact(alarm, AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent);
         }
@@ -184,28 +186,23 @@ public class TarefaActivity extends AppCompatActivity {
     private boolean validaCampos(){
         if(inputTitulo.getText().toString().isEmpty()){
             textInputLayout.setErrorEnabled(true);
-            textInputLayout.setError("Preenchimento Obrigatório.");
+            textInputLayout.setError(getString(R.string.validacao_campo_obrigatorio));
             return false;
         }
 
         if(!btnSelecaoData.getText().toString().contentEquals(getString(R.string.selecao_data))
                 && btnSelecaoHorario.getText().toString().contentEquals(getString(R.string.selecao_horario))){
-            Toast.makeText(this, "Necessario Selecionar Horario", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.validacao_msg_erro_hora, Toast.LENGTH_SHORT).show();
             return false;
         }
 
         if(btnSelecaoData.getText().toString().contentEquals(getString(R.string.selecao_data))
                 && !btnSelecaoHorario.getText().toString().contentEquals(getString(R.string.selecao_horario))){
-            Toast.makeText(this, "Necessario Selecionar Data", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.validacao_msg_erro_data, Toast.LENGTH_SHORT).show();
             return false;
         }
 
         textInputLayout.setErrorEnabled(false);
-        return true;
-    }
-
-    private boolean validaCAmpoData() {
-
         return true;
     }
 
@@ -263,8 +260,6 @@ public class TarefaActivity extends AppCompatActivity {
         @Override
         public void onSelect(List<Calendar> calendars) {
             Calendar calendar = calendars.get(0);
-//            Date date = calendar.getTime();
-//            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
             String data = DataFormatterUtil.formatarData(calendar);
             btnSelecaoData.setText(data);
         }

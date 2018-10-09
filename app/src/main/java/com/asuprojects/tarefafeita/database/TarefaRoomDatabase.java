@@ -24,6 +24,7 @@ import com.asuprojects.tarefafeita.domain.Tarefa;
         CalendarTypeConverter.class})
 public abstract class TarefaRoomDatabase extends RoomDatabase {
 
+    public static final String NOME_BANCO = "tarefas_db";
     private static TarefaRoomDatabase INSTANCIA;
 
     public abstract TarefaDao getTarefaDao();
@@ -33,7 +34,7 @@ public abstract class TarefaRoomDatabase extends RoomDatabase {
             synchronized (TarefaRoomDatabase.class){
                 if(INSTANCIA == null){
                     INSTANCIA = Room.databaseBuilder(context.getApplicationContext(),
-                            TarefaRoomDatabase.class, "tarefas_db")
+                            TarefaRoomDatabase.class, NOME_BANCO)
                             .addCallback(roomDatabaseCallback)
                             .build();
                 }

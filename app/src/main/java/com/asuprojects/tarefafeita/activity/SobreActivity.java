@@ -13,6 +13,10 @@ public class SobreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sobre);
 
+        configuraToolBar();
+    }
+
+    private void configuraToolBar() {
         Toolbar toolbar = findViewById(R.id.toolbar_sobre);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

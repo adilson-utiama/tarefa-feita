@@ -33,8 +33,8 @@ public class DetalhesActivity extends AppCompatActivity {
         prioridade = findViewById(R.id.prioridadeTarefaDetalhes);
 
         Intent intent = getIntent();
-        if(intent.hasExtra("tarefa_notificacao")){
-            tarefa = (Tarefa) intent.getSerializableExtra("tarefa_notificacao");
+        if(intent.hasExtra(getString(R.string.intent_tarefa_notificacao))){
+            tarefa = (Tarefa) intent.getSerializableExtra(getString(R.string.intent_tarefa_notificacao));
             if(tarefa != null){
                 titulo.setText(tarefa.getTitulo());
                 anotacao.setText(tarefa.getAnotacao());

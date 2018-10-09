@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity
 
         toolbar = findViewById(R.id.toolbar_tarefa);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Tarefa Feita");
+        getSupportActionBar().setTitle(R.string.app_name);
 
         drawerLayout = findViewById(R.id.drawerLayout);
         ActionBarDrawerToggle toggle =
