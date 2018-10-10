@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.AlarmManagerCompat;
@@ -56,6 +57,9 @@ public class TarefaActivity extends AppCompatActivity {
     private Tarefa tarefa;
     private Prioridade prioridade = Prioridade.INDEFINIDO;
 
+    private ConstraintLayout painelSelecaoData;
+    private boolean painelVisivel = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +71,8 @@ public class TarefaActivity extends AppCompatActivity {
         inputTitulo = findViewById(R.id.input_titulo);
         inputAnotacao = findViewById(R.id.input_anotacao);
         radioGroup = findViewById(R.id.radioGroup);
+
+        painelSelecaoData = findViewById(R.id.painelData);
 
         viewModel = ViewModelProviders.of(this).get(AddTarefaViewModel.class);
 
@@ -161,6 +167,7 @@ public class TarefaActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_tarefa);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Adicionar Tarefa");
     }
 
     private void setAlarmeParaNotificacao(Tarefa tarefa) {
@@ -283,6 +290,15 @@ public class TarefaActivity extends AppCompatActivity {
                     prioridade = Prioridade.ALTA;
                 }
                 break;
+        }
+    }
+
+    public void mostrarPainelData(View view){
+        painelVisivel = !painelVisivel;
+        if (painelVisivel){
+            painelSelecaoData.setVisibility(View.VISIBLE);
+        } else {
+            painelSelecaoData.setVisibility(View.GONE);
         }
     }
 

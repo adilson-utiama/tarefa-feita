@@ -52,7 +52,4 @@ public class TarefaViewModel extends AndroidViewModel {
         repository.deleta(tarefa);
     }
 
-    public void apagarTarefasAntigas(Calendar data){
-        repository.apagarTarefasAntigas(data);
-    }
 }

@@ -68,7 +68,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
                 android:hint="Anotações (Opcional)"
                 app:counterEnabled="true"
                 app:counterMaxLength="100"
@@ -80,154 +79,185 @@
                     android:id="@+id/input_anotacao"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="100"
-                    android:inputType="text|textCapSentences|textMultiLine" />
+                    android:inputType="text|textCapSentences|textMultiLine"
+                    android:maxLength="100" />
 
             </android.support.design.widget.TextInputLayout>
 
             <TextView
-                android:id="@+id/text_dataConclusao"
-                android:layout_width="wrap_content"
+                android:id="@+id/textview_definirData"
+                android:layout_width="match_parent"
                 android:layout_height="16dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="Data para Conclusão"
-                android:textAlignment="textStart"
-                android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="@+id/btnCalendar"
-                app:layout_constraintTop_toBottomOf="@+id/textInputLayout_anotacao" />
-
-            <Button
-                android:id="@+id/btnCalendar"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginStart="24dp"
-                android:background="@drawable/rounded_corner_square"
-                android:padding="10dp"
-                android:text="@string/selecao_data"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                android:layout_marginStart="16dp"
+                android:onClick="mostrarPainelData"
+                android:text="Definir Data e Horario?"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@+id/painelData"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_dataConclusao"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/text_horario"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="Horario"
-                android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="@+id/btnHorario"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout_anotacao" />
 
-            <Button
-                android:id="@+id/btnHorario"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/rounded_corner_square"
-                android:padding="10dp"
-                android:text="@string/selecao_horario"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toBottomOf="@+id/text_horario"
-                app:layout_constraintVertical_bias="0.0" />
-
-
-            <TextView
-                android:id="@+id/text_prioridade"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/painelData"
+                android:layout_width="match_parent"
+                android:layout_height="158dp"
                 android:layout_marginTop="8dp"
-                android:text="Prioridade da Tarefa"
-                app:layout_constraintBottom_toTopOf="@+id/radioGroup"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnHorario"
-                app:layout_constraintVertical_bias="1.0" />
-
-            <RadioGroup
-                android:id="@+id/radioGroup"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginStart="24dp"
                 android:fitsSystemWindows="true"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/btnAdicionar"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.47"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnCalendar"
-                app:layout_constraintVertical_bias="0.26999998">
+                app:layout_constraintTop_toBottomOf="@+id/textview_definirData">
 
-                <RadioButton
-                    android:id="@+id/item_baixa"
+                <TextView
+                    android:id="@+id/text_dataConclusao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Conclusão"
+                    android:textAlignment="textStart"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="@+id/btnCalendar"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/btnCalendar"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="24dp"
+                    android:background="@drawable/rounded_corner_square"
+                    android:padding="5dp"
+                    android:text="@string/selecao_data"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_dataConclusao"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/text_horario"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:onClick="onRadioButtonClicked"
-                    android:text="BAIXA" />
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Horario"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="@+id/btnHorario"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <RadioButton
-                    android:id="@+id/item_media"
+                <Button
+                    android:id="@+id/btnHorario"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/rounded_corner_square"
+                    android:padding="5dp"
+                    android:text="@string/selecao_horario"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintTop_toBottomOf="@+id/text_horario"
+                    app:layout_constraintVertical_bias="0.0" />
+
+
+                <TextView
+                    android:id="@+id/text_prioridade"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:onClick="onRadioButtonClicked"
-                    android:text="MEDIA" />
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Prioridade da Tarefa"
+                    app:layout_constraintEnd_toEndOf="@+id/radioGroup"
+                    app:layout_constraintStart_toStartOf="@+id/radioGroup"
+                    app:layout_constraintTop_toBottomOf="@+id/btnCalendar" />
 
-                <RadioButton
-                    android:id="@+id/item_alta"
-                    android:layout_width="wrap_content"
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:onClick="onRadioButtonClicked"
-                    android:text="ALTA" />
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:fitsSystemWindows="true"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_prioridade">
 
-            </RadioGroup>
+                    <RadioButton
+                        android:id="@+id/item_baixa"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="onRadioButtonClicked"
+                        android:text="BAIXA" />
+
+                    <RadioButton
+                        android:id="@+id/item_media"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="onRadioButtonClicked"
+                        android:text="MEDIA" />
+
+                    <RadioButton
+                        android:id="@+id/item_alta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="onRadioButtonClicked"
+                        android:text="ALTA" />
+
+                </RadioGroup>
+
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintGuide_percent="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
 
             <Button
                 android:id="@+id/btnAdicionar"
                 android:layout_width="match_parent"
-                android:layout_height="46dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="36dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginEnd="64dp"
+                android:layout_marginStart="64dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/rounded_corner_square"
                 android:text="Adicionar"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+                app:layout_constraintTop_toBottomOf="@+id/painelData"
                 app:layout_constraintVertical_bias="0.35000002" />
 
-            <android.support.constraint.Guideline
-                android:id="@+id/guideline"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintGuide_percent="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
         </android.support.constraint.ConstraintLayout>
+
+
 
     </android.support.v4.widget.NestedScrollView>
 
