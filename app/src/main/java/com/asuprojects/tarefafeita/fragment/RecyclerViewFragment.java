@@ -107,8 +107,8 @@ public class RecyclerViewFragment extends Fragment {
                                     mostraDialogRemocao(tarefa);
                                 }
                                 if(selecao == 2){
-                                    tarefa.setStatus(Status.CANCELADO);
-                                    viewModel.atualiza(tarefa);
+                                    mostrarDialogCancelarTarefa(tarefa);
+
                                 }
                             }
                         });
@@ -122,6 +122,21 @@ public class RecyclerViewFragment extends Fragment {
                 }
         ));
         return view;
+    }
+
+    private void mostrarDialogCancelarTarefa(final Tarefa tarefa) {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+        dialog.setTitle("Cancelar Tarefa?")
+                .setMessage(tarefa.getTitulo())
+                .setPositiveButton(getString(R.string.opcao_sim), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        tarefa.setStatus(Status.CANCELADO);
+                        viewModel.atualiza(tarefa);
+                    }
+                })
+                .setNegativeButton(getString(R.string.opcao_nao), null)
+                .show();
     }
 
     @Override
@@ -173,7 +188,7 @@ public class RecyclerViewFragment extends Fragment {
         }else{
             builder.setTitle("Desmarcar Concluir?");
         }
-        builder.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.opcao_sim), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if(!tarefa.getStatus().equals(Status.CONCLUIDO)){
@@ -184,7 +199,7 @@ public class RecyclerViewFragment extends Fragment {
                 viewModel.atualiza(tarefa);
             }
         });
-        builder.setNeutralButton("NÂO", null);
+        builder.setNeutralButton(getString(R.string.opcao_nao), null);
         builder.setIcon(R.drawable.ic_question);
         builder.show();
     }
@@ -219,19 +234,16 @@ public class RecyclerViewFragment extends Fragment {
     }
 
     private void mostraDialogRemocao(final Tarefa tarefa) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Remover Tarefa ")
-                .append("'").append(tarefa.getTitulo()).append("'").append(" ?");
         AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-        dialog.setTitle("DELETAR TAREFA");
-        dialog.setMessage(builder.toString());
-        dialog.setPositiveButton("Deletar", new DialogInterface.OnClickListener() {
+        dialog.setTitle("Deletar Tarefa?");
+        dialog.setMessage(tarefa.getTitulo());
+        dialog.setPositiveButton(R.string.opcao_deletar, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 viewModel.remove(tarefa);
             }
         });
-        dialog.setNegativeButton("Cancelar", null);
+        dialog.setNegativeButton(R.string.opcao_cancelar, null);
         dialog.show();
     }
 

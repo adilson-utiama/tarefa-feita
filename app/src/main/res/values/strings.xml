@@ -52,4 +52,6 @@
     <string name="aba_tarefas_sem_data">Sem Data</string>
     <string name="aba_tarefas_geral">Lista Geral</string>
     <string name="aba_tarefas_resumo">Resumo</string>
+    <string name="opcao_deletar">Deletar</string>
+    <string name="opcao_cancelar">Cancelar</string>
 </resources>
