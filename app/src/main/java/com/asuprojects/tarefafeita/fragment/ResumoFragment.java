@@ -14,20 +14,19 @@ import android.widget.TextView;
 
 import com.asuprojects.tarefafeita.R;
 import com.asuprojects.tarefafeita.domain.Tarefa;
+import com.asuprojects.tarefafeita.domain.enums.Prioridade;
 import com.asuprojects.tarefafeita.domain.enums.Status;
 import com.asuprojects.tarefafeita.domain.viewmodel.TarefaViewModel;
 
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ResumoFragment extends Fragment {
 
     private TextView tarefasTotais;
     private TextView tarefasConcluidas;
     private TextView tarefasNaoConcluidas;
     private TextView tarefasCanceladas;
+    private TextView tarefasDataIndefinida;
 
     private TarefaViewModel viewModel;
 
@@ -47,6 +46,7 @@ public class ResumoFragment extends Fragment {
         tarefasConcluidas = view.findViewById(R.id.tarefasConcluidas);
         tarefasNaoConcluidas  = view.findViewById(R.id.tarefasNaoConcluidas);
         tarefasCanceladas = view.findViewById(R.id.tarefasCanceladas);
+        tarefasDataIndefinida = view.findViewById(R.id.semDataIndefinida);
 
         viewModel = ViewModelProviders.of(this).get(TarefaViewModel.class);
         viewModel.getTarefas().observe(ResumoFragment.this, new Observer<List<Tarefa>>() {
@@ -58,6 +58,7 @@ public class ResumoFragment extends Fragment {
                 int concluidos = totalFromStatus(Status.CONCLUIDO);
                 int naoConcluidos = totalFromStatus(Status.ADICIONADO);
                 int cancelados = totalFromStatus(Status.CANCELADO);
+                int dataIndefinida = totalFromPrioridade(Prioridade.INDEFINIDO);
 
                 Log.i("COUNTER", "onChanged: " + total + ":" + concluidos + ":" + naoConcluidos + ":" + cancelados);
 
@@ -65,10 +66,21 @@ public class ResumoFragment extends Fragment {
                 tarefasConcluidas.setText(String.valueOf(concluidos));
                 tarefasNaoConcluidas.setText(String.valueOf(naoConcluidos));
                 tarefasCanceladas.setText(String.valueOf(cancelados));
+                tarefasDataIndefinida.setText(String.valueOf(dataIndefinida));
             }
         });
 
         return view;
+    }
+
+    private int totalFromPrioridade(Prioridade indefinido) {
+        int total = 0;
+        for(Tarefa t : listaTarefas) {
+            if(t.getPrioridade().equals(indefinido)) {
+                total++;
+            }
+        }
+        return total;
     }
 
     private int totalFromStatus(Status status) {

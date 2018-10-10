@@ -9,5 +9,6 @@
     <color name="prioridadeBaixa">#1fba22</color>
     <color name="prioridadeMedia">#ffa530</color>
     <color name="prioridadeAlta">#ff3030</color>
+    <color name="dataIndefinida">#3f51b5</color>
 
 </resources>
