@@ -59,6 +59,7 @@ public class TarefaActivity extends AppCompatActivity {
 
     private ConstraintLayout painelSelecaoData;
     private boolean painelVisivel = false;
+    private boolean prioridadeSelecionada = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,8 +116,7 @@ public class TarefaActivity extends AppCompatActivity {
                     tarefa.setAnotacao(inputAnotacao.getText().toString());
                     tarefa.setDataIncluida(Calendar.getInstance());
                     tarefa.setStatus(Status.ADICIONADO);
-                    if(!btnSelecaoData.getText().toString().contentEquals(getString(R.string.selecao_data)) ||
-                            !btnSelecaoHorario.getText().toString().contentEquals(getString(R.string.selecao_horario))){
+                    if(dataFoiSelecionada() && horaFoiSelecionada()){
                         String data = btnSelecaoData.getText().toString();
                         String hora = btnSelecaoHorario.getText().toString();
                         Calendar dataConclusao = buildCalendar(data, hora);
@@ -198,20 +198,31 @@ public class TarefaActivity extends AppCompatActivity {
             return false;
         }
 
-        if(!btnSelecaoData.getText().toString().contentEquals(getString(R.string.selecao_data))
-                && btnSelecaoHorario.getText().toString().contentEquals(getString(R.string.selecao_horario))){
+        if(dataFoiSelecionada() && !horaFoiSelecionada()){
             Toast.makeText(this, R.string.validacao_msg_erro_hora, Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        if(btnSelecaoData.getText().toString().contentEquals(getString(R.string.selecao_data))
-                && !btnSelecaoHorario.getText().toString().contentEquals(getString(R.string.selecao_horario))){
+        if(!dataFoiSelecionada() && horaFoiSelecionada()){
             Toast.makeText(this, R.string.validacao_msg_erro_data, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(dataFoiSelecionada() && horaFoiSelecionada() && !prioridadeSelecionada) {
+            Toast.makeText(this, R.string.validacao_msg_erro_prioridade, Toast.LENGTH_SHORT).show();
             return false;
         }
 
         textInputLayout.setErrorEnabled(false);
         return true;
+    }
+
+    private boolean dataFoiSelecionada(){
+        return !btnSelecaoData.getText().toString().contentEquals(getString(R.string.selecao_data));
+    }
+
+    private boolean horaFoiSelecionada(){
+        return !btnSelecaoHorario.getText().toString().contentEquals(getString(R.string.selecao_horario));
     }
 
     private void checkPrioridadeRadioButton(Prioridade prioridade) {
@@ -275,6 +286,7 @@ public class TarefaActivity extends AppCompatActivity {
 
     public void onRadioButtonClicked(View view) {
         boolean checked = ((RadioButton) view).isChecked();
+        prioridadeSelecionada = checked;
         switch(view.getId()){
             case R.id.item_baixa:
                 if(checked){

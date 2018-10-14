@@ -64,4 +64,5 @@
     <string name="deletar_tarefa">Deletar Tarefa?</string>
     <string name="titulo_appbar_editar_tarefa">Editar Tarefa</string>
     <string name="rotulo_tarefa_cancelada">Tarefa Cancelada</string>
+    <string name="validacao_msg_erro_prioridade">Selecione um Prioridade</string>
 </resources>
