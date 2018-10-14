@@ -35,7 +35,7 @@ import java.util.List;
 public class RecyclerViewFragment extends Fragment {
 
     public static final String TIPO_LISTA = "TIPO";
-    private RecyclerView recyclerView;
+    public static final String EDITAR_TAREFA = "EDITAR_TAREFA";
     private RecyclerViewAdapter adapter;
 
     private TarefaViewModel viewModel;
@@ -61,7 +61,7 @@ public class RecyclerViewFragment extends Fragment {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         this.adapter = new RecyclerViewAdapter(new ArrayList<Tarefa>());
-        recyclerView = view.findViewById(R.id.recyclerViewSelecionados);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerViewSelecionados);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(this.adapter);
 
@@ -94,13 +94,13 @@ public class RecyclerViewFragment extends Fragment {
                         opcoes[2] = "Cancelar";
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                        builder.setTitle("Escolha uma Opção");
+                        builder.setTitle(R.string.escolher_opcao);
                         builder.setItems(opcoes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int selecao) {
                                 if(selecao == 0){
                                     Intent intent = new Intent(getContext(), TarefaActivity.class);
-                                    intent.putExtra("EDITAR_TAREFA", tarefa);
+                                    intent.putExtra(EDITAR_TAREFA, tarefa);
                                     startActivity(intent);
                                 }
                                 if(selecao == 1){
@@ -113,7 +113,6 @@ public class RecyclerViewFragment extends Fragment {
                             }
                         });
                         builder.show();
-
                     }
 
                     @Override
@@ -126,7 +125,7 @@ public class RecyclerViewFragment extends Fragment {
 
     private void mostrarDialogCancelarTarefa(final Tarefa tarefa) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-        dialog.setTitle("Cancelar Tarefa?")
+        dialog.setTitle(R.string.cancelar_tarefa)
                 .setMessage(tarefa.getTitulo())
                 .setPositiveButton(getString(R.string.opcao_sim), new DialogInterface.OnClickListener() {
                     @Override
@@ -184,9 +183,9 @@ public class RecyclerViewFragment extends Fragment {
         builder.setView(view);
 
         if(!tarefa.getStatus().equals(Status.CONCLUIDO)){
-            builder.setTitle("Tarefa Concluida?");
+            builder.setTitle(R.string.tarefa_esta_concluida);
         }else{
-            builder.setTitle("Desmarcar Concluir?");
+            builder.setTitle(R.string.desmarcar_tarefa_concluida);
         }
         builder.setPositiveButton(getString(R.string.opcao_sim), new DialogInterface.OnClickListener() {
             @Override
@@ -206,22 +205,37 @@ public class RecyclerViewFragment extends Fragment {
 
     private View preencherTarefaDetalheDialog() {
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_tarefa_detalhes, null);
+
         TextView dataInclusao = view.findViewById(R.id.detalhe_dataInclusao);
-        dataInclusao.setText(DataFormatterUtil.formatarData(tarefa.getDataIncluida()));
         TextView dataConclusao = view.findViewById(R.id.detalhe_dataConclusao);
+        dataInclusao.setText(DataFormatterUtil.formatarData(tarefa.getDataIncluida()));
+
         TextView horario = view.findViewById(R.id.detalhe_horario);
+        TextView titulo = view.findViewById(R.id.detalhe_titulo);
+
+        titulo.setText(tarefa.getTitulo());
+        TextView anotacao = view.findViewById(R.id.detalhe_anotacao);
+
+        anotacao.setText(tarefa.getAnotacao());
+        TextView prioridade = view.findViewById(R.id.detalhe_prioridade);
+
+        defineTextoDataConclusao(dataConclusao, horario);
+        defineCorTextPrioridade(prioridade);
+
+        return view;
+    }
+
+    private void defineTextoDataConclusao(TextView dataConclusao, TextView horario) {
         if(!tarefa.getPrioridade().equals(Prioridade.NENHUM)){
             dataConclusao.setText(DataFormatterUtil.formatarData(tarefa.getDataConlusao()));
             horario.setText(DataFormatterUtil.formataHora(tarefa.getDataConlusao()));
         } else {
-            dataConclusao.setText("Sem Data Definida");
+            dataConclusao.setText(getString(R.string.rotulo_data_indefinida));
             horario.setText("");
         }
-        TextView titulo = view.findViewById(R.id.detalhe_titulo);
-        titulo.setText(tarefa.getTitulo());
-        TextView anotacao = view.findViewById(R.id.detalhe_anotacao);
-        anotacao.setText(tarefa.getAnotacao());
-        TextView prioridade = view.findViewById(R.id.detalhe_prioridade);
+    }
+
+    private void defineCorTextPrioridade(TextView prioridade) {
         if(tarefa.getPrioridade().equals(Prioridade.ALTA)){
             prioridade.setTextColor(Prioridade.ALTA.getCor());
         } else if(tarefa.getPrioridade().equals(Prioridade.MEDIA)){
@@ -230,12 +244,11 @@ public class RecyclerViewFragment extends Fragment {
             prioridade.setTextColor(Prioridade.BAIXA.getCor());
         }
         prioridade.setText(tarefa.getPrioridade().getDescricao());
-        return view;
     }
 
     private void mostraDialogRemocao(final Tarefa tarefa) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-        dialog.setTitle("Deletar Tarefa?");
+        dialog.setTitle(R.string.deletar_tarefa);
         dialog.setMessage(tarefa.getTitulo());
         dialog.setPositiveButton(R.string.opcao_deletar, new DialogInterface.OnClickListener() {
             @Override

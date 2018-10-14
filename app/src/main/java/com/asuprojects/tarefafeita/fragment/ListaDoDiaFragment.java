@@ -24,10 +24,9 @@ import java.util.List;
 
 public class ListaDoDiaFragment extends Fragment {
 
-    private TarefaViewModel viewModel;
+    public static final String PATTERN_DATA_EXTENSO = "EEEE, dd 'de' MMMM";
 
     private TextView dataAtual;
-
     private int listSize;
 
     public ListaDoDiaFragment() {
@@ -42,7 +41,7 @@ public class ListaDoDiaFragment extends Fragment {
         dataAtual = view.findViewById(R.id.dataAtual);
         setaDataAtual();
 
-        viewModel = ViewModelProviders.of(this).get(TarefaViewModel.class);
+        TarefaViewModel viewModel = ViewModelProviders.of(this).get(TarefaViewModel.class);
         viewModel.getTarefas(Calendar.getInstance(), Prioridade.NENHUM).observe(ListaDoDiaFragment.this, new Observer<List<Tarefa>>() {
             @Override
             public void onChanged(@Nullable List<Tarefa> tasks) {
@@ -69,9 +68,8 @@ public class ListaDoDiaFragment extends Fragment {
     }
 
     private void setaDataAtual() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd 'de' MMMM");
         Calendar atual = Calendar.getInstance();
-        String dataExtenso = dateFormat.format(atual.getTime());
+        String dataExtenso = new SimpleDateFormat(PATTERN_DATA_EXTENSO).format(atual.getTime());
         dataAtual.setText(dataExtenso);
     }
 

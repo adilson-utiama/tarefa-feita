@@ -28,8 +28,6 @@ public class ResumoFragment extends Fragment {
     private TextView tarefasCanceladas;
     private TextView tarefasDataIndefinida;
 
-    private TarefaViewModel viewModel;
-
     private List<Tarefa> listaTarefas;
 
     public ResumoFragment() {
@@ -48,7 +46,7 @@ public class ResumoFragment extends Fragment {
         tarefasCanceladas = view.findViewById(R.id.tarefasCanceladas);
         tarefasDataIndefinida = view.findViewById(R.id.semDataIndefinida);
 
-        viewModel = ViewModelProviders.of(this).get(TarefaViewModel.class);
+        TarefaViewModel viewModel = ViewModelProviders.of(this).get(TarefaViewModel.class);
         viewModel.getTarefas().observe(ResumoFragment.this, new Observer<List<Tarefa>>() {
             @Override
             public void onChanged(@Nullable List<Tarefa> tarefas) {
@@ -59,8 +57,6 @@ public class ResumoFragment extends Fragment {
                 int naoConcluidos = totalFromStatus(Status.ADICIONADO);
                 int cancelados = totalFromStatus(Status.CANCELADO);
                 int dataIndefinida = totalFromPrioridade(Prioridade.NENHUM);
-
-                Log.i("COUNTER", "onChanged: " + total + ":" + concluidos + ":" + naoConcluidos + ":" + cancelados);
 
                 tarefasTotais.setText(String.valueOf(total));
                 tarefasConcluidas.setText(String.valueOf(concluidos));

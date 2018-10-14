@@ -57,4 +57,9 @@
     <string name="rotulo_data_indefinida">Nenhuma data definida</string>
     <string name="titulo_toolbar_adicionar_tarefa">Adicionar Tarefa</string>
     <string name="notificacao_subtexto">Clique para mais detalhes</string>
+    <string name="escolher_opcao">Escolha uma Opção</string>
+    <string name="cancelar_tarefa">Cancelar Tarefa?</string>
+    <string name="tarefa_esta_concluida">Tarefa Concluida?</string>
+    <string name="desmarcar_tarefa_concluida">Desmarcar Concluir?</string>
+    <string name="deletar_tarefa">Deletar Tarefa?</string>
 </resources>

@@ -20,7 +20,6 @@ import java.util.List;
 
 public class ListaPrioridadeIndefinidaFragment extends Fragment {
 
-    private TarefaViewModel viewModel;
     private int listSize;
 
     public ListaPrioridadeIndefinidaFragment() {
@@ -33,7 +32,7 @@ public class ListaPrioridadeIndefinidaFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lista_prioridade_indefinida, container, false);
 
-        viewModel = ViewModelProviders.of(this).get(TarefaViewModel.class);
+        TarefaViewModel viewModel = ViewModelProviders.of(this).get(TarefaViewModel.class);
         viewModel.getTarefas(Prioridade.NENHUM).observe(this, new Observer<List<Tarefa>>() {
             @Override
             public void onChanged(@Nullable List<Tarefa> tasks) {
@@ -54,7 +53,6 @@ public class ListaPrioridadeIndefinidaFragment extends Fragment {
                 }
             }
         });
-
 
         return view;
     }

@@ -33,7 +33,6 @@ import java.util.List;
 
 public class ListaGeralFragment extends Fragment {
 
-    private TarefaViewModel viewModel;
     private int listSize;
 
     public ListaGeralFragment() {
@@ -45,7 +44,7 @@ public class ListaGeralFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lista_geral, container, false);
 
-        viewModel = ViewModelProviders.of(this).get(TarefaViewModel.class);
+        TarefaViewModel viewModel = ViewModelProviders.of(this).get(TarefaViewModel.class);
         viewModel.getTarefasOrdenadoPorData().observe(this, new Observer<List<Tarefa>>() {
             @Override
             public void onChanged(@Nullable List<Tarefa> tasks) {

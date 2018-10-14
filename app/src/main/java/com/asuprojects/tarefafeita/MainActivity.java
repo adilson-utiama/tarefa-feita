@@ -99,7 +99,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onPause() {
-        Log.i("CYCLE", "onPause: ");
         if (mAdView != null) {
             if(!isConected()){
                 container.removeView(mAdView);
@@ -114,7 +113,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onResume() {
-        Log.i("CYCLE", "onResume: ");
         if (mAdView != null) {
             if(!isConected()){
                 container.removeView(mAdView);
@@ -129,7 +127,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onDestroy() {
-        Log.i("CYCLE", "onDestroy: ");
         if (mAdView != null) {
             container.removeView(mAdView);
             mAdView.destroy();
