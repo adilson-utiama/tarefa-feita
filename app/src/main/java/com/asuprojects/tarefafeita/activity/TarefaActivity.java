@@ -149,6 +149,7 @@ public class TarefaActivity extends AppCompatActivity {
 
     private void eHEdicaoTarefa(Intent intent) {
         if(intent.hasExtra(EDITAR_TAREFA)){
+            getSupportActionBar().setTitle(getString(R.string.titulo_appbar_editar_tarefa));
             tarefa = (Tarefa) intent.getSerializableExtra(EDITAR_TAREFA);
             if(tarefa != null){
                 inputTitulo.setText(tarefa.getTitulo());
