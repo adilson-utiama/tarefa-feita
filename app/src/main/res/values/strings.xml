@@ -63,4 +63,5 @@
     <string name="desmarcar_tarefa_concluida">Desmarcar Concluir?</string>
     <string name="deletar_tarefa">Deletar Tarefa?</string>
     <string name="titulo_appbar_editar_tarefa">Editar Tarefa</string>
+    <string name="rotulo_tarefa_cancelada">Tarefa Cancelada</string>
 </resources>

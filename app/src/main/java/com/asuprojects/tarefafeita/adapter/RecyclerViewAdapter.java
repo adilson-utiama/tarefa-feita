@@ -55,12 +55,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
     }
 
     private void defineTextoData(Tarefa tarefa, TarefaViewHolder viewholder) {
-        if(!tarefa.getPrioridade().equals(Prioridade.NENHUM)){
-            viewholder.dataConclusao.setText(DataFormatterUtil.formatarData(tarefa.getDataConlusao()));
-            viewholder.horario.setText(DataFormatterUtil.formataHora(tarefa.getDataConlusao()));
-        } else {
-            viewholder.dataConclusao.setText(R.string.rotulo_data_indefinida);
+        if(tarefa.getStatus().equals(Status.CANCELADO)){
+            viewholder.dataConclusao.setText(R.string.rotulo_tarefa_cancelada);
             viewholder.horario.setText("");
+        } else {
+            if(!tarefa.getPrioridade().equals(Prioridade.NENHUM)){
+                viewholder.dataConclusao.setText(DataFormatterUtil.formatarData(tarefa.getDataConlusao()));
+                viewholder.horario.setText(DataFormatterUtil.formataHora(tarefa.getDataConlusao()));
+            } else {
+                viewholder.dataConclusao.setText(R.string.rotulo_data_indefinida);
+                viewholder.horario.setText("");
+            }
         }
     }
 
