@@ -54,4 +54,6 @@
     <string name="aba_tarefas_resumo">Resumo</string>
     <string name="opcao_deletar">Deletar</string>
     <string name="opcao_cancelar">Cancelar</string>
+    <string name="rotulo_data_indefinida">Nenhuma data definida</string>
+    <string name="titulo_toolbar_adicionar_tarefa">Adicionar Tarefa</string>
 </resources>

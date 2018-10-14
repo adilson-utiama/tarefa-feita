@@ -12,7 +12,9 @@ import java.util.Locale;
 
 public class CalendarTypeConverter {
 
-    public static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm",
+    public static final String US_PATTERN = "yyyy-MM-dd HH:mm";
+
+    public static SimpleDateFormat format = new SimpleDateFormat(US_PATTERN,
             Locale.getDefault());
 
     @TypeConverter

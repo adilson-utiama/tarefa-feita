@@ -7,7 +7,7 @@ public enum Prioridade {
     BAIXA(1, "BAIXA", Color.rgb(31, 186, 34)),
     MEDIA(2, "MEDIA", Color.rgb(255,165,48)),
     ALTA(3, "ALTA", Color.rgb(255,48,48)),
-    INDEFINIDO(4, "INDEFINIDO", Color.BLUE);
+    NENHUM(4, "NENHUM", Color.BLUE);
 
     private Integer cod;
     private String descricao;

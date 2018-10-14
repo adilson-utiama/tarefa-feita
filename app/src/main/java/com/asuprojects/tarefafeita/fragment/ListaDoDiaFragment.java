@@ -43,7 +43,7 @@ public class ListaDoDiaFragment extends Fragment {
         setaDataAtual();
 
         viewModel = ViewModelProviders.of(this).get(TarefaViewModel.class);
-        viewModel.getTarefas(Calendar.getInstance(), Prioridade.INDEFINIDO).observe(ListaDoDiaFragment.this, new Observer<List<Tarefa>>() {
+        viewModel.getTarefas(Calendar.getInstance(), Prioridade.NENHUM).observe(ListaDoDiaFragment.this, new Observer<List<Tarefa>>() {
             @Override
             public void onChanged(@Nullable List<Tarefa> tasks) {
                 listSize = tasks.size();

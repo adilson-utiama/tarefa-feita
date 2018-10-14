@@ -55,7 +55,7 @@ public class TarefaActivity extends AppCompatActivity {
     private AddTarefaViewModel viewModel;
 
     private Tarefa tarefa;
-    private Prioridade prioridade = Prioridade.INDEFINIDO;
+    private Prioridade prioridade = Prioridade.NENHUM;
 
     private ConstraintLayout painelSelecaoData;
     private boolean painelVisivel = false;
@@ -133,7 +133,7 @@ public class TarefaActivity extends AppCompatActivity {
                         viewModel.adiciona(tarefa);
                     }
 
-                    if(!tarefa.getPrioridade().equals(Prioridade.INDEFINIDO)){
+                    if(!tarefa.getPrioridade().equals(Prioridade.NENHUM)){
                         setAlarmeParaNotificacao(tarefa);
                     }
                     finish();
@@ -153,7 +153,7 @@ public class TarefaActivity extends AppCompatActivity {
             if(tarefa != null){
                 inputTitulo.setText(tarefa.getTitulo());
                 inputAnotacao.setText(tarefa.getAnotacao());
-                if(!tarefa.getPrioridade().equals(Prioridade.INDEFINIDO)){
+                if(!tarefa.getPrioridade().equals(Prioridade.NENHUM)){
                     btnSelecaoData.setText(DataFormatterUtil.formatarData(tarefa.getDataConlusao()));
                     btnSelecaoHorario.setText(DataFormatterUtil.formataHora(tarefa.getDataConlusao()));
                 }
@@ -167,7 +167,7 @@ public class TarefaActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_tarefa);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Adicionar Tarefa");
+        getSupportActionBar().setTitle(R.string.titulo_toolbar_adicionar_tarefa);
     }
 
     private void setAlarmeParaNotificacao(Tarefa tarefa) {

@@ -148,7 +148,7 @@ public class RecyclerViewFragment extends Fragment {
     private void verificaTipoLista() {
         switch(tipoLista.getCode()){
             case 1:
-                viewModel.getTarefas(Calendar.getInstance(), Prioridade.INDEFINIDO).observe(RecyclerViewFragment.this, new Observer<List<Tarefa>>() {
+                viewModel.getTarefas(Calendar.getInstance(), Prioridade.NENHUM).observe(RecyclerViewFragment.this, new Observer<List<Tarefa>>() {
                     @Override
                     public void onChanged(@Nullable List<Tarefa> tasks) {
                         RecyclerViewFragment.this.adapter.setListaTarefas(tasks);
@@ -156,7 +156,7 @@ public class RecyclerViewFragment extends Fragment {
                 });
                 break;
             case 2:
-                viewModel.getTarefas(Prioridade.INDEFINIDO).observe(RecyclerViewFragment.this, new Observer<List<Tarefa>>() {
+                viewModel.getTarefas(Prioridade.NENHUM).observe(RecyclerViewFragment.this, new Observer<List<Tarefa>>() {
                     @Override
                     public void onChanged(@Nullable List<Tarefa> tasks) {
                         RecyclerViewFragment.this.adapter.setListaTarefas(tasks);
@@ -210,7 +210,7 @@ public class RecyclerViewFragment extends Fragment {
         dataInclusao.setText(DataFormatterUtil.formatarData(tarefa.getDataIncluida()));
         TextView dataConclusao = view.findViewById(R.id.detalhe_dataConclusao);
         TextView horario = view.findViewById(R.id.detalhe_horario);
-        if(!tarefa.getPrioridade().equals(Prioridade.INDEFINIDO)){
+        if(!tarefa.getPrioridade().equals(Prioridade.NENHUM)){
             dataConclusao.setText(DataFormatterUtil.formatarData(tarefa.getDataConlusao()));
             horario.setText(DataFormatterUtil.formataHora(tarefa.getDataConlusao()));
         } else {

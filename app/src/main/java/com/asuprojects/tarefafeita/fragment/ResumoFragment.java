@@ -58,7 +58,7 @@ public class ResumoFragment extends Fragment {
                 int concluidos = totalFromStatus(Status.CONCLUIDO);
                 int naoConcluidos = totalFromStatus(Status.ADICIONADO);
                 int cancelados = totalFromStatus(Status.CANCELADO);
-                int dataIndefinida = totalFromPrioridade(Prioridade.INDEFINIDO);
+                int dataIndefinida = totalFromPrioridade(Prioridade.NENHUM);
 
                 Log.i("COUNTER", "onChanged: " + total + ":" + concluidos + ":" + naoConcluidos + ":" + cancelados);
 

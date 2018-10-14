@@ -24,8 +24,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
     private Drawable naoConcluido;
     private Drawable cancelado;
 
-
-
     public RecyclerViewAdapter(List<Tarefa> tarefas){
         this.tarefas = tarefas;
     }
@@ -48,15 +46,25 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
         TarefaViewHolder viewholder = (TarefaViewHolder) holder;
 
         viewholder.titulo.setText(tarefa.getTitulo());
+        viewholder.prioridade.setText(tarefa.getPrioridade().getDescricao());
 
-        if(!tarefa.getPrioridade().equals(Prioridade.INDEFINIDO)){
+        defineTextoData(tarefa, viewholder);
+        defineCorTextoPrioridade(tarefa, viewholder);
+        definiIconeStatus(tarefa, viewholder);
+
+    }
+
+    private void defineTextoData(Tarefa tarefa, TarefaViewHolder viewholder) {
+        if(!tarefa.getPrioridade().equals(Prioridade.NENHUM)){
             viewholder.dataConclusao.setText(DataFormatterUtil.formatarData(tarefa.getDataConlusao()));
             viewholder.horario.setText(DataFormatterUtil.formataHora(tarefa.getDataConlusao()));
         } else {
-            viewholder.dataConclusao.setText("Sem data Definida");
+            viewholder.dataConclusao.setText(R.string.rotulo_data_indefinida);
             viewholder.horario.setText("");
         }
+    }
 
+    private void defineCorTextoPrioridade(Tarefa tarefa, TarefaViewHolder viewholder) {
         switch(tarefa.getPrioridade().getCod()){
             case 1:
                 viewholder.prioridade.setTextColor(Prioridade.BAIXA.getCor());
@@ -68,11 +76,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
                 viewholder.prioridade.setTextColor(Prioridade.ALTA.getCor());
                 break;
             default:
-                viewholder.prioridade.setTextColor(Prioridade.INDEFINIDO.getCor());
+                viewholder.prioridade.setTextColor(Prioridade.NENHUM.getCor());
         }
+    }
 
-        viewholder.prioridade.setText(tarefa.getPrioridade().getDescricao());
-
+    private void definiIconeStatus(Tarefa tarefa, TarefaViewHolder viewholder) {
         if(tarefa.getStatus().equals(Status.CONCLUIDO)){
             viewholder.iconStatus.setImageDrawable(concluido);
             viewholder.tarjaStatus.setBackgroundColor(Prioridade.BAIXA.getCor());
@@ -84,8 +92,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
             viewholder.iconStatus.setImageDrawable(cancelado);
             viewholder.tarjaStatus.setBackgroundColor(Prioridade.ALTA.getCor());
         }
-
-
     }
 
     @Override
