@@ -4,12 +4,12 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:title="Configurações"
+            android:title="@string/menu_item_configuracoes"
             android:id="@+id/menu_configuracoes"
             android:icon="@drawable/ic_configuracoes" />
 
         <item
-            android:title="Sobre"
+            android:title="@string/menu_item_sobre"
             android:id="@+id/menu_sobre"
             android:icon="@drawable/ic_about" />
 

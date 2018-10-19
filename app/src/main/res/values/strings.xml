@@ -91,4 +91,10 @@
     <string name="resumo_tx_cancelados">CANCELADOS</string>
     <string name="resumo_tx_data_indefinida">DATA INDEFINIDA</string>
     <string name="email">adilson@gmail.com</string>
+    <string name="pref_summary_apagar_tarefas_antigas">Excluir tarefas com mais de um mês apos adicionado</string>
+    <string name="pref_titulo_apagar_tarefas_antigas">Apagar tarefas antigas.</string>
+    <string name="pref_summary_notificacoes">Notificações de aviso de tarefa no horário desativadas</string>
+    <string name="pref_titulo_notificacoes">Desativar Notificações</string>
+    <string name="menu_item_configuracoes">Configurações</string>
+    <string name="menu_item_sobre">Sobre</string>
 </resources>

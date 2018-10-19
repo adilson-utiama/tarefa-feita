@@ -3,14 +3,14 @@
 
     <CheckBoxPreference
         android:key="@string/apagar_tarefas_antigas"
-        android:summary="Excluir tarefas com mais de um mês apos adicionado"
-        android:title="Apagar tarefas antigas."
+        android:summary="@string/pref_summary_apagar_tarefas_antigas"
+        android:title="@string/pref_titulo_apagar_tarefas_antigas"
         android:defaultValue="false"/>
 
     <CheckBoxPreference
         android:key="@string/desativar_notificacao"
-        android:summary="Notificações de aviso de tarefa no horário desativadas"
-        android:title="Desativar Notificações"
+        android:summary="@string/pref_summary_notificacoes"
+        android:title="@string/pref_titulo_notificacoes"
         android:defaultValue="false"/>
 
 </PreferenceScreen>
