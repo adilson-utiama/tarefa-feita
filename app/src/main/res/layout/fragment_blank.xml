@@ -21,6 +21,6 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:layout_gravity="center"
-        android:text="Nenhuma Tarefa" />
+        android:text="@string/lista_vazia_nenhuma_tarefa" />
 
 </android.support.v7.widget.LinearLayoutCompat>
