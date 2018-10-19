@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="Versão 1.0"
+        android:text="@string/versao_app"
         app:layout_constraintEnd_toEndOf="@+id/textView_appName"
         app:layout_constraintStart_toStartOf="@+id/textView_appName"
         app:layout_constraintTop_toBottomOf="@+id/textView_appName" />
@@ -46,7 +46,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        android:text="Desenvolvido por:"
+        android:text="@string/desenvolvido_por"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_versao" />
@@ -58,7 +58,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Adilson S. Utiama"
+        android:text="@string/nome_desenvolvedor"
         android:textColor="@color/prioridadeBaixa"
         app:layout_constraintEnd_toEndOf="@+id/textView_desenvolvido_por"
         app:layout_constraintStart_toStartOf="@+id/textView_desenvolvido_por"

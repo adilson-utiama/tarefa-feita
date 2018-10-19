@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -44,7 +43,7 @@
                 android:layout_marginEnd="24dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
-                android:hint="Titulo Descritivo"
+                android:hint="@string/edit_hint_titulo_descritivo"
                 app:counterEnabled="true"
                 app:counterMaxLength="30"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -68,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
                 android:layout_marginStart="24dp"
-                android:hint="Anotações (Opcional)"
+                android:hint="@string/edit_hint_anota_es_opcional"
                 app:counterEnabled="true"
                 app:counterMaxLength="100"
                 app:layout_constraintEnd_toEndOf="@+id/textInputLayout_titulo"
@@ -91,7 +90,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:onClick="mostrarPainelData"
-                android:text="Definir Data e Horario?"
+                android:text="@string/link_tx_definir_data_e_horario"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimary"
                 android:visibility="visible"
@@ -119,7 +118,7 @@
                     android:layout_height="16dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:text="Conclusão"
+                    android:text="@string/tx_conclusao"
                     android:textAlignment="textStart"
                     android:textSize="12sp"
                     app:layout_constraintStart_toStartOf="@+id/btnCalendar"
@@ -148,7 +147,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:text="Horario"
+                    android:text="@string/tx_horario"
                     android:textSize="12sp"
                     app:layout_constraintStart_toStartOf="@+id/btnHorario"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -178,7 +177,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="24dp"
-                    android:text="Selecione uma Prioridade"
+                    android:text="@string/tx_selecione_uma_prioridade"
                     app:layout_constraintEnd_toEndOf="@+id/radioGroup"
                     app:layout_constraintStart_toStartOf="@+id/radioGroup"
                     app:layout_constraintTop_toBottomOf="@+id/btnCalendar" />
@@ -204,7 +203,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:onClick="onRadioButtonClicked"
-                        android:text="BAIXA" />
+                        android:text="@string/prioridade_baixa" />
 
                     <RadioButton
                         android:id="@+id/item_media"
@@ -212,7 +211,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:onClick="onRadioButtonClicked"
-                        android:text="MEDIA" />
+                        android:text="@string/prioridade_media" />
 
                     <RadioButton
                         android:id="@+id/item_alta"
@@ -220,7 +219,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:onClick="onRadioButtonClicked"
-                        android:text="ALTA" />
+                        android:text="@string/prioridade_alta" />
 
                 </RadioGroup>
 
@@ -247,7 +246,7 @@
                 android:layout_marginStart="64dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/rounded_corner_square"
-                android:text="Adicionar"
+                android:text="@string/btn_adicionar"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

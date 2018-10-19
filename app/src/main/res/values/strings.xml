@@ -65,4 +65,19 @@
     <string name="titulo_appbar_editar_tarefa">Editar Tarefa</string>
     <string name="rotulo_tarefa_cancelada">Tarefa Cancelada</string>
     <string name="validacao_msg_erro_prioridade">Selecione um Prioridade</string>
+    <string name="versao_app">Versão 1.0</string>
+    <string name="desenvolvido_por">Desenvolvido por:</string>
+    <string name="nome_desenvolvedor">Adilson S. Utiama</string>
+    <string name="edit_hint_titulo_descritivo">Titulo Descritivo</string>
+    <string name="edit_hint_anota_es_opcional">Anotações (Opcional)</string>
+    <string name="link_tx_definir_data_e_horario">Definir Data e Horario?</string>
+    <string name="tx_conclusao">Conclusão</string>
+    <string name="tx_horario">Horario</string>
+    <string name="tx_selecione_uma_prioridade">Selecione uma Prioridade</string>
+    <string name="prioridade_baixa">BAIXA</string>
+    <string name="prioridade_media">MEDIA</string>
+    <string name="prioridade_alta">ALTA</string>
+    <string name="btn_adicionar">Adicionar</string>
+    <string name="menu_opcao_editar">Editar</string>
+    <string name="menu_opcao_deletar">Deletar</string>
 </resources>
