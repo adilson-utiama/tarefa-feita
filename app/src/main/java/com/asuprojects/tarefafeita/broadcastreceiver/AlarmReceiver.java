@@ -13,6 +13,7 @@ import android.util.Log;
 import com.asuprojects.tarefafeita.R;
 import com.asuprojects.tarefafeita.activity.DetalhesActivity;
 import com.asuprojects.tarefafeita.domain.Tarefa;
+import com.asuprojects.tarefafeita.util.ByteArrayHelper;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -36,16 +37,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         if(intent.hasExtra(TAREFA_ALARM)){
             Log.i("CALENDAR", "onReceive: Achou Tarefa");
             byte[] data = intent.getByteArrayExtra(TAREFA_ALARM);
-            ByteArrayInputStream in = new ByteArrayInputStream(data);
-            ObjectInputStream is = null;
-            try {
-                is = new ObjectInputStream(in);
-                tarefa = (Tarefa) is.readObject();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+            tarefa = (Tarefa) ByteArrayHelper.toObject(data);
             Log.i("CALENDAR", "onReceive: " + tarefa);
         }
         if(tarefa != null){

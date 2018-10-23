@@ -6,6 +6,7 @@ import android.app.TimePickerDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
@@ -32,6 +33,7 @@ import com.asuprojects.tarefafeita.domain.Tarefa;
 import com.asuprojects.tarefafeita.domain.enums.Prioridade;
 import com.asuprojects.tarefafeita.domain.enums.Status;
 import com.asuprojects.tarefafeita.domain.viewmodel.AddTarefaViewModel;
+import com.asuprojects.tarefafeita.util.ByteArrayHelper;
 import com.asuprojects.tarefafeita.util.DataFormatterUtil;
 
 import java.io.ByteArrayOutputStream;
@@ -149,7 +151,6 @@ public class TarefaActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         eHEdicaoTarefa(intent);
-
     }
 
     private void eHEdicaoTarefa(Intent intent) {
@@ -179,23 +180,12 @@ public class TarefaActivity extends AppCompatActivity {
     }
 
     private void setAlarmeParaNotificacao(Tarefa tarefa) {
-
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         boolean notificacaoDesativada = sharedPref.getBoolean(getString(R.string.desativar_notificacao), false);
         if(!notificacaoDesativada){
             Intent intent = new Intent(EXECUTAR_ALARME);
 
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            ObjectOutputStream os = null;
-            byte[] bytesTarefa = null;
-            try {
-                os = new ObjectOutputStream(out);
-                os.writeObject(tarefa);
-                bytesTarefa = out.toByteArray();
-            } catch (IOException e) {
-
-                e.printStackTrace();
-            }
+            byte[] bytesTarefa = ByteArrayHelper.toByteArray(tarefa);
             intent.putExtra(TAREFA_ALARM, bytesTarefa);
 
             Random random = new Random();
@@ -207,7 +197,6 @@ public class TarefaActivity extends AppCompatActivity {
             AlarmManager alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
             AlarmManagerCompat.setExact(alarm, AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent);
         }
-
     }
 
     private boolean validaCampos(){
@@ -216,17 +205,14 @@ public class TarefaActivity extends AppCompatActivity {
             textInputLayout.setError(getString(R.string.validacao_campo_obrigatorio));
             return false;
         }
-
         if(dataFoiSelecionada() && !horaFoiSelecionada()){
             Toast.makeText(this, R.string.validacao_msg_erro_hora, Toast.LENGTH_SHORT).show();
             return false;
         }
-
         if(!dataFoiSelecionada() && horaFoiSelecionada()){
             Toast.makeText(this, R.string.validacao_msg_erro_data, Toast.LENGTH_SHORT).show();
             return false;
         }
-
         if(dataFoiSelecionada() && horaFoiSelecionada() && !editMode){
             if(!prioridadeSelecionada) {
                 Toast.makeText(this, R.string.validacao_msg_erro_prioridade, Toast.LENGTH_SHORT).show();
@@ -260,23 +246,16 @@ public class TarefaActivity extends AppCompatActivity {
 
     private void checkPrioridadeRadioButton(Prioridade prioridade) {
         RadioButton baixa = findViewById(R.id.item_baixa);
-        int baixaId = baixa.getId();
         RadioButton media = findViewById(R.id.item_media);
-        int mediaId = media.getId();
         RadioButton alta = findViewById(R.id.item_alta);
-        int altaId = alta.getId();
         switch (prioridade.getCod()){
             case 1:
-                radioGroup.check(baixaId);
-                break;
+                radioGroup.check(baixa.getId()); break;
             case 2:
-                radioGroup.check(mediaId);
-                break;
+                radioGroup.check(media.getId()); break;
             case 3:
-                radioGroup.check(altaId);
-                break;
+                radioGroup.check(alta.getId()); break;
         }
-
     }
 
     private Calendar buildCalendar(String data, String horario) {
@@ -328,19 +307,13 @@ public class TarefaActivity extends AppCompatActivity {
         prioridadeSelecionada = checked;
         switch(view.getId()){
             case R.id.item_baixa:
-                if(checked){
-                    prioridade = Prioridade.BAIXA;
-                }
+                if(checked) prioridade = Prioridade.BAIXA;
                 break;
             case R.id.item_media:
-                if(checked){
-                    prioridade = Prioridade.MEDIA;
-                }
+                if(checked) prioridade = Prioridade.MEDIA;
                 break;
             case R.id.item_alta:
-                if(checked){
-                    prioridade = Prioridade.ALTA;
-                }
+                if(checked) prioridade = Prioridade.ALTA;
                 break;
         }
     }
