@@ -1,5 +1,7 @@
 package com.asuprojects.tarefafeita.adapter;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,12 +21,14 @@ import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter {
 
     private List<Tarefa> tarefas;
+    private Context ctx;
 
     private Drawable concluido;
     private Drawable naoConcluido;
     private Drawable cancelado;
 
-    public RecyclerViewAdapter(List<Tarefa> tarefas){
+    public RecyclerViewAdapter(Context ctx, List<Tarefa> tarefas){
+        this.ctx = ctx;
         this.tarefas = tarefas;
     }
 
@@ -46,12 +50,30 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
         TarefaViewHolder viewholder = (TarefaViewHolder) holder;
 
         viewholder.titulo.setText(tarefa.getTitulo());
-        viewholder.prioridade.setText(tarefa.getPrioridade().getDescricao());
+        viewholder.prioridade.setText(getTexoPrioridade(tarefa.getPrioridade()));
 
         defineTextoData(tarefa, viewholder);
         defineCorTextoPrioridade(tarefa, viewholder);
         definiIconeStatus(tarefa, viewholder);
 
+    }
+
+    private String getTexoPrioridade(Prioridade pri){
+        String prioridade = null;
+        switch(pri.getCod()){
+            case 1:
+                prioridade = ctx.getResources().getString(R.string.prioridade_baixa);
+                break;
+            case 2:
+                prioridade = ctx.getResources().getString(R.string.prioridade_media);
+                break;
+            case 3:
+                prioridade = ctx.getResources().getString(R.string.prioridade_alta);
+                break;
+            case 4:
+                prioridade = ctx.getResources().getString(R.string.prioridade_nenhum);
+        }
+        return prioridade;
     }
 
     private void defineTextoData(Tarefa tarefa, TarefaViewHolder viewholder) {

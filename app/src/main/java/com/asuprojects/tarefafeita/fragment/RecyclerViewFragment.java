@@ -60,7 +60,7 @@ public class RecyclerViewFragment extends Fragment {
         }
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        this.adapter = new RecyclerViewAdapter(new ArrayList<Tarefa>());
+        this.adapter = new RecyclerViewAdapter(getActivity(), new ArrayList<Tarefa>());
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewSelecionados);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(this.adapter);

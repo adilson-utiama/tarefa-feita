@@ -1,0 +1,99 @@
+<resources>
+    <string name="app_name">Tarefa Feita</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="open_drawer">open</string>
+    <string name="close_drawer">close</string>
+    <string name="title_activity_detalhes">DetalhesActivity</string>
+
+
+    <string name="material_calendar_monday">Seg</string>
+    <string name="material_calendar_tuesday">Ter</string>
+    <string name="material_calendar_wednesday">Qua</string>
+    <string name="material_calendar_thursday">Qui</string>
+    <string name="material_calendar_friday">Sex</string>
+    <string name="material_calendar_saturday">Sab</string>
+    <string name="material_calendar_sunday">Dom</string>
+
+    <array name="material_calendar_months_array">
+        <item>Janeiro</item>
+        <item>Fevereiro</item>
+        <item>Março</item>
+        <item>Abril</item>
+        <item>Maio</item>
+        <item>Junho</item>
+        <item>Julho</item>
+        <item>Agosto</item>
+        <item>Setembro</item>
+        <item>Outubro</item>
+        <item>Novembro</item>
+        <item>Dezembro</item>
+    </array>
+
+    <string name="material_calendar_today_button">Hoje</string>
+    <string name="material_calendar_positive_button">OK</string>
+    <string name="material_calendar_negative_button">Cancel</string>
+    <string name="desativar_notificacao">desativar_notificacoes</string>
+    <string name="apagar_tarefas_antigas">apagar_tarefas_antigas</string>
+    <string name="selecao_data">Data</string>
+    <string name="selecao_horario">Horario</string>
+    <string name="tarefa_a_realizar">Tarefa a ser realizada!</string>
+    <string name="sobre">Sobre</string>
+    <string name="configuracoes_titulo">Configurações</string>
+    <string name="texto_atualizar_tarefa">Atualizar</string>
+    <string name="validacao_campo_obrigatorio">Preenchimento Obrigatório.</string>
+    <string name="validacao_msg_erro_hora">Necessario Selecionar Horario</string>
+    <string name="validacao_msg_erro_data">Necessario Selecionar Data</string>
+    <string name="sair_app_msg">Sair do Aplicativo?</string>
+    <string name="opcao_sim">SIM</string>
+    <string name="opcao_nao">NÂO</string>
+    <string name="aba_tarefas_do_dia">Atual</string>
+    <string name="aba_tarefas_sem_data">Sem Data</string>
+    <string name="aba_tarefas_geral">Lista Geral</string>
+    <string name="aba_tarefas_resumo">Resumo</string>
+    <string name="opcao_deletar">Deletar</string>
+    <string name="opcao_cancelar">Cancelar</string>
+    <string name="rotulo_data_indefinida">Nenhuma data definida</string>
+    <string name="titulo_toolbar_adicionar_tarefa">Adicionar Tarefa</string>
+    <string name="notificacao_subtexto">Clique para mais detalhes</string>
+    <string name="escolher_opcao">Escolha uma Opção</string>
+    <string name="cancelar_tarefa">Cancelar Tarefa?</string>
+    <string name="tarefa_esta_concluida">Tarefa Concluida?</string>
+    <string name="desmarcar_tarefa_concluida">Desmarcar Concluir?</string>
+    <string name="deletar_tarefa">Deletar Tarefa?</string>
+    <string name="titulo_appbar_editar_tarefa">Editar Tarefa</string>
+    <string name="rotulo_tarefa_cancelada">Tarefa Cancelada</string>
+    <string name="validacao_msg_erro_prioridade">Selecione um Prioridade</string>
+    <string name="versao_app">Versão 1.0</string>
+    <string name="desenvolvido_por">Desenvolvido por:</string>
+    <string name="nome_desenvolvedor">Adilson S. Utiama</string>
+    <string name="edit_hint_titulo_descritivo">Titulo Descritivo</string>
+    <string name="edit_hint_anota_es_opcional">Anotações (Opcional)</string>
+    <string name="link_tx_definir_data_e_horario">Definir Data e Horario?</string>
+    <string name="tx_conclusao">Conclusão</string>
+    <string name="tx_horario">Horario</string>
+    <string name="tx_selecione_uma_prioridade">Selecione uma Prioridade</string>
+    <string name="prioridade_baixa">BAIXA</string>
+    <string name="prioridade_media">MEDIA</string>
+    <string name="prioridade_alta">ALTA</string>
+    <string name="btn_adicionar">Adicionar</string>
+    <string name="menu_opcao_editar">Editar</string>
+    <string name="menu_opcao_deletar">Deletar</string>
+    <string name="tx_adicionado_em">Adicionado em</string>
+    <string name="tx_titulo_descritivo">Titulo Descritivo</string>
+    <string name="tx_anotaces">Anotações</string>
+    <string name="tx_prioridade">Prioridade</string>
+    <string name="lista_vazia_nenhuma_tarefa">Nenhuma Tarefa</string>
+    <string name="tx_total_de_tarefas">Total de Tarefas:</string>
+    <string name="resumo_tx_concluidos">CONCLUIDOS</string>
+    <string name="resumo_tx_nao_concluidos">NÃO CONCLUIDOS</string>
+    <string name="resumo_tx_cancelados">CANCELADOS</string>
+    <string name="resumo_tx_data_indefinida">DATA INDEFINIDA</string>
+    <string name="email">adilson@gmail.com</string>
+    <string name="pref_summary_apagar_tarefas_antigas">Excluir tarefas com mais de um mês apos adicionado</string>
+    <string name="pref_titulo_apagar_tarefas_antigas">Apagar tarefas antigas.</string>
+    <string name="pref_summary_notificacoes">Notificações de aviso de tarefa no horário desativadas</string>
+    <string name="pref_titulo_notificacoes">Desativar Notificações</string>
+    <string name="menu_item_configuracoes">Configurações</string>
+    <string name="menu_item_sobre">Sobre</string>
+</resources>
