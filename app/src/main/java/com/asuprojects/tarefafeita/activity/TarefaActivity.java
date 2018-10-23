@@ -12,8 +12,10 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.AlarmManagerCompat;
+import android.support.v4.app.BundleCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -32,6 +34,9 @@ import com.asuprojects.tarefafeita.domain.enums.Status;
 import com.asuprojects.tarefafeita.domain.viewmodel.AddTarefaViewModel;
 import com.asuprojects.tarefafeita.util.DataFormatterUtil;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
@@ -40,7 +45,7 @@ public class TarefaActivity extends AppCompatActivity {
 
     public static final String EDITAR_TAREFA = "EDITAR_TAREFA";
     public static final String EXECUTAR_ALARME = "EXECUTAR_ALARME";
-    public static final String TAREFA = "tarefa";
+    public static final String TAREFA_ALARM = "tarefa";
     public static final int FEED_NUMBER = 2000;
     private TextInputLayout textInputLayout;
     private TextInputEditText inputTitulo;
@@ -60,6 +65,7 @@ public class TarefaActivity extends AppCompatActivity {
     private ConstraintLayout painelSelecaoData;
     private boolean painelVisivel = false;
     private boolean prioridadeSelecionada = false;
+    private boolean editMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,12 +127,13 @@ public class TarefaActivity extends AppCompatActivity {
                         String hora = btnSelecaoHorario.getText().toString();
                         Calendar dataConclusao = buildCalendar(data, hora);
                         tarefa.setDataConlusao(dataConclusao);
-                        tarefa.setPrioridade(prioridade);
+                        tarefa.setPrioridade(getCheckedPrioridade());
                     } else {
                         tarefa.setDataConlusao(Calendar.getInstance());
                         tarefa.setPrioridade(prioridade);
                     }
 
+                    Log.i("CALENDAR", "onClick: " + tarefa);
                     if (tarefa.getId() != 0) {
                         viewModel.atualiza(tarefa);
                     } else {
@@ -161,6 +168,7 @@ public class TarefaActivity extends AppCompatActivity {
                 checkPrioridadeRadioButton(tarefa.getPrioridade());
                 btnSalvar.setText(R.string.texto_atualizar_tarefa);
             }
+            editMode = true;
         }
     }
 
@@ -177,7 +185,19 @@ public class TarefaActivity extends AppCompatActivity {
         boolean notificacaoDesativada = sharedPref.getBoolean(getString(R.string.desativar_notificacao), false);
         if(!notificacaoDesativada){
             Intent intent = new Intent(EXECUTAR_ALARME);
-            intent.putExtra(TAREFA, tarefa);
+
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            ObjectOutputStream os = null;
+            byte[] bytesTarefa = null;
+            try {
+                os = new ObjectOutputStream(out);
+                os.writeObject(tarefa);
+                bytesTarefa = out.toByteArray();
+            } catch (IOException e) {
+
+                e.printStackTrace();
+            }
+            intent.putExtra(TAREFA_ALARM, bytesTarefa);
 
             Random random = new Random();
             int nextInt = random.nextInt(FEED_NUMBER);
@@ -208,11 +228,12 @@ public class TarefaActivity extends AppCompatActivity {
             return false;
         }
 
-        if(dataFoiSelecionada() && horaFoiSelecionada() && !prioridadeSelecionada) {
-            Toast.makeText(this, R.string.validacao_msg_erro_prioridade, Toast.LENGTH_SHORT).show();
-            return false;
+        if(dataFoiSelecionada() && horaFoiSelecionada() && !editMode){
+            if(!prioridadeSelecionada) {
+                Toast.makeText(this, R.string.validacao_msg_erro_prioridade, Toast.LENGTH_SHORT).show();
+                return false;
+            }
         }
-
         textInputLayout.setErrorEnabled(false);
         return true;
     }
@@ -223,6 +244,19 @@ public class TarefaActivity extends AppCompatActivity {
 
     private boolean horaFoiSelecionada(){
         return !btnSelecaoHorario.getText().toString().contentEquals(getString(R.string.selecao_horario));
+    }
+
+    private Prioridade getCheckedPrioridade(){
+        int checkedRadioButtonId = radioGroup.getCheckedRadioButtonId();
+        switch(checkedRadioButtonId){
+            case R.id.item_baixa:
+                return Prioridade.BAIXA;
+            case R.id.item_media:
+                return Prioridade.MEDIA;
+            case R.id.item_alta:
+                return Prioridade.ALTA;
+        }
+        return Prioridade.NENHUM;
     }
 
     private void checkPrioridadeRadioButton(Prioridade prioridade) {
@@ -247,16 +281,26 @@ public class TarefaActivity extends AppCompatActivity {
     }
 
     private Calendar buildCalendar(String data, String horario) {
+        Calendar calendar = Calendar.getInstance();
         int dia, mes, ano, hora, minuto = 0;
         String[] arrayData = data.split("/");
         String[] arrayHorario = horario.split(":");
-        dia = Integer.parseInt(arrayData[0]);
-        mes = Integer.parseInt(arrayData[1]);
-        ano = Integer.parseInt(arrayData[2]);
-        hora = Integer.parseInt(arrayHorario[0]);
-        minuto = Integer.parseInt(arrayHorario[1]);
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(ano, mes - 1, dia, hora, minuto);
+        if(data.matches("\\d{4}\\/\\d{1,2}\\/\\d{1,2}")){
+            ano = Integer.parseInt(arrayData[0]);
+            mes = Integer.parseInt(arrayData[1]);
+            dia = Integer.parseInt(arrayData[2]);
+            hora = Integer.parseInt(arrayHorario[0]);
+            minuto = Integer.parseInt(arrayHorario[1]);
+            calendar.set(ano, mes - 1, dia, hora, minuto);
+        }
+        if(data.matches("\\d{1,2}\\/\\d{1,2}\\/\\d{4}")){
+            dia = Integer.parseInt(arrayData[0]);
+            mes = Integer.parseInt(arrayData[1]);
+            ano = Integer.parseInt(arrayData[2]);
+            hora = Integer.parseInt(arrayHorario[0]);
+            minuto = Integer.parseInt(arrayHorario[1]);
+            calendar.set(ano, mes - 1, dia, hora, minuto);
+        }
         return calendar;
     }
 

@@ -40,7 +40,6 @@
     <string name="tarefa_a_realizar">Tarefa a ser realizada!</string>
     <string name="sobre">Sobre</string>
     <string name="configuracoes_titulo">Configurações</string>
-    <string name="intent_tarefa_notificacao">tarefa_notificacao</string>
     <string name="texto_atualizar_tarefa">Atualizar</string>
     <string name="validacao_campo_obrigatorio">Preenchimento Obrigatório.</string>
     <string name="validacao_msg_erro_hora">Necessario Selecionar Horario</string>

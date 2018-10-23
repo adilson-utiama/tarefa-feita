@@ -16,6 +16,7 @@ import com.asuprojects.tarefafeita.util.DataFormatterUtil;
 
 public class DetalhesActivity extends AppCompatActivity {
 
+    public static final String TAREFA_NOTIFICACAO = "tarefa_notificacao";
     private TextView titulo, anotacao, dataIncluisao, dataConclusao, prioridade;
     private Button btnOK;
 
@@ -33,9 +34,10 @@ public class DetalhesActivity extends AppCompatActivity {
         prioridade = findViewById(R.id.prioridadeTarefaDetalhes);
 
         Intent intent = getIntent();
-        if(intent.hasExtra(getString(R.string.intent_tarefa_notificacao))){
-            tarefa = (Tarefa) intent.getSerializableExtra(getString(R.string.intent_tarefa_notificacao));
+        if(intent.hasExtra(TAREFA_NOTIFICACAO)){
+            tarefa = (Tarefa) intent.getSerializableExtra(TAREFA_NOTIFICACAO);
             if(tarefa != null){
+                Log.i("CALENDAR", "onCreate: " + tarefa);
                 titulo.setText(tarefa.getTitulo());
                 anotacao.setText(tarefa.getAnotacao());
                 dataIncluisao.setText(DataFormatterUtil.formatarData(tarefa.getDataIncluida()));
