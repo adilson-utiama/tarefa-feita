@@ -78,7 +78,6 @@ public class TarefaActivity extends AppCompatActivity {
         inputTitulo = findViewById(R.id.input_titulo);
         inputAnotacao = findViewById(R.id.input_anotacao);
         radioGroup = findViewById(R.id.radioGroup);
-
         painelSelecaoData = findViewById(R.id.painelData);
 
         viewModel = ViewModelProviders.of(this).get(AddTarefaViewModel.class);
@@ -90,7 +89,6 @@ public class TarefaActivity extends AppCompatActivity {
                 DatePickerBuilder builder = new DatePickerBuilder(TarefaActivity.this, listener)
                         .date(Calendar.getInstance())
                         .pickerType(CalendarView.ONE_DAY_PICKER);
-
                 DatePicker datePicker = builder.build();
                 datePicker.show();
             }
@@ -169,6 +167,7 @@ public class TarefaActivity extends AppCompatActivity {
                 btnSalvar.setText(R.string.texto_atualizar_tarefa);
             }
             editMode = true;
+            painelSelecaoData.setVisibility(View.VISIBLE);
         }
     }
 
@@ -309,12 +308,8 @@ public class TarefaActivity extends AppCompatActivity {
         public void onTimeSet(TimePicker timePicker, int hora, int minutos) {
             String horaS = String.valueOf(hora);
             String minutosS = String.valueOf(minutos);
-            if (hora < 10){
-                horaS = "0" + horaS;
-            }
-            if(minutos < 10){
-                minutosS = "0" + minutos;
-            }
+            if(hora < 10) horaS = "0" + horaS;
+            if(minutos < 10) minutosS = "0" + minutos;
             btnSelecaoHorario.setText(horaS + ":" + minutosS);
         }
     };
