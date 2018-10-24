@@ -14,9 +14,12 @@ public class DataFormatterUtil {
     public static final String PATTERN_HORA = "HH:mm";
     public static final String PATTERN_DATA_HORA_BR = "dd/MM/yyyy - HH:mm";
     public static final String PATTERN_DATA_HORA_US = "yyyy/MM/dd - HH:mm";
+    public static final String PATTERN_DATA_EXTENSO_BR = "EEEE, dd 'de' MMMM";
+    public static final String PATTERN_DATA_EXTENSO_US = "EEEE, MMMM dd";
 
     private static final String DATA = "DATA";
     private static final String DATAHORA = "DATAHORA";
+    private static final String DATA_EXTENSO = "DATA_EXTENSO";
 
     public static String formatarData(Calendar data){
         return getDateFormatter(DATA).format(data.getTime());
@@ -27,12 +30,11 @@ public class DataFormatterUtil {
     }
 
     public static  String formataDataHora(Calendar data){
-        if(data != null){
-            Log.i("CALENDAR", "formataDataHora: " + data);
-        }else{
-            Log.i("CALENDAR", "formataDataHora: Calendar esta NULO");
-        }
         return getDateFormatter(DATAHORA).format(data.getTime());
+    }
+
+    public static String formataDataExtenso(Calendar data){
+        return getDateFormatter(DATA_EXTENSO).format(data.getTime());
     }
 
     private static boolean isBrasil(){
@@ -55,6 +57,13 @@ public class DataFormatterUtil {
                     format = new SimpleDateFormat(PATTERN_DATA_HORA_BR);
                 }else{
                     format = new SimpleDateFormat(PATTERN_DATA_HORA_US);
+                }
+                break;
+            case DATA_EXTENSO:
+                if(isBrasil()){
+                    format = new SimpleDateFormat(PATTERN_DATA_EXTENSO_BR);
+                }else{
+                    format = new SimpleDateFormat(PATTERN_DATA_EXTENSO_US);
                 }
                 break;
         }

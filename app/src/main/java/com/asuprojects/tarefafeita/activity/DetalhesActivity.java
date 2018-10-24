@@ -19,26 +19,43 @@ public class DetalhesActivity extends AppCompatActivity {
 
     public static final String TAREFA_NOTIFICACAO = "tarefa_notificacao";
     private TextView titulo, anotacao, dataIncluisao, dataConclusao, prioridade;
-    private Button btnOK;
-
-    private Tarefa tarefa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalhes);
 
+        configuraComponentes();
+
+        Intent intent = getIntent();
+        eHNotificacaoTarefa(intent);
+
+        configuraBtnOk();
+    }
+
+    private void configuraComponentes() {
         titulo = findViewById(R.id.tituloTarefaDetalhe);
         anotacao = findViewById(R.id.anotacoesTarefaDetalhes);
         dataIncluisao = findViewById(R.id.dataInclusaoTarefaDetalhe);
         dataConclusao = findViewById(R.id.dataConclusaoTarefaDetalhe);
         prioridade = findViewById(R.id.prioridadeTarefaDetalhes);
+    }
 
-        Intent intent = getIntent();
+    private void configuraBtnOk() {
+        Button btnOK = findViewById(R.id.btnOK);
+        btnOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(DetalhesActivity.this, MainActivity.class));
+                finish();
+            }
+        });
+    }
+
+    private void eHNotificacaoTarefa(Intent intent) {
         if(intent.hasExtra(TAREFA_NOTIFICACAO)){
-            tarefa = (Tarefa) intent.getSerializableExtra(TAREFA_NOTIFICACAO);
+            Tarefa tarefa = (Tarefa) intent.getSerializableExtra(TAREFA_NOTIFICACAO);
             if(tarefa != null){
-                Log.i("CALENDAR", "onCreate: " + tarefa);
                 titulo.setText(tarefa.getTitulo());
                 anotacao.setText(tarefa.getAnotacao());
                 dataIncluisao.setText(DataFormatterUtil.formatarData(tarefa.getDataIncluida()));
@@ -54,14 +71,5 @@ public class DetalhesActivity extends AppCompatActivity {
 
             }
         }
-
-        btnOK = findViewById(R.id.btnOK);
-        btnOK.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(DetalhesActivity.this, MainActivity.class));
-                finish();
-            }
-        });
     }
 }

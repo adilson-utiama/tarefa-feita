@@ -16,6 +16,7 @@ import com.asuprojects.tarefafeita.R;
 import com.asuprojects.tarefafeita.domain.Tarefa;
 import com.asuprojects.tarefafeita.domain.enums.Prioridade;
 import com.asuprojects.tarefafeita.domain.viewmodel.TarefaViewModel;
+import com.asuprojects.tarefafeita.util.DataFormatterUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -23,8 +24,6 @@ import java.util.List;
 
 
 public class ListaDoDiaFragment extends Fragment {
-
-    public static final String PATTERN_DATA_EXTENSO = "EEEE, dd 'de' MMMM";
 
     private TextView dataAtual;
     private int listSize;
@@ -69,7 +68,7 @@ public class ListaDoDiaFragment extends Fragment {
 
     private void setaDataAtual() {
         Calendar atual = Calendar.getInstance();
-        String dataExtenso = new SimpleDateFormat(PATTERN_DATA_EXTENSO).format(atual.getTime());
+        String dataExtenso = DataFormatterUtil.formataDataExtenso(atual);
         dataAtual.setText(dataExtenso);
     }
 

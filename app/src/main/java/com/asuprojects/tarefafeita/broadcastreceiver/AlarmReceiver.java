@@ -33,15 +33,11 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.i("CALENDAR", "onReceive: " + intent.getExtras());
         if(intent.hasExtra(TAREFA_ALARM)){
-            Log.i("CALENDAR", "onReceive: Achou Tarefa");
             byte[] data = intent.getByteArrayExtra(TAREFA_ALARM);
             tarefa = (Tarefa) ByteArrayHelper.toObject(data);
-            Log.i("CALENDAR", "onReceive: " + tarefa);
         }
         if(tarefa != null){
-            Log.i("CALENDAR", "onReceive: " + tarefa);
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_aviso)
                     .setContentTitle(context.getString(R.string.tarefa_a_realizar))
@@ -64,10 +60,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
             Notification notification = mBuilder.build();
             notificationManager.notify(notifyId, notification);
-        } else {
-            Log.i("CALENDAR", "onReceive: Tarefa esta NULO");
         }
-
     }
 
     private int geraNumeroAleatorio() {

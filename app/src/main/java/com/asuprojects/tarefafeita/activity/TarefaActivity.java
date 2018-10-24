@@ -74,28 +74,61 @@ public class TarefaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tarefa);
 
-        configuraToolBar();
-
-        textInputLayout = findViewById(R.id.textInputLayout_titulo);
-        inputTitulo = findViewById(R.id.input_titulo);
-        inputAnotacao = findViewById(R.id.input_anotacao);
-        radioGroup = findViewById(R.id.radioGroup);
-        painelSelecaoData = findViewById(R.id.painelData);
-
         viewModel = ViewModelProviders.of(this).get(AddTarefaViewModel.class);
 
-        btnSelecaoData = findViewById(R.id.btnCalendar);
-        btnSelecaoData.setOnClickListener(new View.OnClickListener() {
+        configuraToolBar();
+        configuraComponentes();
+        configuraBtnSelData();
+        configuraBtnSelHorario();
+        configuraBtnSalvarTarefa();
+
+        Intent intent = getIntent();
+        eHEdicaoTarefa(intent);
+    }
+
+    private void configuraBtnSalvarTarefa() {
+        btnSalvar = findViewById(R.id.btnAdicionar);
+        btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatePickerBuilder builder = new DatePickerBuilder(TarefaActivity.this, listener)
-                        .date(Calendar.getInstance())
-                        .pickerType(CalendarView.ONE_DAY_PICKER);
-                DatePicker datePicker = builder.build();
-                datePicker.show();
+                if(validaCampos()) {
+                    if (tarefa == null) {
+                        tarefa = new Tarefa();
+                    }
+                    salvaTarefa();
+                    finish();
+                }
+
             }
         });
+    }
 
+    private void salvaTarefa() {
+        tarefa.setTitulo(inputTitulo.getText().toString());
+        tarefa.setAnotacao(inputAnotacao.getText().toString());
+        tarefa.setDataIncluida(Calendar.getInstance());
+        tarefa.setStatus(Status.ADICIONADO);
+        if(dataFoiSelecionada() && horaFoiSelecionada()){
+            String data = btnSelecaoData.getText().toString();
+            String hora = btnSelecaoHorario.getText().toString();
+            Calendar dataConclusao = buildCalendar(data, hora);
+            tarefa.setDataConlusao(dataConclusao);
+            tarefa.setPrioridade(getCheckedPrioridade());
+        } else {
+            tarefa.setDataConlusao(Calendar.getInstance());
+            tarefa.setPrioridade(prioridade);
+        }
+        if (tarefa.getId() != 0) {
+            viewModel.atualiza(tarefa);
+        } else {
+            viewModel.adiciona(tarefa);
+        }
+        if(!tarefa.getPrioridade().equals(Prioridade.NENHUM)){
+            setAlarmeParaNotificacao(tarefa);
+        }
+    }
+
+    private void configuraBtnSelHorario() {
         btnSelecaoHorario = findViewById(R.id.btnHorario);
         btnSelecaoHorario.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,54 +136,35 @@ public class TarefaActivity extends AppCompatActivity {
                 Calendar atual = Calendar.getInstance();
                 int horaAtual = atual.get(Calendar.HOUR_OF_DAY);
                 int minutosAtuais = atual.get(Calendar.MINUTE);
-                TimePickerDialog dialog = new TimePickerDialog(TarefaActivity.this, listenerHorario, horaAtual, minutosAtuais, true);
+                TimePickerDialog dialog = new TimePickerDialog(TarefaActivity.this,
+                        listenerHorario, horaAtual, minutosAtuais, true);
                 dialog.show();
             }
         });
+    }
 
-        btnSalvar = findViewById(R.id.btnAdicionar);
-        btnSalvar.setOnClickListener(new View.OnClickListener() {
+    private void configuraBtnSelData() {
+        btnSelecaoData = findViewById(R.id.btnCalendar);
+        btnSelecaoData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if(validaCampos()) {
-
-                    if (tarefa == null) {
-                        tarefa = new Tarefa();
-                    }
-                    tarefa.setTitulo(inputTitulo.getText().toString());
-                    tarefa.setAnotacao(inputAnotacao.getText().toString());
-                    tarefa.setDataIncluida(Calendar.getInstance());
-                    tarefa.setStatus(Status.ADICIONADO);
-                    if(dataFoiSelecionada() && horaFoiSelecionada()){
-                        String data = btnSelecaoData.getText().toString();
-                        String hora = btnSelecaoHorario.getText().toString();
-                        Calendar dataConclusao = buildCalendar(data, hora);
-                        tarefa.setDataConlusao(dataConclusao);
-                        tarefa.setPrioridade(getCheckedPrioridade());
-                    } else {
-                        tarefa.setDataConlusao(Calendar.getInstance());
-                        tarefa.setPrioridade(prioridade);
-                    }
-
-                    Log.i("CALENDAR", "onClick: " + tarefa);
-                    if (tarefa.getId() != 0) {
-                        viewModel.atualiza(tarefa);
-                    } else {
-                        viewModel.adiciona(tarefa);
-                    }
-
-                    if(!tarefa.getPrioridade().equals(Prioridade.NENHUM)){
-                        setAlarmeParaNotificacao(tarefa);
-                    }
-                    finish();
-                }
-
+                DatePickerBuilder builder = new DatePickerBuilder(TarefaActivity.this,
+                        listener)
+                        .date(Calendar.getInstance())
+                        .todayLabelColor(R.color.colorSecondary)
+                        .pickerType(CalendarView.ONE_DAY_PICKER);
+                DatePicker datePicker = builder.build();
+                datePicker.show();
             }
         });
+    }
 
-        Intent intent = getIntent();
-        eHEdicaoTarefa(intent);
+    private void configuraComponentes() {
+        textInputLayout = findViewById(R.id.textInputLayout_titulo);
+        inputTitulo = findViewById(R.id.input_titulo);
+        inputAnotacao = findViewById(R.id.input_anotacao);
+        radioGroup = findViewById(R.id.radioGroup);
+        painelSelecaoData = findViewById(R.id.painelData);
     }
 
     private void eHEdicaoTarefa(Intent intent) {

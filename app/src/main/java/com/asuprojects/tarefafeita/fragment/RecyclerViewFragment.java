@@ -89,14 +89,9 @@ public class RecyclerViewFragment extends Fragment {
                     public void onClickItemLongo(View view, int position) {
                         tarefa = RecyclerViewFragment.this.adapter.getTarefa(position);
 
-                        CharSequence[] opcoes = new CharSequence[3];
-                        opcoes[0] = "Editar";
-                        opcoes[1] = "Deletar";
-                        opcoes[2] = "Cancelar";
-
                         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                         builder.setTitle(R.string.escolher_opcao);
-                        builder.setItems(opcoes, new DialogInterface.OnClickListener() {
+                        builder.setItems(R.array.menu_onlong_click_dialog, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int selecao) {
                                 if(selecao == 0){
@@ -109,7 +104,6 @@ public class RecyclerViewFragment extends Fragment {
                                 }
                                 if(selecao == 2){
                                     mostrarDialogCancelarTarefa(tarefa);
-
                                 }
                             }
                         });

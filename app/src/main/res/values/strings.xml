@@ -6,7 +6,6 @@
     <string name="close_drawer">close</string>
     <string name="title_activity_detalhes">DetalhesActivity</string>
 
-
     <string name="material_calendar_monday">Mon</string>
     <string name="material_calendar_tuesday">Tue</string>
     <string name="material_calendar_wednesday">Wed</string>
@@ -28,6 +27,12 @@
         <item>October</item>
         <item>November</item>
         <item>December</item>
+    </array>
+
+    <array name="menu_onlong_click_dialog">
+        <item>Edit Task</item>
+        <item>Delete Task</item>
+        <item>Cancel Task</item>
     </array>
 
     <string name="desativar_notificacao">desativar_notificacoes</string>

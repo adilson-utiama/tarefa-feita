@@ -30,6 +30,12 @@
         <item>Dezembro</item>
     </array>
 
+    <array name="menu_onlong_click_dialog">
+        <item>Editar Tarefa</item>
+        <item>Deletar Tarefa</item>
+        <item>Cancelar Tarefa</item>
+    </array>
+
     <string name="material_calendar_today_button">Hoje</string>
     <string name="material_calendar_positive_button">OK</string>
     <string name="material_calendar_negative_button">Cancel</string>
