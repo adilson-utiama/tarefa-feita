@@ -26,6 +26,7 @@ import com.asuprojects.tarefafeita.domain.enums.Status;
 import com.asuprojects.tarefafeita.domain.viewmodel.TarefaViewModel;
 import com.asuprojects.tarefafeita.util.DataFormatterUtil;
 import com.asuprojects.tarefafeita.util.RecyclerViewItemListener;
+import com.asuprojects.tarefafeita.util.ResourcesHelper;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -243,7 +244,7 @@ public class RecyclerViewFragment extends Fragment {
         } else {
             prioridade.setTextColor(Prioridade.BAIXA.getCor());
         }
-        prioridade.setText(tarefa.getPrioridade().getDescricao());
+        prioridade.setText(ResourcesHelper.getTextoPrioridade(getActivity(), tarefa.getPrioridade()));
     }
 
     private void mostraDialogRemocao(final Tarefa tarefa) {

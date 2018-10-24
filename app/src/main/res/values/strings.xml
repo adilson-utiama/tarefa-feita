@@ -30,13 +30,14 @@
         <item>December</item>
     </array>
 
+    <string name="desativar_notificacao">desativar_notificacoes</string>
+    <string name="apagar_tarefas_antigas">apagar_tarefas_antigas</string>
+
     <string name="material_calendar_today_button">Today</string>
     <string name="material_calendar_positive_button">OK</string>
     <string name="material_calendar_negative_button">Cancel</string>
-    <string name="desativar_notificacao">desativar_notificacoes</string>
-    <string name="apagar_tarefas_antigas">apagar_tarefas_antigas</string>
     <string name="selecao_data">Date</string>
-    <string name="selecao_horario">Schedule</string>
+    <string name="selecao_horario">Time</string>
     <string name="tarefa_a_realizar">Task to be performed!</string>
     <string name="sobre">About</string>
     <string name="configuracoes_titulo">Settings</string>
@@ -70,8 +71,8 @@
     <string name="edit_hint_titulo_descritivo">Descriptive Title</string>
     <string name="edit_hint_anota_es_opcional">Notes (Optional)</string>
     <string name="link_tx_definir_data_e_horario">Set Date and Time?</string>
-    <string name="tx_conclusao">Conclusion</string>
-    <string name="tx_horario">Schedule</string>
+    <string name="tx_conclusao">Set Date</string>
+    <string name="tx_horario">Set Time</string>
     <string name="tx_selecione_uma_prioridade">Select a Priority</string>
     <string name="prioridade_baixa">LOW</string>
     <string name="prioridade_media">MEDIUM</string>
@@ -97,4 +98,9 @@
     <string name="pref_titulo_notificacoes">Disable Notifications</string>
     <string name="menu_item_configuracoes">Settings</string>
     <string name="menu_item_sobre">About</string>
+    <string name="tx_viewholder_prioridade">priority:</string>
+    <string name="sair">Exit</string>
+    <string name="tx_data_conclusao">Completion Date</string>
+    <string name="data_inclusao">Date Included</string>
+    <string name="tx_notificacao_de_tarefa">Task Notification</string>
 </resources>

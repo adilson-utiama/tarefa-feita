@@ -13,6 +13,7 @@ import com.asuprojects.tarefafeita.R;
 import com.asuprojects.tarefafeita.domain.Tarefa;
 import com.asuprojects.tarefafeita.domain.enums.Prioridade;
 import com.asuprojects.tarefafeita.util.DataFormatterUtil;
+import com.asuprojects.tarefafeita.util.ResourcesHelper;
 
 public class DetalhesActivity extends AppCompatActivity {
 
@@ -49,7 +50,7 @@ public class DetalhesActivity extends AppCompatActivity {
                 } else {
                     prioridade.setTextColor(Prioridade.BAIXA.getCor());
                 }
-                prioridade.setText(tarefa.getPrioridade().getDescricao());
+                prioridade.setText(ResourcesHelper.getTextoPrioridade(this, tarefa.getPrioridade()));
 
             }
         }

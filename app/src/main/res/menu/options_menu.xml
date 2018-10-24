@@ -3,9 +3,9 @@
 
     <item
         android:id="@+id/menuitem_cofiguracoes"
-        android:title="Configurações" />
+        android:title="@string/menu_item_configuracoes" />
 
     <item
         android:id="@+id/menuitem_sair"
-        android:title="Sair" />
+        android:title="@string/sair" />
 </menu>

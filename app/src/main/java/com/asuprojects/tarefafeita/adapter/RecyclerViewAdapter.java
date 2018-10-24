@@ -15,6 +15,7 @@ import com.asuprojects.tarefafeita.domain.Tarefa;
 import com.asuprojects.tarefafeita.domain.enums.Prioridade;
 import com.asuprojects.tarefafeita.domain.enums.Status;
 import com.asuprojects.tarefafeita.util.DataFormatterUtil;
+import com.asuprojects.tarefafeita.util.ResourcesHelper;
 
 import java.util.List;
 
@@ -50,30 +51,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
         TarefaViewHolder viewholder = (TarefaViewHolder) holder;
 
         viewholder.titulo.setText(tarefa.getTitulo());
-        viewholder.prioridade.setText(getTexoPrioridade(tarefa.getPrioridade()));
+        viewholder.prioridade.setText(ResourcesHelper.getTextoPrioridade(ctx, tarefa.getPrioridade()));
 
         defineTextoData(tarefa, viewholder);
         defineCorTextoPrioridade(tarefa, viewholder);
         definiIconeStatus(tarefa, viewholder);
 
-    }
-
-    private String getTexoPrioridade(Prioridade pri){
-        String prioridade = null;
-        switch(pri.getCod()){
-            case 1:
-                prioridade = ctx.getResources().getString(R.string.prioridade_baixa);
-                break;
-            case 2:
-                prioridade = ctx.getResources().getString(R.string.prioridade_media);
-                break;
-            case 3:
-                prioridade = ctx.getResources().getString(R.string.prioridade_alta);
-                break;
-            case 4:
-                prioridade = ctx.getResources().getString(R.string.prioridade_nenhum);
-        }
-        return prioridade;
     }
 
     private void defineTextoData(Tarefa tarefa, TarefaViewHolder viewholder) {

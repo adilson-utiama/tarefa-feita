@@ -76,6 +76,7 @@
     <string name="prioridade_baixa">BAIXA</string>
     <string name="prioridade_media">MEDIA</string>
     <string name="prioridade_alta">ALTA</string>
+    <string name="prioridade_nenhum">NENHUM</string>
     <string name="btn_adicionar">Adicionar</string>
     <string name="menu_opcao_editar">Editar</string>
     <string name="menu_opcao_deletar">Deletar</string>
@@ -96,4 +97,9 @@
     <string name="pref_titulo_notificacoes">Desativar Notificações</string>
     <string name="menu_item_configuracoes">Configurações</string>
     <string name="menu_item_sobre">Sobre</string>
+    <string name="tx_viewholder_prioridade">prioridade:</string>
+    <string name="sair">Sair</string>
+    <string name="tx_data_conclusao">Data Conclusão</string>
+    <string name="data_inclusao">Data Incluida</string>
+    <string name="tx_notificacao_de_tarefa">Notificação de Tarefa</string>
 </resources>
