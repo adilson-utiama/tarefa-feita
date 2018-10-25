@@ -89,6 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
+                android:fontFamily="@font/cabin"
                 android:onClick="mostrarPainelData"
                 android:text="@string/link_tx_definir_data_e_horario"
                 android:textAlignment="center"
@@ -118,6 +119,7 @@
                     android:layout_height="16dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
+                    android:fontFamily="@font/cabin"
                     android:text="@string/tx_conclusao"
                     android:textAlignment="textStart"
                     android:textSize="12sp"
@@ -132,6 +134,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="24dp"
                     android:background="@drawable/rounded_corner_square"
+                    android:fontFamily="@font/varela_round"
                     android:padding="5dp"
                     android:text="@string/selecao_data"
                     android:theme="@style/ThemeOverlay.AppCompat.Dark"
@@ -147,6 +150,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
+                    android:fontFamily="@font/cabin"
                     android:text="@string/tx_horario"
                     android:textSize="12sp"
                     app:layout_constraintStart_toStartOf="@+id/btnHorario"
@@ -160,6 +164,7 @@
                     android:layout_marginEnd="24dp"
                     android:layout_marginStart="8dp"
                     android:background="@drawable/rounded_corner_square"
+                    android:fontFamily="@font/varela_round"
                     android:padding="5dp"
                     android:text="@string/selecao_horario"
                     android:theme="@style/ThemeOverlay.AppCompat.Dark"
@@ -177,6 +182,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="24dp"
+                    android:fontFamily="@font/cabin"
                     android:text="@string/tx_selecione_uma_prioridade"
                     app:layout_constraintEnd_toEndOf="@+id/radioGroup"
                     app:layout_constraintStart_toStartOf="@+id/radioGroup"
@@ -202,6 +208,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/cabin"
                         android:onClick="onRadioButtonClicked"
                         android:text="@string/prioridade_baixa" />
 
@@ -210,6 +217,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/cabin"
                         android:onClick="onRadioButtonClicked"
                         android:text="@string/prioridade_media" />
 
@@ -218,6 +226,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:fontFamily="@font/cabin"
                         android:onClick="onRadioButtonClicked"
                         android:text="@string/prioridade_alta" />
 
@@ -246,6 +255,7 @@
                 android:layout_marginStart="64dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/rounded_corner_square"
+                android:fontFamily="@font/varela_round"
                 android:text="@string/btn_adicionar"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark"
                 app:layout_constraintBottom_toBottomOf="parent"

@@ -19,8 +19,10 @@
         android:id="@+id/texto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
         android:layout_gravity="center"
-        android:text="@string/lista_vazia_nenhuma_tarefa" />
+        android:fontFamily="@font/cabin"
+        android:text="@string/lista_vazia_nenhuma_tarefa"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
 </android.support.v7.widget.LinearLayoutCompat>

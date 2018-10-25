@@ -9,14 +9,15 @@
         android:id="@+id/dataAtual"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Tarefas Atuais"
-        android:textStyle="bold"
+        android:background="@color/colorPrimaryDark"
+        android:fontFamily="@font/varela_round"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:text="quarta-feira, 24 de outubro"
         android:textAlignment="center"
         android:textSize="18sp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:background="@color/colorPrimaryDark"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
+        android:textStyle="bold"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"

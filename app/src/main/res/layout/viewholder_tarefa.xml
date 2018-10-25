@@ -21,10 +21,11 @@
 
         <TextView
             android:id="@+id/tarefa_data_conclusao"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:fontFamily="@font/antic"
             android:text="20/08/2018"
             app:layout_constraintStart_toEndOf="@+id/tarja_status"
             app:layout_constraintTop_toTopOf="parent" />
@@ -33,10 +34,10 @@
             android:id="@+id/tarefa_titulo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp"
+            android:fontFamily="@font/cabin"
             android:text="Titulo Descritivo"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintStart_toStartOf="@+id/tarefa_data_conclusao"
@@ -47,7 +48,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/antic"
             android:text="@string/tx_viewholder_prioridade"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -59,6 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
+            android:fontFamily="@font/varela_round"
             android:text="ALTA"
             app:layout_constraintBottom_toBottomOf="@+id/textView_prioridade"
             app:layout_constraintStart_toEndOf="@+id/textView_prioridade"
@@ -70,6 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:fontFamily="@font/antic"
             android:text="10:00"
             app:layout_constraintBottom_toBottomOf="@+id/tarefa_data_conclusao"
             app:layout_constraintStart_toEndOf="@+id/tarefa_data_conclusao"
@@ -83,7 +87,7 @@
             android:layout_marginStart="311dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintGuide_percent="0.67"
+            app:layout_constraintGuide_percent="0.74"
             app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView

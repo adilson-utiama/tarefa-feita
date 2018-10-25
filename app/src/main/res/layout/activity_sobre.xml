@@ -47,6 +47,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:text="@string/desenvolvido_por"
+        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_versao" />
@@ -57,10 +58,23 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="@string/nome_desenvolvedor"
         android:textColor="@color/prioridadeBaixa"
         app:layout_constraintEnd_toEndOf="@+id/textView_desenvolvido_por"
         app:layout_constraintStart_toStartOf="@+id/textView_desenvolvido_por"
         app:layout_constraintTop_toBottomOf="@+id/textView_desenvolvido_por" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="@+id/textView_dev_name"
+        app:layout_constraintStart_toStartOf="@+id/textView_dev_name"
+        app:layout_constraintTop_toBottomOf="@+id/textView_dev_name"
+        tools:text="@string/email" />
 </android.support.constraint.ConstraintLayout>
