@@ -97,7 +97,7 @@
     <string name="resumo_tx_cancelados">CANCELADOS</string>
     <string name="resumo_tx_data_indefinida">DATA INDEFINIDA</string>
     <string name="email">adilson@gmail.com</string>
-    <string name="pref_summary_apagar_tarefas_antigas">Excluir tarefas com mais de um mês apos adicionado</string>
+    <string name="pref_summary_apagar_tarefas_antigas">Excluir tarefas com mais de 30 dias ou dias definido pelo usuário apos tarefa adicionada</string>
     <string name="pref_titulo_apagar_tarefas_antigas">Apagar tarefas antigas.</string>
     <string name="pref_summary_notificacoes">Notificações de aviso de tarefa no horário desativadas</string>
     <string name="pref_titulo_notificacoes">Desativar Notificações</string>
@@ -108,4 +108,7 @@
     <string name="tx_data_conclusao">Data Conclusão</string>
     <string name="data_inclusao">Data Incluida</string>
     <string name="tx_notificacao_de_tarefa">Notificação de Tarefa</string>
+    <string name="quant_dias_a_manter_tarefa">quant_dias_a_manter_tarefas</string>
+    <string name="pref_quant_dias_titulo">Quantidade de Dias</string>
+    <string name="pref_summary_quant_dias">Define quantidade de dias a manter tarefas. Padrão 30 dias</string>
 </resources>

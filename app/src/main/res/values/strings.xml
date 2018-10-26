@@ -97,7 +97,7 @@
     <string name="resumo_tx_cancelados">CANCELED</string>
     <string name="resumo_tx_data_indefinida">INDEFINITE DATE</string>
     <string name="email">adilson@gmail.com</string>
-    <string name="pref_summary_apagar_tarefas_antigas">Delete tasks longer than 30 days after adding</string>
+    <string name="pref_summary_apagar_tarefas_antigas">Delete tasks with more than 30 days or days defined by the user after added task</string>
     <string name="pref_titulo_apagar_tarefas_antigas">Delete old tasks.</string>
     <string name="pref_summary_notificacoes">On-time task alert notifications off</string>
     <string name="pref_titulo_notificacoes">Disable Notifications</string>
@@ -108,4 +108,7 @@
     <string name="tx_data_conclusao">Completion Date</string>
     <string name="data_inclusao">Date Included</string>
     <string name="tx_notificacao_de_tarefa">Task Notification</string>
+    <string name="quant_dias_a_manter_tarefa">quant_dias_a_manter_tarefas</string>
+    <string name="pref_quant_dias_titulo">Number of days</string>
+    <string name="pref_summary_quant_dias">Sets amount of days to keep tasks. Default: 30 days</string>
 </resources>

@@ -7,6 +7,13 @@
         android:title="@string/pref_titulo_apagar_tarefas_antigas"
         android:defaultValue="false"/>
 
+    <EditTextPreference
+        android:key="@string/quant_dias_a_manter_tarefa"
+        android:title="@string/pref_quant_dias_titulo"
+        android:summary="@string/pref_summary_quant_dias"
+        android:defaultValue="30"
+        android:inputType="number"/>
+
     <CheckBoxPreference
         android:key="@string/desativar_notificacao"
         android:summary="@string/pref_summary_notificacoes"

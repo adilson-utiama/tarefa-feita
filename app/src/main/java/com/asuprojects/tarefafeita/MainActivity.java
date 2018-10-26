@@ -241,12 +241,21 @@ public class MainActivity extends AppCompatActivity
 
     private void verificaTarefasAntigas(TarefaRepository repository) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean apagarTarefasAntigas = preferences.getBoolean(getString(R.string.apagar_tarefas_antigas), false);
-        if(apagarTarefasAntigas){
-            Calendar instance = Calendar.getInstance();
-            instance.add(Calendar.DAY_OF_MONTH, -30);
-            repository.apagarTarefasAntigas(instance);
+        if(preferences.contains(getString(R.string.quant_dias_a_manter_tarefa))){
+            String quant_dias_str = preferences.getString(getString(R.string.quant_dias_a_manter_tarefa), "30");
+            Integer quant_dias = Integer.valueOf(quant_dias_str);
+            Log.i("DIAS", "verificaTarefasAntigas: " + quant_dias);
+            if(quant_dias < 1){
+                quant_dias = 30;
+            }
+            boolean apagarTarefasAntigas = preferences.getBoolean(getString(R.string.apagar_tarefas_antigas), false);
+            if(apagarTarefasAntigas){
+                Calendar instance = Calendar.getInstance();
+                instance.add(Calendar.DAY_OF_MONTH, -quant_dias);
+                repository.apagarTarefasAntigas(instance);
+            }
         }
+
     }
 
     private boolean isConected(){
