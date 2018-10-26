@@ -11,6 +11,7 @@ import com.asuprojects.tarefafeita.domain.enums.Prioridade;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class TarefaRepository {
 
@@ -37,6 +38,18 @@ public class TarefaRepository {
 
     public LiveData<List<Tarefa>> getTarefasPela(Prioridade prioridade){
         return tarefaDao.listarPor(prioridade);
+    }
+
+    public Integer quantidadeTarefasAntigas(Calendar data){
+        Integer quant = 0;
+        try {
+            quant = new quantidadeTarefasAntigas(tarefaDao).execute(data).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return quant;
     }
 
     public void adiciona (Tarefa tarefa) {
@@ -107,4 +120,20 @@ public class TarefaRepository {
             return null;
         }
     }
+
+    private static class quantidadeTarefasAntigas extends AsyncTask<Calendar, Void, Integer>{
+        private TarefaDao asyncTaskDao;
+
+        quantidadeTarefasAntigas(TarefaDao dao){
+            asyncTaskDao = dao;
+        }
+        
+        @Override
+        protected Integer doInBackground(Calendar... data) {
+            int quant = asyncTaskDao.quantidadeTarefasAntigas(data[0]);
+            return quant;
+        }
+
+    }
+
 }

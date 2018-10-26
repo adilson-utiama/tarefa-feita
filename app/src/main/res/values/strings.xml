@@ -111,4 +111,13 @@
     <string name="quant_dias_a_manter_tarefa">quant_dias_a_manter_tarefas</string>
     <string name="pref_quant_dias_titulo">Number of days</string>
     <string name="pref_summary_quant_dias">Sets amount of days to keep tasks. Default: 30 days</string>
+    <string name="pref_key_aviso_tarefas_amtigas">aviso_de_tarefas_antigas</string>
+    <string name="pref_titulo_aviso_tarefas_antigas">Notice of Old Tasks</string>
+    <string name="pref_summary_tarefas_antigas">Enable / Disable warning when there are old tasks to remove. Default: enabled</string>
+    <string name="dlg_rem_tarefas_antigas_1">Task(s) over</string>
+    <string name="dlg_rem_tarefas_antigas_2">Days.</string>
+    <string name="dlg_rem_tarefas_antigas_3">Continue removal of the Task(s)?</string>
+    <string name="dlg_rem_tarefas_antigas_4">To disable this warning, go to the settings menu.</string>
+    <string name="dlg_rem_tarefas_antigas_title">Notice of Removal of Old Tasks</string>
+    <string name="opcao_prosseguir">Proceed</string>
 </resources>

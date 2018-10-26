@@ -46,4 +46,7 @@ public interface TarefaDao {
     @Query("DELETE FROM tabela_tarefa WHERE date(dataConlusao) < date(:data)")
     void apagarTarefasAntigas(Calendar data);
 
+    @Query("SELECT count() FROM tabela_tarefa WHERE date(dataConlusao) < date(:data)")
+    int quantidadeTarefasAntigas(Calendar data);
+
 }

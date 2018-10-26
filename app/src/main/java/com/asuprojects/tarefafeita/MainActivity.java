@@ -19,7 +19,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,7 +45,8 @@ public class MainActivity extends AppCompatActivity
 
     private DrawerLayout drawerLayout;
     private AdView mAdView;
-    LinearLayoutCompat container;
+    private LinearLayoutCompat container;
+    private TarefaRepository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +63,9 @@ public class MainActivity extends AppCompatActivity
             container.removeView(mAdView);
         }
 
-        TarefaRepository repository = new TarefaRepository(getApplication());
+        repository = new TarefaRepository(getApplication());
 
-        verificaTarefasAntigas(repository);
+        verificaTarefasAntigas();
 
         Toolbar toolbar = configuraToolbar();
 
@@ -239,23 +239,57 @@ public class MainActivity extends AppCompatActivity
         return toolbar;
     }
 
-    private void verificaTarefasAntigas(TarefaRepository repository) {
+    private void verificaTarefasAntigas() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean apagarTarefasAntigas = preferences.getBoolean(getString(R.string.apagar_tarefas_antigas), false);
+        boolean avisoTarefasAntigas = preferences.getBoolean(getString(R.string.pref_key_aviso_tarefas_amtigas), true);
+
         if(preferences.contains(getString(R.string.quant_dias_a_manter_tarefa))){
             String quant_dias_str = preferences.getString(getString(R.string.quant_dias_a_manter_tarefa), "30");
             Integer quant_dias = Integer.valueOf(quant_dias_str);
-            Log.i("DIAS", "verificaTarefasAntigas: " + quant_dias);
             if(quant_dias < 1){
                 quant_dias = 30;
             }
-            boolean apagarTarefasAntigas = preferences.getBoolean(getString(R.string.apagar_tarefas_antigas), false);
+            Calendar instance = Calendar.getInstance();
+            instance.add(Calendar.DAY_OF_MONTH, -quant_dias);
+
+            int quantTarefasAntigas = repository.quantidadeTarefasAntigas(instance);
+
             if(apagarTarefasAntigas){
-                Calendar instance = Calendar.getInstance();
-                instance.add(Calendar.DAY_OF_MONTH, -quant_dias);
-                repository.apagarTarefasAntigas(instance);
+                if(avisoTarefasAntigas && quantTarefasAntigas > 0){
+                    dialogRemoveTarefasAntigas(quant_dias, instance, quantTarefasAntigas);
+                } else {
+                    repository.apagarTarefasAntigas(instance);
+                }
+
             }
         }
 
+    }
+
+    private void dialogRemoveTarefasAntigas(final Integer quant_dias, final Calendar instance,
+                                            final int quantTarefasAntigas) {
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(quantTarefasAntigas).append(" ")
+                .append(getString(R.string.dlg_rem_tarefas_antigas_1)).append(" ")
+                .append(quant_dias).append(" ")
+                .append(getString(R.string.dlg_rem_tarefas_antigas_2)).append(" ")
+                .append(getString(R.string.dlg_rem_tarefas_antigas_3)).append("\n")
+                .append(getString(R.string.dlg_rem_tarefas_antigas_4));
+
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle(R.string.dlg_rem_tarefas_antigas_title)
+                .setIcon(R.drawable.ic_aviso_remocao_tarefa)
+                .setMessage(builder.toString())
+                .setPositiveButton(getString(R.string.opcao_prosseguir), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        repository.apagarTarefasAntigas(instance);
+                    }
+                })
+                .setNegativeButton(getString(R.string.opcao_cancelar), null)
+                .show();
     }
 
     private boolean isConected(){

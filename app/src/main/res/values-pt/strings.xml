@@ -111,4 +111,13 @@
     <string name="quant_dias_a_manter_tarefa">quant_dias_a_manter_tarefas</string>
     <string name="pref_quant_dias_titulo">Quantidade de Dias</string>
     <string name="pref_summary_quant_dias">Define quantidade de dias a manter tarefas. Padrão 30 dias</string>
+    <string name="pref_key_aviso_tarefas_amtigas">aviso_de_tarefas_antigas</string>
+    <string name="pref_titulo_aviso_tarefas_antigas">Aviso de Tarefas Antigas</string>
+    <string name="pref_summary_tarefas_antigas">Ativa/Desativa aviso quando houver tarefas antigas a remover. Padrao: ativado</string>
+    <string name="dlg_rem_tarefas_antigas_1">Tarefa(s) com mais de</string>
+    <string name="dlg_rem_tarefas_antigas_2">Dias.</string>
+    <string name="dlg_rem_tarefas_antigas_3">Prosseguir remoção das Tarefa(s)?</string>
+    <string name="dlg_rem_tarefas_antigas_4">Para desativar este aviso, acesse o menu de configurações</string>
+    <string name="dlg_rem_tarefas_antigas_title">Aviso de Remoção de Tarefas Antigas</string>
+    <string name="opcao_prosseguir">Prosseguir</string>
 </resources>

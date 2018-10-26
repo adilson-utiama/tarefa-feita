@@ -15,6 +15,12 @@
         android:inputType="number"/>
 
     <CheckBoxPreference
+        android:key="@string/pref_key_aviso_tarefas_amtigas"
+        android:title="@string/pref_titulo_aviso_tarefas_antigas"
+        android:summary="@string/pref_summary_tarefas_antigas"
+        android:defaultValue="true"/>
+
+    <CheckBoxPreference
         android:key="@string/desativar_notificacao"
         android:summary="@string/pref_summary_notificacoes"
         android:title="@string/pref_titulo_notificacoes"
