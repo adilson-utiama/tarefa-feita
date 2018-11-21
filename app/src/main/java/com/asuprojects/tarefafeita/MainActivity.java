@@ -146,10 +146,10 @@ public class MainActivity extends AppCompatActivity
 
     private void configuraAdView() {
         MobileAds.initialize(this,
-                "ca-app-pub-3940256099942544~3347511713");
+                getString(R.string.admob_test_id));
         mAdView = new AdView(this);
         mAdView.setAdSize(AdSize.SMART_BANNER);
-        mAdView.setAdUnitId("ca-app-pub-3940256099942544/6300978111");
+        mAdView.setAdUnitId(getString(R.string.admob_test_banner_id));
     }
 
     private void mostraDialogSairDoApp() {

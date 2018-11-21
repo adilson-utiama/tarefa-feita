@@ -15,7 +15,7 @@ import com.asuprojects.tarefafeita.database.converters.StatusTypeConverter;
 import com.asuprojects.tarefafeita.database.dao.TarefaDao;
 import com.asuprojects.tarefafeita.domain.Tarefa;
 
-@Database(entities = {Tarefa.class}, version = 1)
+@Database(entities = {Tarefa.class}, version = 1, exportSchema = false)
 @TypeConverters({
         PrioridadeTypeConverter.class,
         StatusTypeConverter.class,

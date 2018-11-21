@@ -42,6 +42,7 @@ public class Tarefa implements Serializable {
         this.status = Status.ADICIONADO;
     }
 
+    @Ignore
     public Tarefa(String titulo, Calendar dataConlusao, String anotacao, Prioridade prioridade) {
         this();
         this.titulo = titulo;

@@ -4,9 +4,13 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
@@ -14,6 +18,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.AlarmManagerCompat;
 import android.support.v4.app.BundleCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -29,6 +34,7 @@ import com.applandeo.materialcalendarview.DatePicker;
 import com.applandeo.materialcalendarview.builders.DatePickerBuilder;
 import com.applandeo.materialcalendarview.listeners.OnSelectDateListener;
 import com.asuprojects.tarefafeita.R;
+import com.asuprojects.tarefafeita.broadcastreceiver.AlarmReceiver;
 import com.asuprojects.tarefafeita.domain.Tarefa;
 import com.asuprojects.tarefafeita.domain.enums.Prioridade;
 import com.asuprojects.tarefafeita.domain.enums.Status;
@@ -197,7 +203,7 @@ public class TarefaActivity extends AppCompatActivity {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         boolean notificacaoDesativada = sharedPref.getBoolean(getString(R.string.desativar_notificacao), false);
         if(!notificacaoDesativada){
-            Intent intent = new Intent(EXECUTAR_ALARME);
+            Intent intent = new Intent(TarefaActivity.this, AlarmReceiver.class);
 
             byte[] bytesTarefa = ByteArrayHelper.toByteArray(tarefa);
             intent.putExtra(TAREFA_ALARM, bytesTarefa);
@@ -207,9 +213,23 @@ public class TarefaActivity extends AppCompatActivity {
             long timeInMillis = tarefa.getDataConlusao().getTimeInMillis();
 
             PendingIntent pendingIntent =
-                    PendingIntent.getBroadcast(TarefaActivity.this, nextInt, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-            AlarmManager alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
-            AlarmManagerCompat.setExact(alarm, AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent);
+                    PendingIntent.getBroadcast(TarefaActivity.this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            AlarmManager alarm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+            if(alarm != null){
+                Log.i("ALARM", "setAlarmeParaNotificacao: Alarme Setado");
+                AlarmManagerCompat.setExact(alarm, AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent);
+
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                    AlarmReceiver alarmReceiver = new AlarmReceiver();
+                    IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+                    filter.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+                    registerReceiver(alarmReceiver, filter);
+                    AlarmManagerCompat.setExact(alarm, AlarmManager.RTC_WAKEUP, timeInMillis, pendingIntent);
+                }
+            }
+
+
         }
     }
 

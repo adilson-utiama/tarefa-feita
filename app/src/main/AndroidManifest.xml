@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"/>
+            android:value="@string/admob_test_id"/>
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -32,19 +32,16 @@
 
         <receiver
             android:name=".broadcastreceiver.AlarmReceiver"
-            android:enabled="true"
-            android:exported="false">
+            android:enabled="true">
             <intent-filter>
                 <action android:name="EXECUTAR_ALARME" />
-
-                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
 
         <activity android:name=".activity.DetalhesActivity" />
         <activity
             android:name=".activity.SobreActivity"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity"/>
     </application>
 
 </manifest>

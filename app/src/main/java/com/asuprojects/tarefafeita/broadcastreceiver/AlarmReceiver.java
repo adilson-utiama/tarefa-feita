@@ -1,10 +1,15 @@
 package com.asuprojects.tarefafeita.broadcastreceiver;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -28,38 +33,71 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     private Tarefa tarefa;
 
-    private final int notifyId = 1;
+    private final int notifyId = 100;
     private final String CHANNEL_ID = "channelIdTarefa";
+    private final String CHANNEL_NAME = "channelTarefaFeita";
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.i("NOTIFICACAO", "onReceive: inicio");
         if(intent.hasExtra(TAREFA_ALARM)){
+            Log.i("NOTIFICACAO", "onReceive: Verificando intent TAREFA_ALARM");
             byte[] data = intent.getByteArrayExtra(TAREFA_ALARM);
             tarefa = (Tarefa) ByteArrayHelper.toObject(data);
         }
         if(tarefa != null){
+            Log.i("NOTIFICACAO", "onReceive: Tarefa NAO esta NULO");
+            NotificationManager notificationManager =
+                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_aviso)
                     .setContentTitle(context.getString(R.string.tarefa_a_realizar))
                     .setContentText(tarefa.getTitulo())
                     .setSubText(context.getString(R.string.notificacao_subtexto))
-                    .setVibrate(new long[]{ 100,250,100,500 })
                     .setAutoCancel(true);
 
-            int nextInt = geraNumeroAleatorio();
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                NotificationChannel nChannel =
+                        new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+                nChannel.enableLights(true);
+                nChannel.setLightColor(Color.RED);
+                nChannel.setShowBadge(true);
+                nChannel.enableVibration(true);
+                mBuilder.setChannelId(CHANNEL_ID);
+
+                if(notificationManager != null){
+                    notificationManager.createNotificationChannel(nChannel);
+                }
+            } else {
+                mBuilder.setDefaults(Notification.DEFAULT_SOUND |
+                                        Notification.DEFAULT_LIGHTS |
+                                        Notification.DEFAULT_VIBRATE);
+            }
+
+//            int nextInt = geraNumeroAleatorio();
 
             Intent resultIntent = new Intent(context, DetalhesActivity.class);
+            resultIntent.putExtra(TAREFA_NOTIFICACAO, tarefa);
             resultIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                     | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            resultIntent.putExtra(TAREFA_NOTIFICACAO, tarefa);
 
-            PendingIntent resultPendingIntent =
-                    PendingIntent.getActivity(context, nextInt, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            mBuilder.setContentIntent(resultPendingIntent);
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+            stackBuilder.addNextIntent(resultIntent);
 
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-            Notification notification = mBuilder.build();
-            notificationManager.notify(notifyId, notification);
+//            PendingIntent resultPendingIntent =
+//                    PendingIntent.getActivity(context, nextInt, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+//            mBuilder.setContentIntent(resultPendingIntent);
+
+            PendingIntent pendingIntent = stackBuilder.getPendingIntent(notifyId, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            mBuilder.setContentIntent(pendingIntent);
+
+            if(notificationManager != null){
+                notificationManager.notify(notifyId, mBuilder.build());
+            }
+        } else {
+            Log.i("NOTIFICACAO", "onReceive: TArefa ESTA NULO");
         }
     }
 

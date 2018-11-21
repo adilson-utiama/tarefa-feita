@@ -120,4 +120,6 @@
     <string name="dlg_rem_tarefas_antigas_4">Para desativar este aviso, acesse o menu de configurações</string>
     <string name="dlg_rem_tarefas_antigas_title">Aviso de Remoção de Tarefas Antigas</string>
     <string name="opcao_prosseguir">Prosseguir</string>
+    <string name="admob_app_id">ca-app-pub-5895689592844160~1143957563</string>
+    <string name="admob_banner_block_id">ca-app-pub-5895689592844160/1832659603</string>
 </resources>

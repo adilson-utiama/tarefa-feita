@@ -30,9 +30,6 @@ public interface TarefaDao {
     @Delete
     void remove(Tarefa tarefa);
 
-    @Query("DELETE FROM tabela_tarefa")
-    void deleteAll();
-
     @Query("SELECT * FROM tabela_tarefa ORDER BY dataConlusao DESC")
     LiveData<List<Tarefa>> listaOrdenadaPorDataConclusao();
 

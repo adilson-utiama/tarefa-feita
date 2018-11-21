@@ -120,4 +120,9 @@
     <string name="dlg_rem_tarefas_antigas_4">To disable this warning, go to the settings menu.</string>
     <string name="dlg_rem_tarefas_antigas_title">Notice of Removal of Old Tasks</string>
     <string name="opcao_prosseguir">Proceed</string>
+    <string name="admob_app_id">ca-app-pub-5895689592844160~1143957563</string>
+    <string name="admob_banner_block_id">ca-app-pub-5895689592844160/1832659603</string>
+
+    <string name="admob_test_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="admob_test_banner_id">ca-app-pub-3940256099942544/6300978111</string>
 </resources>
