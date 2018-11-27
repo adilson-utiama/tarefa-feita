@@ -35,4 +35,6 @@ public class AbasAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         return this.titulos.get(position);
     }
+
+
 }

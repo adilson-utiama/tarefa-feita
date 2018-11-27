@@ -5,19 +5,17 @@ import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.arch.persistence.room.TypeConverters;
+import android.arch.persistence.room.migration.Migration;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
 import com.asuprojects.tarefafeita.database.converters.CalendarTypeConverter;
-import com.asuprojects.tarefafeita.database.converters.PrioridadeTypeConverter;
 import com.asuprojects.tarefafeita.database.converters.StatusTypeConverter;
 import com.asuprojects.tarefafeita.database.dao.TarefaDao;
 import com.asuprojects.tarefafeita.domain.Tarefa;
 
 @Database(entities = {Tarefa.class}, version = 1, exportSchema = false)
 @TypeConverters({
-        PrioridadeTypeConverter.class,
         StatusTypeConverter.class,
         CalendarTypeConverter.class})
 public abstract class TarefaRoomDatabase extends RoomDatabase {
@@ -33,6 +31,7 @@ public abstract class TarefaRoomDatabase extends RoomDatabase {
                 if(INSTANCIA == null){
                     INSTANCIA = Room.databaseBuilder(context.getApplicationContext(),
                             TarefaRoomDatabase.class, NOME_BANCO)
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }

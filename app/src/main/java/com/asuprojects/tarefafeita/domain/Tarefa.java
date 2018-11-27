@@ -4,12 +4,9 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
-import android.support.annotation.NonNull;
 
 import com.asuprojects.tarefafeita.database.converters.CalendarTypeConverter;
-import com.asuprojects.tarefafeita.database.converters.PrioridadeTypeConverter;
 import com.asuprojects.tarefafeita.database.converters.StatusTypeConverter;
-import com.asuprojects.tarefafeita.domain.enums.Prioridade;
 import com.asuprojects.tarefafeita.domain.enums.Status;
 
 import java.io.Serializable;
@@ -31,24 +28,25 @@ public class Tarefa implements Serializable {
 
     private String anotacao;
 
-    @TypeConverters(PrioridadeTypeConverter.class)
-    private Prioridade prioridade;
-
     @TypeConverters(StatusTypeConverter.class)
     private Status status;
+
+    private boolean dataDefinida;
+
+    private boolean concluido;
 
     public Tarefa() {
         this.dataIncluida = Calendar.getInstance();
         this.status = Status.ADICIONADO;
+        this.concluido  = false;
     }
 
     @Ignore
-    public Tarefa(String titulo, Calendar dataConlusao, String anotacao, Prioridade prioridade) {
+    public Tarefa(String titulo, Calendar dataConlusao, String anotacao) {
         this();
         this.titulo = titulo;
         this.dataConlusao = dataConlusao;
         this.anotacao = anotacao;
-        this.prioridade = prioridade;
     }
 
     public long getId() {
@@ -91,14 +89,6 @@ public class Tarefa implements Serializable {
         this.anotacao = anotacao;
     }
 
-    public Prioridade getPrioridade() {
-        return prioridade;
-    }
-
-    public void setPrioridade(Prioridade prioridade) {
-        this.prioridade = prioridade;
-    }
-
     public Status getStatus() {
         return status;
     }
@@ -107,12 +97,32 @@ public class Tarefa implements Serializable {
         this.status = status;
     }
 
+    public void setConcluido(boolean conclusao){
+        this.concluido = conclusao;
+        if (conclusao){
+            setStatus(Status.CONCLUIDO);
+        } else {
+            setStatus(Status.ADICIONADO);
+        }
+    }
+
+    public boolean isConcluido() {
+        return concluido;
+    }
+
+    public void setDataDefinida(boolean definido){
+        this.dataDefinida = definido;
+    }
+
+    public boolean isDataDefinida() {
+        return dataDefinida;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("ID: ").append(getId()).append("Titulo: ").append(getTitulo())
-                .append("Data Conclusao: ").append(getDataConlusao().getTime())
-                .append("Prioridade: ").append(getPrioridade().getDescricao());
+                .append("Data Conclusao: ").append(getDataConlusao().getTime());
         return builder.toString();
     }
 }

@@ -6,7 +6,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 
 import com.asuprojects.tarefafeita.R;
 import com.asuprojects.tarefafeita.domain.Tarefa;
-import com.asuprojects.tarefafeita.domain.enums.Prioridade;
 import com.asuprojects.tarefafeita.domain.enums.Status;
 import com.asuprojects.tarefafeita.domain.viewmodel.TarefaViewModel;
 
@@ -56,33 +54,33 @@ public class ResumoFragment extends Fragment {
                 int concluidos = totalFromStatus(Status.CONCLUIDO);
                 int naoConcluidos = totalFromStatus(Status.ADICIONADO);
                 int cancelados = totalFromStatus(Status.CANCELADO);
-                int dataIndefinida = totalFromPrioridade(Prioridade.NENHUM);
+                int tarefasLivre = totalTarefasLivre();
 
                 tarefasTotais.setText(String.valueOf(total));
                 tarefasConcluidas.setText(String.valueOf(concluidos));
                 tarefasNaoConcluidas.setText(String.valueOf(naoConcluidos));
                 tarefasCanceladas.setText(String.valueOf(cancelados));
-                tarefasDataIndefinida.setText(String.valueOf(dataIndefinida));
+                tarefasDataIndefinida.setText(String.valueOf(tarefasLivre));
             }
         });
 
         return view;
     }
 
-    private int totalFromPrioridade(Prioridade indefinido) {
+    private int totalFromStatus(Status status) {
         int total = 0;
-        for(Tarefa t : listaTarefas) {
-            if(t.getPrioridade().equals(indefinido)) {
+        for(Tarefa t : listaTarefas){
+            if(t.getStatus().equals(status)){
                 total++;
             }
         }
         return total;
     }
 
-    private int totalFromStatus(Status status) {
+    private int totalTarefasLivre(){
         int total = 0;
         for(Tarefa t : listaTarefas){
-            if(t.getStatus().equals(status)){
+            if(!t.isDataDefinida()){
                 total++;
             }
         }

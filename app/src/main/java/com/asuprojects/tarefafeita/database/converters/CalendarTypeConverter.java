@@ -27,6 +27,7 @@ public class CalendarTypeConverter {
     @TypeConverter
     public static Calendar toCalendar(String data){
         Calendar instance = Calendar.getInstance();
+        Log.i("DATA", "toCalendar: " + data);
         try {
             Date date = format.parse(data);
             instance.setTime(date);

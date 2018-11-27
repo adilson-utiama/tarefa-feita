@@ -2,12 +2,12 @@ package com.asuprojects.tarefafeita.database.repository;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.content.Context;
 import android.os.AsyncTask;
 
 import com.asuprojects.tarefafeita.database.TarefaRoomDatabase;
 import com.asuprojects.tarefafeita.database.dao.TarefaDao;
 import com.asuprojects.tarefafeita.domain.Tarefa;
-import com.asuprojects.tarefafeita.domain.enums.Prioridade;
 
 import java.util.Calendar;
 import java.util.List;
@@ -18,7 +18,7 @@ public class TarefaRepository {
     private TarefaDao tarefaDao;
     private LiveData<List<Tarefa>> tarefas;
 
-    public TarefaRepository(Application application){
+    public TarefaRepository(Context application){
         TarefaRoomDatabase db = TarefaRoomDatabase.getDatabase(application);
         tarefaDao = db.getTarefaDao();
         tarefas = tarefaDao.listarTodos();
@@ -32,12 +32,12 @@ public class TarefaRepository {
         return tarefaDao.listaOrdenadaPorDataConclusao();
     }
 
-    public LiveData<List<Tarefa>> getTarefasDoDia(Calendar data, Prioridade prioridade) {
-        return tarefaDao.listaDoDia(data, prioridade);
+    public LiveData<List<Tarefa>> getTarefasSemDataDefinida() {
+        return tarefaDao.listaTarefasSemDataDefinida();
     }
 
-    public LiveData<List<Tarefa>> getTarefasPela(Prioridade prioridade){
-        return tarefaDao.listarPor(prioridade);
+    public LiveData<List<Tarefa>> getTarefasDoDia(Calendar data) {
+        return tarefaDao.listaDoDia(data);
     }
 
     public Integer quantidadeTarefasAntigas(Calendar data){

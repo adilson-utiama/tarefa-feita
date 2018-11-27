@@ -64,8 +64,6 @@
     <string name="notificacao_subtexto">Click for more details</string>
     <string name="escolher_opcao">Choose an Option</string>
     <string name="cancelar_tarefa">Cancel Task?</string>
-    <string name="tarefa_esta_concluida">Task Completed?</string>
-    <string name="desmarcar_tarefa_concluida">Deselect Finish?</string>
     <string name="deletar_tarefa">Delete Task?</string>
     <string name="titulo_appbar_editar_tarefa">Edit Task</string>
     <string name="rotulo_tarefa_cancelada">Task Canceled</string>
@@ -78,18 +76,12 @@
     <string name="link_tx_definir_data_e_horario">Set Date and Time?</string>
     <string name="tx_conclusao">Set Date</string>
     <string name="tx_horario">Set Time</string>
-    <string name="tx_selecione_uma_prioridade">Select a Priority</string>
-    <string name="prioridade_baixa">LOW</string>
-    <string name="prioridade_media">MEDIUM</string>
-    <string name="prioridade_alta">HIGH</string>
-    <string name="prioridade_nenhum">NONE</string>
     <string name="btn_adicionar">Add</string>
     <string name="menu_opcao_editar">Edit</string>
     <string name="menu_opcao_deletar">Delete</string>
     <string name="tx_adicionado_em">Added on</string>
     <string name="tx_titulo_descritivo">Descriptive Title</string>
     <string name="tx_anotaces">Annotations</string>
-    <string name="tx_prioridade">Priority</string>
     <string name="lista_vazia_nenhuma_tarefa">No Task</string>
     <string name="tx_total_de_tarefas">Total Tasks:</string>
     <string name="resumo_tx_concluidos">CONCLUDED</string>
@@ -103,7 +95,6 @@
     <string name="pref_titulo_notificacoes">Disable Notifications</string>
     <string name="menu_item_configuracoes">Settings</string>
     <string name="menu_item_sobre">About</string>
-    <string name="tx_viewholder_prioridade">priority:</string>
     <string name="sair">Exit</string>
     <string name="tx_data_conclusao">Completion Date</string>
     <string name="data_inclusao">Date Included</string>

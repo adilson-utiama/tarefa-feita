@@ -83,48 +83,43 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <TextView
-                android:id="@+id/textview_definirData"
-                android:layout_width="match_parent"
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/switch_painel"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/cabin"
-                android:onClick="mostrarPainelData"
                 android:text="@string/link_tx_definir_data_e_horario"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimary"
                 android:visibility="visible"
                 app:layout_constraintBottom_toTopOf="@+id/painelData"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textInputLayout_anotacao"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout_anotacao" />
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/painelData"
                 android:layout_width="match_parent"
-                android:layout_height="158dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:alpha="0.4"
                 android:fitsSystemWindows="true"
-                android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/btnAdicionar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textview_definirData">
+                app:layout_constraintTop_toBottomOf="@+id/switch_painel">
 
                 <TextView
                     android:id="@+id/text_dataConclusao"
                     android:layout_width="wrap_content"
-                    android:layout_height="16dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
                     android:fontFamily="@font/cabin"
                     android:text="@string/tx_conclusao"
                     android:textAlignment="textStart"
                     android:textSize="12sp"
-                    app:layout_constraintStart_toStartOf="@+id/btnCalendar"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintBottom_toTopOf="@+id/btnCalendar"
+                    app:layout_constraintStart_toStartOf="@+id/btnCalendar" />
 
                 <Button
                     android:id="@+id/btnCalendar"
@@ -133,6 +128,7 @@
                     android:layout_marginBottom="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
                     android:background="@drawable/rounded_corner_square"
                     android:fontFamily="@font/varela_round"
                     android:padding="5dp"
@@ -141,7 +137,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/guideline"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_dataConclusao"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
@@ -149,18 +145,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
                     android:fontFamily="@font/cabin"
                     android:text="@string/tx_horario"
                     android:textSize="12sp"
-                    app:layout_constraintStart_toStartOf="@+id/btnHorario"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintBottom_toTopOf="@+id/btnHorario"
+                    app:layout_constraintStart_toStartOf="@+id/btnHorario" />
 
                 <Button
                     android:id="@+id/btnHorario"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
                     android:layout_marginEnd="24dp"
                     android:layout_marginStart="8dp"
                     android:background="@drawable/rounded_corner_square"
@@ -168,69 +162,10 @@
                     android:padding="5dp"
                     android:text="@string/selecao_horario"
                     android:theme="@style/ThemeOverlay.AppCompat.Dark"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/btnCalendar"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline"
-                    app:layout_constraintTop_toBottomOf="@+id/text_horario"
-                    app:layout_constraintVertical_bias="0.0" />
-
-
-                <TextView
-                    android:id="@+id/text_prioridade"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="24dp"
-                    android:fontFamily="@font/cabin"
-                    android:text="@string/tx_selecione_uma_prioridade"
-                    app:layout_constraintEnd_toEndOf="@+id/radioGroup"
-                    app:layout_constraintStart_toStartOf="@+id/radioGroup"
-                    app:layout_constraintTop_toBottomOf="@+id/btnCalendar" />
-
-                <RadioGroup
-                    android:id="@+id/radioGroup"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginEnd="24dp"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="16dp"
-                    android:fitsSystemWindows="true"
-                    android:orientation="horizontal"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_prioridade">
-
-                    <RadioButton
-                        android:id="@+id/item_baixa"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/cabin"
-                        android:onClick="onRadioButtonClicked"
-                        android:text="@string/prioridade_baixa" />
-
-                    <RadioButton
-                        android:id="@+id/item_media"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/cabin"
-                        android:onClick="onRadioButtonClicked"
-                        android:text="@string/prioridade_media" />
-
-                    <RadioButton
-                        android:id="@+id/item_alta"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/cabin"
-                        android:onClick="onRadioButtonClicked"
-                        android:text="@string/prioridade_alta" />
-
-                </RadioGroup>
+                    app:layout_constraintTop_toTopOf="@+id/btnCalendar" />
 
 
                 <android.support.constraint.Guideline
@@ -243,6 +178,17 @@
                     app:layout_constraintGuide_percent="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/checkBox_notificacao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Receber Notificação"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/btnCalendar"
+                    app:layout_constraintTop_toBottomOf="@+id/btnCalendar" />
 
             </android.support.constraint.ConstraintLayout>
 

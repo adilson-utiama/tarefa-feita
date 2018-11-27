@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,15 +16,14 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.AlarmManagerCompat;
-import android.support.v4.app.BundleCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatCheckBox;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.CompoundButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -36,15 +34,12 @@ import com.applandeo.materialcalendarview.listeners.OnSelectDateListener;
 import com.asuprojects.tarefafeita.R;
 import com.asuprojects.tarefafeita.broadcastreceiver.AlarmReceiver;
 import com.asuprojects.tarefafeita.domain.Tarefa;
-import com.asuprojects.tarefafeita.domain.enums.Prioridade;
 import com.asuprojects.tarefafeita.domain.enums.Status;
 import com.asuprojects.tarefafeita.domain.viewmodel.AddTarefaViewModel;
 import com.asuprojects.tarefafeita.util.ByteArrayHelper;
+import com.asuprojects.tarefafeita.util.CalendarUtil;
 import com.asuprojects.tarefafeita.util.DataFormatterUtil;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
@@ -62,17 +57,15 @@ public class TarefaActivity extends AppCompatActivity {
     private Button btnSelecaoData;
     private Button btnSelecaoHorario;
     private Button btnSalvar;
-
-    private RadioGroup radioGroup;
-
     private AddTarefaViewModel viewModel;
 
-    private Tarefa tarefa;
-    private Prioridade prioridade = Prioridade.NENHUM;
+    private AppCompatCheckBox checkBoxNotificacao;
 
+    private Tarefa tarefa;
     private ConstraintLayout painelSelecaoData;
     private boolean painelVisivel = false;
-    private boolean prioridadeSelecionada = false;
+    private SwitchCompat switchPainel;
+
     private boolean editMode = false;
 
     @Override
@@ -82,14 +75,38 @@ public class TarefaActivity extends AppCompatActivity {
 
         viewModel = ViewModelProviders.of(this).get(AddTarefaViewModel.class);
 
+        checkBoxNotificacao = findViewById(R.id.checkBox_notificacao);
+
+        configuraPainelSelecaoData();
         configuraToolBar();
         configuraComponentes();
         configuraBtnSelData();
         configuraBtnSelHorario();
         configuraBtnSalvarTarefa();
+        eHEdicaoTarefa(getIntent());
+    }
 
-        Intent intent = getIntent();
-        eHEdicaoTarefa(intent);
+    private void configuraPainelSelecaoData() {
+        switchPainel = findViewById(R.id.switch_painel);
+        switchPainel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                painelVisivel = !painelVisivel;
+                if (painelVisivel){
+                    painelSelecaoData.animate().setDuration(500).alpha(1F);
+                    togglePainelData(true);
+                } else {
+                    painelSelecaoData.animate().setDuration(500).alpha(0.4F);
+                    togglePainelData(false);
+                }
+            }
+        });
+    }
+
+    private void togglePainelData(boolean visibilidade) {
+        btnSelecaoData.setEnabled(visibilidade);
+        btnSelecaoHorario.setEnabled(visibilidade);
+        checkBoxNotificacao.setEnabled(visibilidade);
     }
 
     private void configuraBtnSalvarTarefa() {
@@ -117,19 +134,21 @@ public class TarefaActivity extends AppCompatActivity {
         if(dataFoiSelecionada() && horaFoiSelecionada()){
             String data = btnSelecaoData.getText().toString();
             String hora = btnSelecaoHorario.getText().toString();
-            Calendar dataConclusao = buildCalendar(data, hora);
+            Calendar dataConclusao = CalendarUtil.buildCalendarFrom(data, hora);
             tarefa.setDataConlusao(dataConclusao);
-            tarefa.setPrioridade(getCheckedPrioridade());
+            tarefa.setDataDefinida(true);
         } else {
             tarefa.setDataConlusao(Calendar.getInstance());
-            tarefa.setPrioridade(prioridade);
+            tarefa.setDataDefinida(false);
         }
         if (tarefa.getId() != 0) {
             viewModel.atualiza(tarefa);
         } else {
             viewModel.adiciona(tarefa);
         }
-        if(!tarefa.getPrioridade().equals(Prioridade.NENHUM)){
+
+        boolean receberNotificacao = checkBoxNotificacao.isChecked();
+        if(receberNotificacao){
             setAlarmeParaNotificacao(tarefa);
         }
     }
@@ -157,7 +176,6 @@ public class TarefaActivity extends AppCompatActivity {
                 DatePickerBuilder builder = new DatePickerBuilder(TarefaActivity.this,
                         listener)
                         .date(Calendar.getInstance())
-                        .todayLabelColor(R.color.colorSecondary)
                         .pickerType(CalendarView.ONE_DAY_PICKER);
                 DatePicker datePicker = builder.build();
                 datePicker.show();
@@ -169,7 +187,6 @@ public class TarefaActivity extends AppCompatActivity {
         textInputLayout = findViewById(R.id.textInputLayout_titulo);
         inputTitulo = findViewById(R.id.input_titulo);
         inputAnotacao = findViewById(R.id.input_anotacao);
-        radioGroup = findViewById(R.id.radioGroup);
         painelSelecaoData = findViewById(R.id.painelData);
     }
 
@@ -180,15 +197,16 @@ public class TarefaActivity extends AppCompatActivity {
             if(tarefa != null){
                 inputTitulo.setText(tarefa.getTitulo());
                 inputAnotacao.setText(tarefa.getAnotacao());
-                if(!tarefa.getPrioridade().equals(Prioridade.NENHUM)){
+                if(tarefa.isDataDefinida()){
                     btnSelecaoData.setText(DataFormatterUtil.formatarData(tarefa.getDataConlusao()));
                     btnSelecaoHorario.setText(DataFormatterUtil.formataHora(tarefa.getDataConlusao()));
+                    togglePainelData(true);
+                    switchPainel.setChecked(true);
                 }
-                checkPrioridadeRadioButton(tarefa.getPrioridade());
                 btnSalvar.setText(R.string.texto_atualizar_tarefa);
             }
             editMode = true;
-            painelSelecaoData.setVisibility(View.VISIBLE);
+
         }
     }
 
@@ -247,12 +265,6 @@ public class TarefaActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.validacao_msg_erro_data, Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(dataFoiSelecionada() && horaFoiSelecionada() && !editMode){
-            if(!prioridadeSelecionada) {
-                Toast.makeText(this, R.string.validacao_msg_erro_prioridade, Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        }
         textInputLayout.setErrorEnabled(false);
         return true;
     }
@@ -265,65 +277,10 @@ public class TarefaActivity extends AppCompatActivity {
         return !btnSelecaoHorario.getText().toString().contentEquals(getString(R.string.selecao_horario));
     }
 
-    private Prioridade getCheckedPrioridade(){
-        int checkedRadioButtonId = radioGroup.getCheckedRadioButtonId();
-        switch(checkedRadioButtonId){
-            case R.id.item_baixa:
-                return Prioridade.BAIXA;
-            case R.id.item_media:
-                return Prioridade.MEDIA;
-            case R.id.item_alta:
-                return Prioridade.ALTA;
-        }
-        return Prioridade.NENHUM;
-    }
-
-    private void checkPrioridadeRadioButton(Prioridade prioridade) {
-        RadioButton baixa = findViewById(R.id.item_baixa);
-        RadioButton media = findViewById(R.id.item_media);
-        RadioButton alta = findViewById(R.id.item_alta);
-        switch (prioridade.getCod()){
-            case 1:
-                radioGroup.check(baixa.getId()); break;
-            case 2:
-                radioGroup.check(media.getId()); break;
-            case 3:
-                radioGroup.check(alta.getId()); break;
-        }
-    }
-
-    private Calendar buildCalendar(String data, String horario) {
-        Calendar calendar = Calendar.getInstance();
-        int dia, mes, ano, hora, minuto = 0;
-        String[] arrayData = data.split("/");
-        String[] arrayHorario = horario.split(":");
-        if(data.matches("\\d{4}\\/\\d{1,2}\\/\\d{1,2}")){
-            ano = Integer.parseInt(arrayData[0]);
-            mes = Integer.parseInt(arrayData[1]);
-            dia = Integer.parseInt(arrayData[2]);
-            hora = Integer.parseInt(arrayHorario[0]);
-            minuto = Integer.parseInt(arrayHorario[1]);
-            calendar.set(ano, mes - 1, dia, hora, minuto);
-        }
-        if(data.matches("\\d{1,2}\\/\\d{1,2}\\/\\d{4}")){
-            dia = Integer.parseInt(arrayData[0]);
-            mes = Integer.parseInt(arrayData[1]);
-            ano = Integer.parseInt(arrayData[2]);
-            hora = Integer.parseInt(arrayHorario[0]);
-            minuto = Integer.parseInt(arrayHorario[1]);
-            calendar.set(ano, mes - 1, dia, hora, minuto);
-        }
-        return calendar;
-    }
-
     private TimePickerDialog.OnTimeSetListener listenerHorario = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePicker timePicker, int hora, int minutos) {
-            String horaS = String.valueOf(hora);
-            String minutosS = String.valueOf(minutos);
-            if(hora < 10) horaS = "0" + horaS;
-            if(minutos < 10) minutosS = "0" + minutos;
-            btnSelecaoHorario.setText(horaS + ":" + minutosS);
+            btnSelecaoHorario.setText(DataFormatterUtil.formataHorario(hora, minutos));
         }
     };
 
@@ -335,30 +292,5 @@ public class TarefaActivity extends AppCompatActivity {
             btnSelecaoData.setText(data);
         }
     };
-
-    public void onRadioButtonClicked(View view) {
-        boolean checked = ((RadioButton) view).isChecked();
-        prioridadeSelecionada = checked;
-        switch(view.getId()){
-            case R.id.item_baixa:
-                if(checked) prioridade = Prioridade.BAIXA;
-                break;
-            case R.id.item_media:
-                if(checked) prioridade = Prioridade.MEDIA;
-                break;
-            case R.id.item_alta:
-                if(checked) prioridade = Prioridade.ALTA;
-                break;
-        }
-    }
-
-    public void mostrarPainelData(View view){
-        painelVisivel = !painelVisivel;
-        if (painelVisivel){
-            painelSelecaoData.setVisibility(View.VISIBLE);
-        } else {
-            painelSelecaoData.setVisibility(View.GONE);
-        }
-    }
 
 }

@@ -11,22 +11,28 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.asuprojects.tarefafeita.R;
 import com.asuprojects.tarefafeita.activity.TarefaActivity;
+import com.asuprojects.tarefafeita.adapter.ClickMenuListener;
 import com.asuprojects.tarefafeita.adapter.RecyclerViewAdapter;
+import com.asuprojects.tarefafeita.adapter.SwitthChangeListener;
+import com.asuprojects.tarefafeita.database.repository.TarefaRepository;
 import com.asuprojects.tarefafeita.domain.Tarefa;
-import com.asuprojects.tarefafeita.domain.enums.Prioridade;
 import com.asuprojects.tarefafeita.domain.enums.Status;
 import com.asuprojects.tarefafeita.domain.viewmodel.TarefaViewModel;
 import com.asuprojects.tarefafeita.util.DataFormatterUtil;
 import com.asuprojects.tarefafeita.util.RecyclerViewItemListener;
-import com.asuprojects.tarefafeita.util.ResourcesHelper;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,6 +51,8 @@ public class RecyclerViewFragment extends Fragment {
 
     private TipoLista tipoLista;
 
+    private RecyclerView recyclerView;
+
     public RecyclerViewFragment() {
         // Required empty public constructor
     }
@@ -62,7 +70,7 @@ public class RecyclerViewFragment extends Fragment {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         this.adapter = new RecyclerViewAdapter(getActivity(), new ArrayList<Tarefa>());
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerViewSelecionados);
+        recyclerView = view.findViewById(R.id.recyclerViewSelecionados);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(this.adapter);
 
@@ -74,7 +82,59 @@ public class RecyclerViewFragment extends Fragment {
             throw new RuntimeException("Necessario informar tipo de lista");
         }
 
+        adicionaListenerSwitchAdapter();
+        //adicionaClickListener();
 
+        return view;
+    }
+
+    private void adicionaListenerSwitchAdapter() {
+        adapter.setListener(new SwitthChangeListener() {
+            @Override
+            public void onChecked(int position, CompoundButton buttonView, boolean isChecked) {
+                adapter.setListener(null);
+
+                Log.i("CHECKED", "Checked: " + isChecked + " | Position: " + position);
+                Tarefa tarefa = RecyclerViewFragment.this.adapter.getTarefa(position);
+                tarefa.setConcluido(isChecked);
+                viewModel.atualiza(tarefa);
+
+                adapter.setListener(this);
+            }
+        });
+        adapter.setMenuListener(new ClickMenuListener() {
+            @Override
+            public void onClickMenu(View view,final int position) {
+                tarefa = adapter.getTarefa(position);
+                PopupMenu popupMenu = new PopupMenu(getActivity(), view);
+                popupMenu.getMenuInflater()
+                        .inflate(R.menu.menu_item, popupMenu.getMenu());
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch(item.getItemId()) {
+                            case R.id.details_task:
+                                mostraDialogStatus();
+                                return true;
+                            case R.id.edit_task:
+                                Intent editarTarefa = new Intent(getActivity(), TarefaActivity.class);
+                                editarTarefa.putExtra(TarefaActivity.EDITAR_TAREFA, tarefa);
+                                startActivity(editarTarefa);
+                                return true;
+                            case R.id.delete_task:
+                                mostraDialogRemocao(tarefa);
+                                return true;
+                         }
+                        return false;
+                    }
+                });
+                popupMenu.show();
+            }
+        });
+    }
+
+    private void adicionaClickListener() {
         recyclerView.addOnItemTouchListener(new RecyclerViewItemListener(
                 getContext(),
                 recyclerView,
@@ -115,7 +175,6 @@ public class RecyclerViewFragment extends Fragment {
                     }
                 }
         ));
-        return view;
     }
 
     private void mostrarDialogCancelarTarefa(final Tarefa tarefa) {
@@ -142,7 +201,7 @@ public class RecyclerViewFragment extends Fragment {
     private void verificaTipoLista() {
         switch(tipoLista.getCode()){
             case 1:
-                viewModel.getTarefas(Calendar.getInstance(), Prioridade.NENHUM).observe(RecyclerViewFragment.this, new Observer<List<Tarefa>>() {
+                viewModel.getTarefas(Calendar.getInstance()).observe(RecyclerViewFragment.this, new Observer<List<Tarefa>>() {
                     @Override
                     public void onChanged(@Nullable List<Tarefa> tasks) {
                         RecyclerViewFragment.this.adapter.setListaTarefas(tasks);
@@ -150,7 +209,7 @@ public class RecyclerViewFragment extends Fragment {
                 });
                 break;
             case 2:
-                viewModel.getTarefas(Prioridade.NENHUM).observe(RecyclerViewFragment.this, new Observer<List<Tarefa>>() {
+                viewModel.getTarefasSemDataDefinida().observe(RecyclerViewFragment.this, new Observer<List<Tarefa>>() {
                     @Override
                     public void onChanged(@Nullable List<Tarefa> tasks) {
                         RecyclerViewFragment.this.adapter.setListaTarefas(tasks);
@@ -176,24 +235,8 @@ public class RecyclerViewFragment extends Fragment {
         View view = preencherTarefaDetalheDialog();
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setView(view);
-
-        if(!tarefa.getStatus().equals(Status.CONCLUIDO)){
-            builder.setTitle(R.string.tarefa_esta_concluida);
-        }else{
-            builder.setTitle(R.string.desmarcar_tarefa_concluida);
-        }
-        builder.setPositiveButton(getString(R.string.opcao_sim), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if(!tarefa.getStatus().equals(Status.CONCLUIDO)){
-                    tarefa.setStatus(Status.CONCLUIDO);
-                }else{
-                    tarefa.setStatus(Status.ADICIONADO);
-                }
-                viewModel.atualiza(tarefa);
-            }
-        });
-        builder.setNeutralButton(getString(R.string.opcao_nao), null);
+        builder.setTitle("Detalhes da Tarefa");
+        builder.setPositiveButton("OK", null);
         builder.setIcon(R.drawable.ic_question);
         builder.show();
     }
@@ -207,38 +250,23 @@ public class RecyclerViewFragment extends Fragment {
 
         TextView horario = view.findViewById(R.id.detalhe_horario);
         TextView titulo = view.findViewById(R.id.detalhe_titulo);
-
         titulo.setText(tarefa.getTitulo());
         TextView anotacao = view.findViewById(R.id.detalhe_anotacao);
-
         anotacao.setText(tarefa.getAnotacao());
-        TextView prioridade = view.findViewById(R.id.detalhe_prioridade);
 
         defineTextoDataConclusao(dataConclusao, horario);
-        defineCorTextPrioridade(prioridade);
 
         return view;
     }
 
     private void defineTextoDataConclusao(TextView dataConclusao, TextView horario) {
-        if(!tarefa.getPrioridade().equals(Prioridade.NENHUM)){
+        if(tarefa.isDataDefinida()){
             dataConclusao.setText(DataFormatterUtil.formatarData(tarefa.getDataConlusao()));
             horario.setText(DataFormatterUtil.formataHora(tarefa.getDataConlusao()));
         } else {
             dataConclusao.setText(getString(R.string.rotulo_data_indefinida));
             horario.setText("");
         }
-    }
-
-    private void defineCorTextPrioridade(TextView prioridade) {
-        if(tarefa.getPrioridade().equals(Prioridade.ALTA)){
-            prioridade.setTextColor(Prioridade.ALTA.getCor());
-        } else if(tarefa.getPrioridade().equals(Prioridade.MEDIA)){
-            prioridade.setTextColor(Prioridade.MEDIA.getCor());
-        } else {
-            prioridade.setTextColor(Prioridade.BAIXA.getCor());
-        }
-        prioridade.setText(ResourcesHelper.getTextoPrioridade(getActivity(), tarefa.getPrioridade()));
     }
 
     private void mostraDialogRemocao(final Tarefa tarefa) {

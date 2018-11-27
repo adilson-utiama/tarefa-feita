@@ -14,11 +14,9 @@ import android.widget.TextView;
 
 import com.asuprojects.tarefafeita.R;
 import com.asuprojects.tarefafeita.domain.Tarefa;
-import com.asuprojects.tarefafeita.domain.enums.Prioridade;
 import com.asuprojects.tarefafeita.domain.viewmodel.TarefaViewModel;
 import com.asuprojects.tarefafeita.util.DataFormatterUtil;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -41,7 +39,7 @@ public class ListaDoDiaFragment extends Fragment {
         setaDataAtual();
 
         TarefaViewModel viewModel = ViewModelProviders.of(this).get(TarefaViewModel.class);
-        viewModel.getTarefas(Calendar.getInstance(), Prioridade.NENHUM).observe(ListaDoDiaFragment.this, new Observer<List<Tarefa>>() {
+        viewModel.getTarefas(Calendar.getInstance()).observe(ListaDoDiaFragment.this, new Observer<List<Tarefa>>() {
             @Override
             public void onChanged(@Nullable List<Tarefa> tasks) {
                 listSize = tasks.size();

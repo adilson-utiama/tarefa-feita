@@ -4,11 +4,15 @@
     <color name="colorPrimaryDark">#303f9f</color>
     <color name="colorSecondary">#ffb65c</color>
     <color name="colorSecondaryDark">#e6922c</color>
-    <color name="colorAccent">#de4a7c</color>
+    <color name="colorAccent">#1fba22</color>
+    <color name="colorAccentBkp">#de4a7c</color>
 
     <color name="prioridadeBaixa">#1fba22</color>
     <color name="prioridadeMedia">#ffa530</color>
     <color name="prioridadeAlta">#ff3030</color>
     <color name="dataIndefinida">#3f51b5</color>
+
+    <color name="colorLightGrey">#cccccc</color>
+    <color name="colorDarkGrey">#787878</color>
 
 </resources>

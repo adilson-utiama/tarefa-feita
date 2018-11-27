@@ -31,7 +31,7 @@ import com.asuprojects.tarefafeita.adapter.AbasAdapter;
 import com.asuprojects.tarefafeita.database.repository.TarefaRepository;
 import com.asuprojects.tarefafeita.fragment.ListaDoDiaFragment;
 import com.asuprojects.tarefafeita.fragment.ListaGeralFragment;
-import com.asuprojects.tarefafeita.fragment.ListaPrioridadeIndefinidaFragment;
+import com.asuprojects.tarefafeita.fragment.ListaDataIndefinidaFragment;
 import com.asuprojects.tarefafeita.fragment.ResumoFragment;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity
     private void configuraViewPager() {
         AbasAdapter abasAdapter = new AbasAdapter(getSupportFragmentManager());
         abasAdapter.adicionar(new ListaDoDiaFragment(), getString(R.string.aba_tarefas_do_dia));
-        abasAdapter.adicionar(new ListaPrioridadeIndefinidaFragment(), getString(R.string.aba_tarefas_sem_data));
+        abasAdapter.adicionar(new ListaDataIndefinidaFragment(), getString(R.string.aba_tarefas_sem_data));
         abasAdapter.adicionar(new ListaGeralFragment(), getString(R.string.aba_tarefas_geral));
         abasAdapter.adicionar(new ResumoFragment(), getString(R.string.aba_tarefas_resumo));
 

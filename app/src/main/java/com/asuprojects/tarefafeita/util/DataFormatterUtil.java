@@ -9,10 +9,10 @@ import java.util.Locale;
 
 public class DataFormatterUtil {
 
-    public static final String PATTERN_DATA_BR = "dd/MM/yyyy";
+    public static final String PATTERN_DATA_BR = "dd/MM/yy";
     public static final String PATTERN_DATA_US = "yyyy/MM/dd";
     public static final String PATTERN_HORA = "HH:mm";
-    public static final String PATTERN_DATA_HORA_BR = "dd/MM/yyyy - HH:mm";
+    public static final String PATTERN_DATA_HORA_BR = "dd/MM/yy - HH:mm";
     public static final String PATTERN_DATA_HORA_US = "yyyy/MM/dd - HH:mm";
     public static final String PATTERN_DATA_EXTENSO_BR = "EEEE, dd 'de' MMMM";
     public static final String PATTERN_DATA_EXTENSO_US = "EEEE, MMMM dd";
@@ -35,6 +35,14 @@ public class DataFormatterUtil {
 
     public static String formataDataExtenso(Calendar data){
         return getDateFormatter(DATA_EXTENSO).format(data.getTime());
+    }
+
+    public static String formataHorario(int hora, int minutos){
+        String horaS = String.valueOf(hora);
+        String minutosS = String.valueOf(minutos);
+        if(hora < 10) horaS = "0" + horaS;
+        if(minutos < 10) minutosS = "0" + minutos;
+        return horaS.concat(":").concat(minutosS);
     }
 
     private static boolean isBrasil(){

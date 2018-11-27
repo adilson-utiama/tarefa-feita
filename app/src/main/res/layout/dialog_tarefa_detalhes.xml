@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:id="@+id/detalheTopo"
@@ -105,43 +106,33 @@
         android:id="@+id/detalhe_anotacao"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/varela_round"
         android:text="@string/tx_anotaces"
         android:textAlignment="textStart"
         android:textStyle="italic"
+        android:padding="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView_status"
         app:layout_constraintEnd_toEndOf="@+id/detalhe_titulo"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/detalhe_titulo"
         app:layout_constraintTop_toBottomOf="@+id/detalhe_titulo" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/textView_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/antic"
-        android:text="@string/tx_prioridade"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/detalhe_anotacao"
-        app:layout_constraintTop_toBottomOf="@+id/detalhe_anotacao"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/detalhe_prioridade"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:fontFamily="@font/cabin"
-        android:text="MEDIA"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textView9"
-        app:layout_constraintTop_toTopOf="@+id/textView9" />
+        android:text="Pendente"
+        android:textColor="@color/prioridadeMedia"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:padding="10dp"
+        android:background="@drawable/rounded_stroke_box_light_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/detalhe_anotacao"
+        app:layout_constraintStart_toStartOf="@+id/detalhe_anotacao" />
+
 </android.support.constraint.ConstraintLayout>

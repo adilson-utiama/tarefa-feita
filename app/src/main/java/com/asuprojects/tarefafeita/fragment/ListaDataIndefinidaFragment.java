@@ -13,16 +13,15 @@ import android.view.ViewGroup;
 
 import com.asuprojects.tarefafeita.R;
 import com.asuprojects.tarefafeita.domain.Tarefa;
-import com.asuprojects.tarefafeita.domain.enums.Prioridade;
 import com.asuprojects.tarefafeita.domain.viewmodel.TarefaViewModel;
 
 import java.util.List;
 
-public class ListaPrioridadeIndefinidaFragment extends Fragment {
+public class ListaDataIndefinidaFragment extends Fragment {
 
     private int listSize;
 
-    public ListaPrioridadeIndefinidaFragment() {
+    public ListaDataIndefinidaFragment() {
         // Required empty public constructor
     }
 
@@ -33,7 +32,7 @@ public class ListaPrioridadeIndefinidaFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_lista_prioridade_indefinida, container, false);
 
         TarefaViewModel viewModel = ViewModelProviders.of(this).get(TarefaViewModel.class);
-        viewModel.getTarefas(Prioridade.NENHUM).observe(this, new Observer<List<Tarefa>>() {
+        viewModel.getTarefasSemDataDefinida().observe(this, new Observer<List<Tarefa>>() {
             @Override
             public void onChanged(@Nullable List<Tarefa> tasks) {
                 listSize = tasks.size();
