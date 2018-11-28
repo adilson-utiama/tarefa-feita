@@ -253,6 +253,11 @@ public class RecyclerViewFragment extends Fragment {
         titulo.setText(tarefa.getTitulo());
         TextView anotacao = view.findViewById(R.id.detalhe_anotacao);
         anotacao.setText(tarefa.getAnotacao());
+        TextView status = view.findViewById(R.id.textView_status);
+        if(tarefa.isConcluido()){
+            status.setText("Concluido");
+            status.setTextColor(getResources().getColor(R.color.prioridadeBaixa));
+        }
 
         defineTextoDataConclusao(dataConclusao, horario);
 
