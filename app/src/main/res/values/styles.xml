@@ -10,4 +10,8 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="SwitchCompatTheme" >
+        <item name="colorControlActivated">@color/customSwitchColor</item>
+    </style>
+
 </resources>

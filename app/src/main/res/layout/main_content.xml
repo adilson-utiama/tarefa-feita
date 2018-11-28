@@ -55,7 +55,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
-                app:tabIndicatorColor="@color/colorAccentBkp"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark"
                 app:tabGravity="fill"
                 app:tabMode="scrollable">
@@ -71,10 +70,9 @@
         android:id="@+id/btnAdiciona"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
+        android:layout_gravity="bottom|center"
         android:layout_margin="14dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
-        app:backgroundTint="@color/colorAccentBkp"
         app:fabSize="normal"
         app:srcCompat="@drawable/ic_adiciona_tarefa" />
 </android.support.design.widget.CoordinatorLayout>

@@ -89,6 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:text="Pendente"
+            android:theme="@style/SwitchCompatTheme"
             app:layout_constraintBottom_toBottomOf="@+id/tarefa_horario"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tarefa_horario" />
