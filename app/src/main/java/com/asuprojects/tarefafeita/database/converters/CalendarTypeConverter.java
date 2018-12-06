@@ -17,15 +17,15 @@ public class CalendarTypeConverter {
     public static SimpleDateFormat format = new SimpleDateFormat(US_PATTERN,
             Locale.getDefault());
 
-    @TypeConverter
-    public static Calendar toCalendar(Date date){
-        Calendar instance = Calendar.getInstance();
-        instance.setTime(date);
-        return instance;
-    }
+//    @TypeConverter
+//    public static Calendar toCalendar(Date date){
+//        Calendar instance = Calendar.getInstance();
+//        instance.setTime(date);
+//        return instance;
+//    }
 
     @TypeConverter
-    public static Calendar toCalendar(String data){
+    public synchronized static Calendar toCalendar(String data){
         Calendar instance = Calendar.getInstance();
         Log.i("DATA_ERROR", "toCalendar: " + data);
         try {
@@ -38,7 +38,7 @@ public class CalendarTypeConverter {
     }
 
     @TypeConverter
-    public static String toString(Calendar value){
+    public synchronized static String toString(Calendar value){
         return format.format(value.getTime());
     }
 }
